@@ -1,47 +1,144 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab text="grafiikka" />
-    <Tab text="tilastot" />
-      <Tab text="debug">
+      <Tab text="tilastot" />
+    <Tab text="debug">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
                <center>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <left>
-                        <FlowPane orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                              <TextField />
-                           </children>
-                        </FlowPane>
-                     </left>
-                     <right>
-                        <FlowPane orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <TextField />
-                              <TextField />
-                           </children>
-                        </FlowPane>
-                     </right>
-                  </BorderPane>
+                  <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <TextField text="Sisääntulo" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </BorderPane.margin>
+                              </TextField>
+                           </top>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField alignment="BOTTOM_LEFT" editable="false" text="Jonossa: (henkilöitä)" />
+                                    <TextField editable="false" layoutX="15.0" layoutY="20.0" text="Jonon keskipituus: (aika)" />
+                                    <TextField editable="false" layoutX="15.0" layoutY="46.0" text="Varattu/Vapaa" />
+                                    <TextField editable="false" layoutX="15.0" layoutY="72.0" text="Palvelun aloitusaika:" />
+                                    <TextField editable="false" layoutX="15.0" layoutY="97.0" text="Palvelun keskipituus:" />
+                                    <TextField editable="false" layoutX="15.0" layoutY="123.0" text="yms.." />
+                                    <TextField editable="false" layoutX="10.0" layoutY="138.0" text="yms.." />
+                                    <TextField editable="false" layoutX="10.0" layoutY="164.0" text="yms.." />
+                                    <TextField editable="false" layoutX="10.0" layoutY="189.0" text="yms.." />
+                                    <TextField editable="false" layoutX="10.0" layoutY="215.0" text="yms.." />
+                                 </children>
+                              </VBox>
+                           </center>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </BorderPane>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <TextField text="Lipunmyynti" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </BorderPane.margin>
+                              </TextField>
+                           </top>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField editable="false" text="Jonossa: (henkilöitä)" />
+                                    <TextField editable="false" text="Jonon keskipituus: (aika)" />
+                                    <TextField editable="false" text="Varattu/Vapaa" />
+                                    <TextField editable="false" text="Palvelun aloitusaika:" />
+                                    <TextField editable="false" text="Palvelun keskipituus:" />
+                                    <TextField editable="false" />
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <TextField text="Lipuntarkastus" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </BorderPane.margin>
+                              </TextField>
+                           </top>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField editable="false" text="Jonossa: (henkilöitä)" />
+                                    <TextField editable="false" text="Jonon keskipituus: (aika)" />
+                                    <TextField editable="false" text="Varattu/Vapaa" />
+                                    <TextField editable="false" text="Palvelun aloitusaika:" />
+                                    <TextField editable="false" text="Palvelun keskipituus:" />
+                                    <TextField editable="false" />
+                                 </children>
+                              </VBox>
+                           </center>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </BorderPane>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <top>
+                              <TextField text="Metro" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </BorderPane.margin>
+                              </TextField>
+                           </top>
+                           <center>
+                              <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <TextField editable="false" text="Jonossa: (henkilöitä)" />
+                                    <TextField editable="false" text="Jonon keskipituus: (aika)" />
+                                    <TextField editable="false" text="Varattu/Vapaa" />
+                                    <TextField editable="false" text="Palvelun aloitusaika:" />
+                                    <TextField editable="false" text="Palvelun keskipituus:" />
+                                    <TextField editable="false" />
+                                 </children>
+                              </VBox>
+                           </center>
+                        </BorderPane>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </HBox>
                </center>
+               <bottom>
+                  <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField text="Metroaseman kapasiteetti: ">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets />
+                           </FlowPane.margin>
+                        </TextField>
+                        <TextField text="current/max">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </TextField>
+                     </children>
+                  </FlowPane>
+               </bottom>
             </BorderPane>
-         </content>
-      </Tab>
+         </content></Tab>
   </tabs>
 </TabPane>
