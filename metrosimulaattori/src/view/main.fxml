@@ -3,11 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
@@ -16,7 +18,7 @@
     <Tab text="debug">
          <content>
             <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
+               <bottom>
                   <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -118,8 +120,8 @@
                         <Insets />
                      </BorderPane.margin>
                   </HBox>
-               </center>
-               <bottom>
+               </bottom>
+               <center>
                   <FlowPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
                         <TextField text="Metroaseman kapasiteetti: ">
@@ -137,7 +139,14 @@
                         </TextField>
                      </children>
                   </FlowPane>
-               </bottom>
+               </center>
+               <top>
+                  <TextArea prefHeight="100.0" prefWidth="800.0" promptText="Metroaseman tilastot tekstimuodossa 🤓" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Papyrus" size="36.0" />
+                     </font>
+                  </TextArea>
+               </top>
             </BorderPane>
          </content></Tab>
   </tabs>
