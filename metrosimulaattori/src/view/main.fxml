@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+  <tabs>
+    <Tab text="grafiikka" />
+    <Tab text="tilastot" />
+      <Tab text="debug">
+         <content>
+            <BorderPane prefHeight="200.0" prefWidth="200.0">
+               <center>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <left>
+                        <FlowPane orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                              <TextField />
+                           </children>
+                        </FlowPane>
+                     </left>
+                     <right>
+                        <FlowPane orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <TextField />
+                              <TextField />
+                           </children>
+                        </FlowPane>
+                     </right>
+                  </BorderPane>
+               </center>
+            </BorderPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
