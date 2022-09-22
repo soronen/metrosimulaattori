@@ -57,6 +57,7 @@ public class Kontrolleri implements IKontrolleri{   // UUSI
 		});
 	}
 
+	// testi commit
 
 
 }
