@@ -107,22 +107,9 @@ public class OmaMoottori extends Moottori{
 
 		for (int i = 0; i < palvelupisteet.length; i++) {
 			System.out.println("\nPalvelupisteen " + i + " keskiarvopalveluaika oli " + palvelupisteet[i].getKeskiarvoaika());
-			System.out.println("Palvelupisteen " + i + " keskiarvojonotusluaika oli " + "toivottavasti lyhyt");
-
-		}
-
-		System.out.println("");
-
-		for (int i = 0; i < palvelupisteet.length; i++) {
 			System.out.println("Palvelupisteen " + i + " keskiverto jono aika oli " + palvelupisteet[i].getKeskijonoaika());
-		}
-
-		System.out.println("");
-
-		for(int i = 0; i < palvelupisteet.length; i++) {
 			System.out.println("Palvelupisteen " + i + " jonopituus lopussa: " + palvelupisteet[i].getJonopituus());
 		}
-
 	}
 
 	protected void yritaCTapahtumat(){
@@ -135,10 +122,26 @@ public class OmaMoottori extends Moottori{
 					System.out.println("Palvelu aloitettu. Palvelupisteen kapasiteetti: " + customersWithin + " : " + stationCapacity);
 					customersWithin++;
 					p.aloitaPalvelu();
-				}
+					}
 
+				}
 			}
 		}
 
+
+	public Palvelupiste[] getPalvelupisteet() {
+		return palvelupisteet;
+	}
+	public double getLapimenoaika() {
+		return keskiarvoaika;
+	}
+	public int getMetroCapacity() {
+		return carCount*carCapacity;
+	}
+	public int getStationCapacity() {
+		return stationCapacity;
+	}
+	public int getCustomersWithin() {
+		return customersWithin;
 	}
 }
