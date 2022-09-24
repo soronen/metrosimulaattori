@@ -2,6 +2,8 @@ package controller;
 
 import controller.Kontrolleri;
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ObservableIntegerValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,9 +15,16 @@ import simu.model.TapahtumanTyyppi;
 import view.ISimulaattorinUI;
 
 import static java.lang.String.valueOf;
-import static simu.model.TapahtumanTyyppi.METRO;
+import static simu.model.TapahtumanTyyppi.*;
 
 public class MainController implements IKontrolleri {
+
+
+
+    private IMoottori moottori;
+    private ISimulaattorinUI ui;
+    //private String[] ppnimet = { "ENTRANCE" , "TICKETSALES" , "CHECK" , "METRO" };
+    private Palvelupiste[] palvelupisteet;
 
     @FXML
     private Label ppTila;
@@ -52,18 +61,31 @@ public class MainController implements IKontrolleri {
     private void startSimulation(ActionEvent event) {
         ppTila.setText("im not a label!");
 
+
         this.kaynnistaSimulointi();
     }
+    @FXML
+    private void setbSaapuminen(ActionEvent event) {
+        displayValues(ENTRANCE);
+    }
+    @FXML
+    private void setbLipunmyynti(ActionEvent event) {
+        displayValues(TICKETSALES);;
+    }
+    @FXML
+    private void setbLipuntarkastus(ActionEvent event) {
+        displayValues(TICKETCHECK);
+    }
+    @FXML
+    private void setbMetro(ActionEvent event) {
+        displayValues(METRO);
+    }
 
+    private void displayValues(TapahtumanTyyppi tt) {
+        ppJononPituus.setText(valueOf(this.getJonottajienlkm(tt)));
+        ppJononKKesto.setText(valueOf(this.getJononkeskipituus(tt)));
 
-    private IMoottori moottori;
-    private ISimulaattorinUI ui;
-
-
-    //private String[] ppnimet = { "ENTRANCE" , "TICKETSALES" , "CHECK" , "METRO" };
-
-
-    private Palvelupiste[] palvelupisteet;
+    }
 
 
     // Moottorin ohjausta:
@@ -79,7 +101,8 @@ public class MainController implements IKontrolleri {
         ((Thread)moottori).start();
         //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
 
-        moottori.getPalvelupisteet();
+        palvelupisteet = moottori.getPalvelupisteet();
+
 
 
     }

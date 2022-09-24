@@ -99,7 +99,7 @@
                               <Insets bottom="20.0" top="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="bSaapuminen" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Saapuminen">
+                        <Button fx:id="bSaapuminen" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setbSaapuminen" text="Saapuminen">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -107,7 +107,7 @@
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="bLipunmyynti" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Lipunmyynti">
+                        <Button fx:id="bLipunmyynti" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setbLipunmyynti" text="Lipunmyynti">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -115,7 +115,7 @@
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="bLipuntarkastus" mnemonicParsing="false" text="Lipuntarkastus">
+                        <Button fx:id="bLipuntarkastus" mnemonicParsing="false" onAction="#setbLipuntarkastus" text="Lipuntarkastus">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -123,7 +123,7 @@
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="bMetro" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Metro">
+                        <Button fx:id="bMetro" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setbMetro" text="Metro">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
