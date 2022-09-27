@@ -89,6 +89,7 @@ public class StatsTabController implements IKontrolleri {
         tfSimuloinninViive.setText(String.valueOf(moottori.getViive()));
     }
 
+
     public void paivitaUI() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -113,45 +114,45 @@ public class StatsTabController implements IKontrolleri {
     }
 
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {
-            switch (palvelupiste) {
-                case ENTRANCE:
-                    if (palvelupisteet[0].onVarattu()) {
-                        labelPavelunTila.setText("Varattu");
-                    } else {
-                        labelPavelunTila.setText("Vapaa");
-                    }
-                    labelPalvelupiste.setText("Palvelupisteen \"Saapuminen\" tilastot");
-                    labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[0].getJonopituus()));
-                    labelJononKeskipituus.setText(String.valueOf(palvelupisteet[0].getKeskijonoaika()));
-                    labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[0].getPalvelunro()));
-                    labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[0].getKeskiarvoaika()));
+        switch (palvelupiste) {
+            case ENTRANCE:
+                if (palvelupisteet[0].onVarattu()) {
+                    labelPavelunTila.setText("Varattu");
+                } else {
+                    labelPavelunTila.setText("Vapaa");
+                }
+                labelPalvelupiste.setText("Palvelupisteen \"Saapuminen\" tilastot");
+                labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[0].getJonopituus()));
+                labelJononKeskipituus.setText(String.valueOf(palvelupisteet[0].getKeskijonoaika()));
+                labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[0].getPalvelunro()));
+                labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[0].getKeskiarvoaika()));
 
-                    break;
-                case TICKETSALES:
-                    labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
-                    labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[1].getJonopituus()));
-                    labelJononKeskipituus.setText(String.valueOf(palvelupisteet[1].getKeskijonoaika()));
-                    labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[1].getPalvelunro()));
-                    labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[1].getKeskiarvoaika()));
+                break;
+            case TICKETSALES:
+                labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
+                labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[1].getJonopituus()));
+                labelJononKeskipituus.setText(String.valueOf(palvelupisteet[1].getKeskijonoaika()));
+                labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[1].getPalvelunro()));
+                labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[1].getKeskiarvoaika()));
 
-                    break;
-                case TICKETCHECK:
-                    labelPalvelupiste.setText("Palvelupisteen \"Lipuntarkastus\" tilastot");
-                    labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[2].getJonopituus()));
-                    labelJononKeskipituus.setText(String.valueOf(palvelupisteet[2].getKeskijonoaika()));
-                    labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[2].getPalvelunro()));
-                    labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[2].getKeskiarvoaika()));
+                break;
+            case TICKETCHECK:
+                labelPalvelupiste.setText("Palvelupisteen \"Lipuntarkastus\" tilastot");
+                labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[2].getJonopituus()));
+                labelJononKeskipituus.setText(String.valueOf(palvelupisteet[2].getKeskijonoaika()));
+                labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[2].getPalvelunro()));
+                labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[2].getKeskiarvoaika()));
 
-                    break;
-                case METRO:
-                    labelPalvelupiste.setText("Palvelupisteen \"Metro\" tilastot");
-                    labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[3].getJonopituus()));
-                    labelJononKeskipituus.setText(String.valueOf(palvelupisteet[3].getKeskijonoaika()));
-                    labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[3].getPalvelunro()));
-                    labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[3].getKeskiarvoaika()));
+                break;
+            case METRO:
+                labelPalvelupiste.setText("Palvelupisteen \"Metro\" tilastot");
+                labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[3].getJonopituus()));
+                labelJononKeskipituus.setText(String.valueOf(palvelupisteet[3].getKeskijonoaika()));
+                labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[3].getPalvelunro()));
+                labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[3].getKeskiarvoaika()));
 
-                    break;
-            }
+                break;
+        }
     }
 
     private void setPainettuNappi(TapahtumanTyyppi tt) {
@@ -192,20 +193,12 @@ public class StatsTabController implements IKontrolleri {
     }
 
     @FXML
-    private void bSaapuminen() {
-        setPainettuNappi(ENTRANCE);
-    }
-    @FXML
-    private void bLipunmyynti() {
-        setPainettuNappi(TICKETSALES);
-    }
-    @FXML
-    private void bLipuntarkastus() {
-        setPainettuNappi(TICKETCHECK);
-    }
-    @FXML
-    private void bMetro() {
-        setPainettuNappi(METRO);
+    public void nollaaSimulaattori() {
+        moottori.setSimulointiaika(0);
+        Kello.getInstance().setAika(0);
+        moottori = new OmaMoottori(this);
+        asetaAsemanTiedot();
+        asetaPavelupisteenTiedot(ENTRANCE);
     }
 
 
