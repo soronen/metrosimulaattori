@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Simulaattori">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-          <Tab text="Tilastot">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                <fx:include fx:id="statsTab" source="StatsTab.fxml" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
-   </center>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.RootLayoutController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Tiedosto">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Uusi tiedosto" />
+                  <MenuItem mnemonicParsing="false" text="Avaa tiedosto" />
+                  <MenuItem mnemonicParsing="false" text="Tallenna tiedosto" />
+                  <MenuItem mnemonicParsing="false" text="Poistu" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#avaaSimulaattori" text="Simulaattori">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Avaa simulaattori" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Tilastot">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Näytä tilastoja" />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Lisää...">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Tietoa meistä" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
 </BorderPane>

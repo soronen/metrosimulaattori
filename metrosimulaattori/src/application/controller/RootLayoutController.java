@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.MainApp;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
@@ -21,7 +22,9 @@ public class RootLayoutController {
     }
 
 
-    public void buttonStatsTab() {
+    @FXML
+    public void avaaSimulaattori() {
+        mainApp.showStatsTab();
     }
 
 }
