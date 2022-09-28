@@ -160,27 +160,23 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Metroaseman kapasiteetti" GridPane.rowIndex="2">
+                        <Label text="Metroaseman kapasiteetti" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label minHeight="-Infinity" minWidth="-Infinity" text="Metroasemasta poistuneet asiakkaat" GridPane.rowIndex="4">
+                        <Label minHeight="-Infinity" minWidth="-Infinity" text="Metroasemasta poistuneet asiakkaat" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelAsemanKapasiteetti" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="labelMetroPoistuneetAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelMetroPoistuneetAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label text="Metroasemassa olevat asiakkaat" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label text="Metroasemassa olevat asiakkaat" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
-                        <Label fx:id="labelAsemassaOlevatAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="labelAsemassaOlevatAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
@@ -204,10 +200,8 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelMetroKapasiteetti" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
+                        <TextField fx:id="tfAsemanKapasiteetti" text="200" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="tfMetronKapasiteetti" text="40" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                   <Label fx:id="labelPalvelupiste" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Palvelupisteen tilastot [PALVELUPISTE]">
@@ -251,23 +245,23 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelPavelunTila" text="Label" GridPane.columnIndex="1">
+                        <Label fx:id="labelPavelunTila" text="Ei käynnissä" GridPane.columnIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelPavellutAsiakkaat" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="labelPavellutAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelPavelunKeskipituus" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Label fx:id="labelPavelunKeskipituus" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelJonossaOlevatAsiakkaat" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Label fx:id="labelJonossaOlevatAsiakkaat" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label fx:id="labelJononKeskipituus" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Label fx:id="labelJononKeskipituus" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font></Label>

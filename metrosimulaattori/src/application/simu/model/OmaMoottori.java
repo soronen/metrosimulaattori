@@ -13,10 +13,10 @@ public class OmaMoottori extends Moottori{
 
 	private int customersWithin = 0;
 	private int servedCustomers = 0;
-	int stationCapacity = 120;
+	int stationCapacity = 0;
 
-	int carCapacity = 20;
-	int carCount = 3;
+	private int metroCapacity = 0;
+
 	private final Saapumisprosessi saapumisprosessi;
 
 	double keskiarvoaika;
@@ -87,7 +87,7 @@ public class OmaMoottori extends Moottori{
 				}
 				break;
 			case METRO:
-				for (int i = 0; i < carCapacity*carCount; i++) {
+				for (int i = 0; i < metroCapacity ; i++) {
 					if (palvelupisteet[3].onJonossa()) {
 						a = palvelupisteet[3].otaJonosta();
 						a.setPoistumisaika(Kello.getInstance().getAika());
@@ -140,10 +140,16 @@ public class OmaMoottori extends Moottori{
 		return keskiarvoaika;
 	}
 	public int getMetroCapacity() {
-		return carCount*carCapacity;
+		return metroCapacity;
+	}
+	public void setMetroCapacity(int capacity) {
+		metroCapacity = capacity;
 	}
 	public int getStationCapacity() {
 		return stationCapacity;
+	}
+	public void setStationCapacity(int stationCapacity) {
+		this.stationCapacity = stationCapacity;
 	}
 	public int getCustomersWithin() {
 		return customersWithin;

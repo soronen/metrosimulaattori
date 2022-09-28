@@ -17,4 +17,8 @@ public interface IMoottori { // UUSI
 	public abstract int getStationCapacity();
 	public abstract int getCustomersWithin();
 	public abstract int getServedCustomers();
+
+	public void setMetroCapacity(int capacity);
+	public void setStationCapacity(int stationCapacity);
+
 }
