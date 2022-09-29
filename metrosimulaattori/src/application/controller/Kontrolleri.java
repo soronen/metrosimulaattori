@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.simu.framework.IMoottori;
+import application.simu.framework.Kello;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.view.ISimulaattorinUI;
@@ -36,7 +37,11 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
-
+    public void resetSimulator() {
+        moottori.setSimulointiaika(0);
+        Kello.getInstance().setAika(0);
+        moottori = new OmaMoottori(this);
+    }
 
 
     public IMoottori getMoottori() {

@@ -240,9 +240,7 @@ public class StatsTabController implements IKontrolleri {
 
     @FXML
     public void nollaaSimulaattori() {
-        moottori.setSimulointiaika(0);
-        Kello.getInstance().setAika(0);
-        moottori = new OmaMoottori(this);
+        kontrolleri.resetSimulator();
         asetaAsemanTiedot();
         asetaPavelupisteenTiedot(ENTRANCE);
     }
