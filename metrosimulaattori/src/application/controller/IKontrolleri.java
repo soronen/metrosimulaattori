@@ -1,5 +1,8 @@
 package application.controller;
 
+import application.simu.framework.IMoottori;
+import application.simu.model.Palvelupiste;
+
 public interface IKontrolleri {
 
     // Rajapinta, joka tarjotaan  käyttöliittymälle:
@@ -13,4 +16,11 @@ public interface IKontrolleri {
     public void visualisoiAsiakas();
 
     public void paivitaUI();
+
+
+    /* ehkä jonain päivänä
+    public IMoottori getMoottori();
+    public void asetaMoottorinParametrit();
+    public Palvelupiste[] getPalvelupisteet();
+    */
 }

@@ -64,19 +64,26 @@ public class StatsTabController implements IKontrolleri {
     private int simukesto = 1000;
     private int simuviive = 100;
 
+    private Kontrolleri kontrolleri;
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
     private void initialize() {
+        kontrolleri = new Kontrolleri(this);
     }
 
 
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
-        moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
+        kontrolleri.getMoottori();
+        palvelupisteet = kontrolleri.getPalvelupisteet();
+        moottori = kontrolleri.getMoottori();
+
+        //moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
 
         //simukesto = Integer.parseInt(tfSimuloinninKesto.getText());
         //simuviive = Integer.parseInt(tfSimuloinninViive.getText());
@@ -91,7 +98,8 @@ public class StatsTabController implements IKontrolleri {
             visualisoiAsiakas();
             asetaAsemanTiedot();
 
-            ((Thread)moottori).start();
+            kontrolleri.kaynnistaSimulointi();
+            //((Thread)moottori).start();
         }
 
         //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
