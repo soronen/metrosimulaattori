@@ -114,6 +114,7 @@ public class OmaMoottori extends Moottori{
 			System.out.println("Palvelupisteen " + i + " keskiverto jono aika oli " + palvelupisteet[i].getKeskijonoaika());
 			System.out.println("Palvelupisteen " + i + " jonopituus lopussa: " + palvelupisteet[i].getJonopituus());
 		}
+		kontrolleri.setKaynnissa(false);
 	}
 
 	protected void yritaCTapahtumat(){

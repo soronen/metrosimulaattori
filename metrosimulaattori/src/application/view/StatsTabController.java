@@ -1,27 +1,22 @@
-package application.controller;
+package application.view;
 
 import application.MainApp;
-import application.controller.IKontrolleri;
+import application.controller.Kontrolleri;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
-import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 
-public class StatsTabController implements IKontrolleri {
+public class StatsTabController {
     @FXML
     private TextField tfAsemanKapasiteetti;
     @FXML
@@ -53,17 +48,8 @@ public class StatsTabController implements IKontrolleri {
 
 
     private IMoottori moottori;
-
     private Palvelupiste[] palvelupisteet;
-
     private TapahtumanTyyppi painettuNappi = TapahtumanTyyppi.ENTRANCE;
-
-    private int metronKapasiteetti = 40;
-    private int asemanKapasiteetti = 200;
-
-    private int simukesto = 1000;
-    private int simuviive = 100;
-
     private Kontrolleri kontrolleri;
 
     /**
@@ -77,37 +63,18 @@ public class StatsTabController implements IKontrolleri {
 
 
     // Moottorin ohjausta:
-    @Override
-    public void kaynnistaSimulointi() {
+    public void kaynnista() {
         kontrolleri.getMoottori();
         palvelupisteet = kontrolleri.getPalvelupisteet();
         moottori = kontrolleri.getMoottori();
 
-        //moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
+        setSimulaattorinAsetukset();
+        asetaAsemanTiedot();
+        kontrolleri.kaynnistaSimulointi();
 
-        //simukesto = Integer.parseInt(tfSimuloinninKesto.getText());
-        //simuviive = Integer.parseInt(tfSimuloinninViive.getText());
-        //moottori.setMetroCapacity(metronKapasiteetti);
-        //moottori.setStationCapacity(asemanKapasiteetti);
-//
-        //moottori.setSimulointiaika(simukesto);
-        //moottori.setViive(simuviive);
-
-        // yritä asettaa parametrit simulaattorille
-        if (setSimulaattorinAsetukset(moottori) == true) {
-            visualisoiAsiakas();
-            asetaAsemanTiedot();
-
-            kontrolleri.kaynnistaSimulointi();
-            //((Thread)moottori).start();
-        }
-
-        //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
-
-        palvelupisteet = moottori.getPalvelupisteet();
     }
 
-    public boolean setSimulaattorinAsetukset(IMoottori moottori) {
+    public boolean setSimulaattorinAsetukset() {
         try {
             int asemanKapasiteetti = Integer.parseInt(tfAsemanKapasiteetti.getText());
             int metronKapasiteetti = Integer.parseInt(tfMetronKapasiteetti.getText());
@@ -115,11 +82,10 @@ public class StatsTabController implements IKontrolleri {
             int simukesto = Integer.parseInt(tfSimuloinninKesto.getText());
             int simuviive = Integer.parseInt(tfSimuloinninViive.getText());
 
-            moottori.setStationCapacity(asemanKapasiteetti);
-            moottori.setMetroCapacity(metronKapasiteetti);
-            moottori.setSimulointiaika(simukesto);
-            moottori.setViive(simuviive);
-
+            kontrolleri.setAsemanKapasiteetti(asemanKapasiteetti);
+            kontrolleri.setMetronKapasiteetti(metronKapasiteetti);
+            kontrolleri.setsimulaattorinKesto(simukesto);
+            kontrolleri.setSimulaattorinViive(simuviive);
             return true;
 
         } catch (NumberFormatException e) {
@@ -133,16 +99,15 @@ public class StatsTabController implements IKontrolleri {
         return false;
     }
 
-    @Override
     public void hidasta() { // hidastetaan moottorisäiettä
-        moottori.setViive((long)(moottori.getViive()*1.10));
-        tfSimuloinninViive.setText(String.valueOf(moottori.getViive()));
+        kontrolleri.hidasta();
+        tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
     }
 
-    @Override
+
     public void nopeuta() { // nopeutetaan moottorisäiettä
-        moottori.setViive((long)(moottori.getViive()*0.9));
-        tfSimuloinninViive.setText(String.valueOf(moottori.getViive()));
+        kontrolleri.nopeuta();
+        tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
     }
 
 
@@ -162,10 +127,10 @@ public class StatsTabController implements IKontrolleri {
             labelSimuloinninTila.setText("Ei käynnissä");
         }
         labelAika.setText(String.valueOf(Kello.getInstance().getAika()));
-        tfMetronKapasiteetti.setText(String.valueOf(moottori.getMetroCapacity()));
-        tfAsemanKapasiteetti.setText(String.valueOf(moottori.getStationCapacity()));
-        labelAsemassaOlevatAsiakkaat.setText(String.valueOf(moottori.getCustomersWithin()));
-        labelMetroPoistuneetAsiakkaat.setText(String.valueOf(moottori.getServedCustomers()));
+        tfMetronKapasiteetti.setText(String.valueOf(kontrolleri.getMetronKapasiteetti()));
+        tfAsemanKapasiteetti.setText(String.valueOf(kontrolleri.getAsemanKapasiteetti()));
+        labelAsemassaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()));
+        labelMetroPoistuneetAsiakkaat.setText(String.valueOf(kontrolleri.getPalvellutAsaiakkaat()));
 
     }
 
@@ -212,6 +177,7 @@ public class StatsTabController implements IKontrolleri {
     @FXML
     private void valittuPalvelupiste(Event evt) {
 
+        // hakee tapahtuman kutsujan fxid:n mustalla magialla
         String napinID = ((Control)evt.getSource()).getId();
         switch (napinID) {
             case "bSaapuminen":
@@ -247,14 +213,6 @@ public class StatsTabController implements IKontrolleri {
 
     // Simulointitulosten välittämistä käyttöliittymään.
     // Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
-
-    @Override
-    public void naytaLoppuaika(double aika) {
-        //Platform.runLater(()->ui.setLoppuaika(aika));
-    }
-    @Override
-    public void visualisoiAsiakas() {
-    }
 
     // Reference to the main application
     private MainApp mainApp;

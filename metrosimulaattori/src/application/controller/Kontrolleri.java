@@ -4,16 +4,24 @@ import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
-import application.view.ISimulaattorinUI;
+import application.view.StatsTabController;
 
 public class Kontrolleri implements IKontrolleri {
 
     private IMoottori moottori;
-    private Palvelupiste[] palvelupisteet;
     private StatsTabController ui;
+
+    private int simukesto = 1000;
+    private int simuviive = 100;
+    private int metronKapasiteetti = 40;
+    private int asemanKapasiteetti = 200;
+
+    boolean kaynnissa = false;
 
     public Kontrolleri(StatsTabController ui) {
         this.ui = ui;
+        moottori = getMoottori();
+        moottori.setViive(100);
     }
     public Kontrolleri() {
 
@@ -24,26 +32,27 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void kaynnistaSimulointi() {
         moottori = getMoottori();
-        //moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
-        ((Thread)moottori).start();
-
-        palvelupisteet = moottori.getPalvelupisteet();
+        if (!kaynnissa) {
+            kaynnissa = true;
+            ((Thread)moottori).start();
+        }
     }
 
-
-    //@Override
+    @Override
     public void asetaMoottorinParametrit() {
 
     }
 
-
+    @Override
     public void resetSimulator() {
         moottori.setSimulointiaika(0);
         Kello.getInstance().setAika(0);
         moottori = new OmaMoottori(this);
+        setMetronKapasiteetti(metronKapasiteetti);
+        setAsemanKapasiteetti(asemanKapasiteetti);
     }
 
-
+    @Override
     public IMoottori getMoottori() {
         if (moottori == null) {
             moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
@@ -51,9 +60,9 @@ public class Kontrolleri implements IKontrolleri {
         return moottori;
     }
 
-    //@Override
+    @Override
     public Palvelupiste[] getPalvelupisteet() {
-        return palvelupisteet;
+        return moottori.getPalvelupisteet();
     }
 
     @Override
@@ -70,14 +79,62 @@ public class Kontrolleri implements IKontrolleri {
     public void naytaLoppuaika(double aika) {
 
     }
-
     @Override
     public void visualisoiAsiakas() {
 
     }
-
     @Override
     public void paivitaUI() {
         ui.paivitaUI();
     }
+
+    @Override
+    public void setAsemanKapasiteetti(int asemanKapasiteetti) {
+        this.asemanKapasiteetti = asemanKapasiteetti;
+        moottori.setStationCapacity(asemanKapasiteetti);
+    }
+    @Override
+    public void setMetronKapasiteetti(int metronKapasiteetti) {
+        this.metronKapasiteetti = metronKapasiteetti;
+        moottori.setMetroCapacity(metronKapasiteetti);
+    }
+    @Override
+    public void setsimulaattorinKesto(int simukesto) {
+        this.simukesto = simukesto;
+        moottori.setSimulointiaika(simukesto);
+    }
+    @Override
+    public void setSimulaattorinViive(int simuviive) {
+        this.simuviive = simuviive;
+        moottori.setViive(simuviive);
+
+    }
+    @Override
+    public int getMetronKapasiteetti() {
+        return moottori.getMetroCapacity();
+    }
+
+    @Override
+    public int getAsemanKapasiteetti() {
+        return moottori.getStationCapacity();
+    }
+
+    @Override
+    public int getAsiakkaatAsemassa() {
+        return moottori.getCustomersWithin();
+    }
+    @Override
+    public int getPalvellutAsaiakkaat() {
+        return moottori.getServedCustomers();
+    }
+
+    @Override
+    public long getViive() {
+        return moottori.getViive();
+    }
+    @Override
+    public void setKaynnissa(boolean kaynnissa) {
+        this.kaynnissa = kaynnissa;
+    }
+
 }

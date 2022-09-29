@@ -2,19 +2,9 @@ package application;
 
 import java.io.IOException;
 
-import application.controller.IKontrolleri;
-import application.controller.RootLayoutController;
-import application.controller.StatsTabController;
+import application.view.RootLayoutController;
+import application.view.StatsTabController;
 import application.simu.framework.Trace;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
