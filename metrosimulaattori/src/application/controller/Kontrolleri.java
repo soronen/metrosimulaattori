@@ -143,5 +143,14 @@ public class Kontrolleri implements IKontrolleri {
     public void setKaynnissa(boolean kaynnissa) {
         this.kaynnissa = kaynnissa;
     }
+    @Override
+    public int getMobiililippujakauma() {
+        return moottori.getMobiililippujakauma();
+    }
+
+    @Override
+    public void setMobiililippujakauma(int mobiililippujakauma) {
+        moottori.setMobiililippujakauma(mobiililippujakauma);
+    }
 
 }

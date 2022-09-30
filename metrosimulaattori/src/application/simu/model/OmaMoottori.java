@@ -84,17 +84,14 @@ public class OmaMoottori extends Moottori{
 					Random r = new Random();
 					int chance = r.nextInt(100)+1;
 
-					if(chance <= mobiililippujakauma)
-
-
-					if (ThreadLocalRandom.current().nextBoolean()){
-						System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 1 + " jonoon");
-						a.valiraportti();
-						palvelupisteet[1].lisaaJonoon(a);
-					} else {
+					if(chance <= mobiililippujakauma) {
 						System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 2 + " jonoon");
 						a.valiraportti();
 						palvelupisteet[2].lisaaJonoon(a);
+					} else {
+						System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 1 + " jonoon");
+						a.valiraportti();
+						palvelupisteet[1].lisaaJonoon(a);
 					}
 				}
 				break;
@@ -171,9 +168,12 @@ public class OmaMoottori extends Moottori{
 	public int getServedCustomers() {
 		return servedCustomers;
 	}
+
 	public void setMobiililippujakauma(int mobiililippujakauma) {
 		this.mobiililippujakauma = mobiililippujakauma;
 	}
+
+	@Override
 	public int getMobiililippujakauma() {
 		return mobiililippujakauma;
 	}

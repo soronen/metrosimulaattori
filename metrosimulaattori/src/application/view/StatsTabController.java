@@ -45,7 +45,12 @@ public class StatsTabController {
     private TextField tfSimuloinninViive;
     @FXML
     private Label labelPalvelupiste;
-
+    @FXML
+    private TextField tfEsiostetutliput;
+    @FXML
+    private TextField tfPalvelupisteenOdotusarvo;
+    @FXML
+    private TextField tfPalvelupisteenVarianssi;
 
     private IMoottori moottori;
     private Palvelupiste[] palvelupisteet;
@@ -76,16 +81,14 @@ public class StatsTabController {
 
     public boolean setSimulaattorinAsetukset() {
         try {
-            int asemanKapasiteetti = Integer.parseInt(tfAsemanKapasiteetti.getText());
-            int metronKapasiteetti = Integer.parseInt(tfMetronKapasiteetti.getText());
+            kontrolleri.setAsemanKapasiteetti(Integer.parseInt(tfAsemanKapasiteetti.getText()));
+            kontrolleri.setMetronKapasiteetti(Integer.parseInt(tfMetronKapasiteetti.getText()));
+            kontrolleri.setsimulaattorinKesto(Integer.parseInt(tfSimuloinninKesto.getText()));
+            kontrolleri.setSimulaattorinViive(Integer.parseInt(tfSimuloinninViive.getText()));
 
-            int simukesto = Integer.parseInt(tfSimuloinninKesto.getText());
-            int simuviive = Integer.parseInt(tfSimuloinninViive.getText());
+            kontrolleri.setMobiililippujakauma(Integer.parseInt(tfEsiostetutliput.getText()));
 
-            kontrolleri.setAsemanKapasiteetti(asemanKapasiteetti);
-            kontrolleri.setMetronKapasiteetti(metronKapasiteetti);
-            kontrolleri.setsimulaattorinKesto(simukesto);
-            kontrolleri.setSimulaattorinViive(simuviive);
+
             return true;
 
         } catch (NumberFormatException e) {
@@ -131,7 +134,6 @@ public class StatsTabController {
         tfAsemanKapasiteetti.setText(String.valueOf(kontrolleri.getAsemanKapasiteetti()));
         labelAsemassaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()));
         labelMetroPoistuneetAsiakkaat.setText(String.valueOf(kontrolleri.getPalvellutAsaiakkaat()));
-
     }
 
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {

@@ -48,6 +48,10 @@ public interface IKontrolleri {
 
     void setKaynnissa(boolean kaynnissa);
 
+    int getMobiililippujakauma();
+
+    void setMobiililippujakauma(int mobiililippujakauma);
+
 
     /* ehkä jonain päivänä
     public IMoottori getMoottori();
