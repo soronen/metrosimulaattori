@@ -81,6 +81,16 @@ public class StatsTabController {
         asetaAsemanTiedot();
         kontrolleri.kaynnistaSimulointi();
 
+        salliSimunasetuksienmuutos(false);
+
+    }
+    private void salliSimunasetuksienmuutos(boolean sallitaanko) {
+        tfPalvelupisteenOdotusarvo.setEditable(sallitaanko);
+        tfPalvelupisteenVarianssi.setEditable(sallitaanko);
+        tfAsemanKapasiteetti.setEditable(sallitaanko);
+        tfMetronKapasiteetti.setEditable(sallitaanko);
+        tfEsiostetutliput.setEditable(sallitaanko);
+
     }
 
     public void setSimunSaapumisJakauma() {
@@ -228,6 +238,8 @@ public class StatsTabController {
     @FXML
     public void nollaaSimulaattori() {
         kontrolleri.resetSimulator();
+        salliSimunasetuksienmuutos(true);
+
     }
 
     // Simulointitulosten välittämistä käyttöliittymään.

@@ -1,7 +1,7 @@
 package application.controller;
 
+import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
-import application.simu.framework.Kello;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.view.StatsTabController;
@@ -18,6 +18,7 @@ public class Kontrolleri implements IKontrolleri {
 
     boolean kaynnissa = false;
 
+    private Palvelupiste palvelupisteet[];
 
 
     private int entranceMean = 4;
@@ -43,7 +44,8 @@ public class Kontrolleri implements IKontrolleri {
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
-        getMoottori();
+        moottori = getMoottori();
+        palvelupisteet = moottori.getPalvelupisteet();
 
         asetaMoottorinParametrit();
 
@@ -171,23 +173,38 @@ public class Kontrolleri implements IKontrolleri {
         moottori.setMobiililippujakauma(mobiililippujakauma);
     }
 
+    @Override
+    public void setEntranceJakauma(int mean, int variance) {
+        entranceMean = mean;
+        entranceVariance = variance;
+        palvelupisteet[0].setJakauma(new Uniform(entranceMean,entranceVariance));
+    }
+    @Override
+    public void setSalesJakauma(int mean, int variance) {
+        salesMean = mean;
+        salesVariance = variance;
+        palvelupisteet[1].setJakauma(new Uniform(entranceMean,entranceVariance));
+    }
+    @Override
+    public void setCheckJakauma(int mean, int variance) {
+        checkMean = mean;
+        checkVariance = variance;
+        palvelupisteet[2].setJakauma(new Uniform(entranceMean,entranceVariance));
+    }
+    @Override
+    public void setMetroJakauma(int mean, int variance) {
+        metroMean = mean;
+        metroVariance = variance;
+        palvelupisteet[3].setJakauma(new Uniform(entranceMean,entranceVariance));
+    }
+
 
     public void setArrivalJakauma (int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
     }
-    public void setEntranceJakauma (int mean, int variance) {
-        moottori.setEntranceJakauma(mean, variance);
-    }
-    public void setSalesJakauma (int mean, int variance) {
-        moottori.setSalesJakauma(mean, variance);
-    }
-    public void setCheckJakauma (int mean, int variance) {
-        moottori.setCheckJakauma(mean, variance);
-    }
-    public void setMetroJakauma (int mean, int variance) {
-        moottori.setMetroJakauma(mean, variance);
-    }
+
+
 
 
     public int getEntranceMean() {

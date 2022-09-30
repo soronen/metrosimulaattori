@@ -53,4 +53,11 @@ public interface IKontrolleri {
     void setMobiililippujakauma(int mobiililippujakauma);
 
 
+    void setCheckJakauma(int mean, int variance);
+
+    void setMetroJakauma(int mean, int variance);
+
+    void setEntranceJakauma(int mean, int variance);
+
+    void setSalesJakauma(int mean, int variance);
 }
