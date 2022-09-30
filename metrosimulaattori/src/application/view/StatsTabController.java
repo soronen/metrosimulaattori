@@ -90,7 +90,8 @@ public class StatsTabController {
         tfAsemanKapasiteetti.setEditable(sallitaanko);
         tfMetronKapasiteetti.setEditable(sallitaanko);
         tfEsiostetutliput.setEditable(sallitaanko);
-
+        tfSaapumisenVarianssi.setEditable(sallitaanko);
+        tfSaapumisenOdotusarvo.setEditable(sallitaanko);
     }
 
     public void setSimunSaapumisJakauma() {
