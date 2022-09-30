@@ -20,6 +20,8 @@ public interface IKontrolleri {
     public void nopeuta();
     public void hidasta();
 
+    void muutaNopeutta(long viive);
+
     // Rajapinta, joka tarjotaan moottorille:
     public void naytaLoppuaika(double aika);
     public void visualisoiAsiakas();

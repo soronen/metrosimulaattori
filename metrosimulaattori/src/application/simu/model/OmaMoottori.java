@@ -7,6 +7,8 @@ import application.simu.framework.Kello;
 import application.simu.framework.Moottori;
 import application.simu.framework.Saapumisprosessi;
 import application.simu.framework.Tapahtuma;
+
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class OmaMoottori extends Moottori{
@@ -14,12 +16,11 @@ public class OmaMoottori extends Moottori{
 	private int customersWithin = 0;
 	private int servedCustomers = 0;
 	int stationCapacity = 0;
-
 	private int metroCapacity = 0;
-
 	private final Saapumisprosessi saapumisprosessi;
 
 	double keskiarvoaika;
+	private int mobiililippujakauma = 50;
 
 	public OmaMoottori(IKontrolleri kontrolleri){ // UUSI
 
@@ -52,7 +53,6 @@ public class OmaMoottori extends Moottori{
 			case ARRIVAL:
 				palvelupisteet[0].lisaaJonoon(new Asiakas());
 				saapumisprosessi.generoiSeuraava();
-				customersWithin++;
 
 				kontrolleri.visualisoiAsiakas(); // UUSI
 				break;
@@ -74,16 +74,28 @@ public class OmaMoottori extends Moottori{
 				a.valiraportti();
 				palvelupisteet[3].lisaaJonoon(a);
 				break;
-			case ENTRANCE: a = palvelupisteet[0].otaJonosta();
-				a.setPpisteSaapumisaika(Kello.getInstance().getAika());
-				if (ThreadLocalRandom.current().nextBoolean()){
-					System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 1 + " jonoon");
-					a.valiraportti();
-					palvelupisteet[1].lisaaJonoon(a);
-				} else {
-					System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 2 + " jonoon");
-					a.valiraportti();
-					palvelupisteet[2].lisaaJonoon(a);
+			case ENTRANCE:
+				if (customersWithin < stationCapacity) {
+					a = palvelupisteet[0].otaJonosta();
+					customersWithin++;
+					a.setPpisteSaapumisaika(Kello.getInstance().getAika());
+
+					// luku 1-100
+					Random r = new Random();
+					int chance = r.nextInt(100)+1;
+
+					if(chance <= mobiililippujakauma)
+
+
+					if (ThreadLocalRandom.current().nextBoolean()){
+						System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 1 + " jonoon");
+						a.valiraportti();
+						palvelupisteet[1].lisaaJonoon(a);
+					} else {
+						System.out.println("Asiakas " + a.getId() + " lisättiin palvelupisteen " + 2 + " jonoon");
+						a.valiraportti();
+						palvelupisteet[2].lisaaJonoon(a);
+					}
 				}
 				break;
 			case METRO:
@@ -158,6 +170,12 @@ public class OmaMoottori extends Moottori{
 
 	public int getServedCustomers() {
 		return servedCustomers;
+	}
+	public void setMobiililippujakauma(int mobiililippujakauma) {
+		this.mobiililippujakauma = mobiililippujakauma;
+	}
+	public int getMobiililippujakauma() {
+		return mobiililippujakauma;
 	}
 
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.StatsTabController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.StatsTabController">
    <children>
       <Label layoutY="5.0" text="Metrosimulaattori 🤓" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
@@ -75,7 +75,7 @@
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#nopeuta" text="Nopeuta" />
                      </children>
                   </HBox>
-                  <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#kaynnista" text="Käynnistä Simulointi">
+                  <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" text="Käynnistä Simulointi">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -138,6 +138,60 @@
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                <children>
+                  <Label layoutX="30.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" text="Simulaattorin parametrit">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane layoutX="30.0" layoutY="80.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Metroaseman kapasiteetti">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Palvelupisteen [PALVELUPISTE]  palveluajan varianssi (normaalijakauma)" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Esiostettujen lippujen % määärä  (Lipuntarkastuksen ohittavat)" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Palvelupisteen [PALVELUPISTE]  palveluajan odotusarvo (normaalijakauma)" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Metron kapasiteetti" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfAsemanKapasiteetti" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="80.0" text="200" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="tfMetronKapasiteetti" maxWidth="-Infinity" prefWidth="80.0" text="40" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfPalvelupisteenVarianssi" layoutX="481.0" layoutY="104.0" maxWidth="-Infinity" prefWidth="80.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="tfEsiostetutliput" layoutX="481.0" layoutY="43.0" maxWidth="-Infinity" prefWidth="80.0" text="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfPalvelupisteenOdotusarvo" layoutX="481.0" layoutY="73.0" maxWidth="-Infinity" prefWidth="80.0" text="7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
                   <Label text="Metroaseman tilastot">
                      <font>
                         <Font size="24.0" />
@@ -148,7 +202,7 @@
                   </Label>
                   <GridPane>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -156,14 +210,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Label text="Metroaseman kapasiteetti" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
                         <Label minHeight="-Infinity" minWidth="-Infinity" text="Metroasemasta poistuneet asiakkaat" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
@@ -196,12 +244,6 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label text="Metron kapasiteetti" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="14.0" />
-                           </font></Label>
-                        <TextField fx:id="tfAsemanKapasiteetti" text="200" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <TextField fx:id="tfMetronKapasiteetti" text="40" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                   <Label fx:id="labelPalvelupiste" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Palvelupisteen tilastot [PALVELUPISTE]">
@@ -214,7 +256,7 @@
                   </Label>
                   <GridPane>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="200.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="500.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" prefWidth="50.0" />
                      </columnConstraints>
                      <rowConstraints>
@@ -274,6 +316,9 @@
                <padding>
                   <Insets left="20.0" />
                </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
          </children>
       </HBox>

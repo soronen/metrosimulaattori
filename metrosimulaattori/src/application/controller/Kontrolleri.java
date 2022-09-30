@@ -32,6 +32,8 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void kaynnistaSimulointi() {
         moottori = getMoottori();
+        setMetronKapasiteetti(metronKapasiteetti);
+        setAsemanKapasiteetti(asemanKapasiteetti);
         if (!kaynnissa) {
             kaynnissa = true;
             ((Thread)moottori).start();
@@ -73,6 +75,11 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void hidasta() {
         moottori.setViive((long)(moottori.getViive()*1.10));
+    }
+
+    @Override
+    public void muutaNopeutta(long viive) {
+        moottori.setViive(viive);
     }
 
     @Override
