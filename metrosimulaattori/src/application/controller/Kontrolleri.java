@@ -18,10 +18,22 @@ public class Kontrolleri implements IKontrolleri {
 
     boolean kaynnissa = false;
 
+
+
+    private int entranceMean = 4;
+    private int	entranceVariance = 8;
+    private int salesMean = 20;
+    private int salesVariance = 10;
+    private int checkMean = 7;
+    private int checkVariance = 3;
+    private int metroMean = 360;
+    private int metroVariance = 60;
+    private int arrivalMean = 5;
+    private int arrivalVariance = 3;
+
     public Kontrolleri(StatsTabController ui) {
         this.ui = ui;
-        moottori = getMoottori();
-        moottori.setViive(100);
+
     }
     public Kontrolleri() {
 
@@ -31,9 +43,10 @@ public class Kontrolleri implements IKontrolleri {
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
-        moottori = getMoottori();
-        setMetronKapasiteetti(metronKapasiteetti);
-        setAsemanKapasiteetti(asemanKapasiteetti);
+        getMoottori();
+
+        asetaMoottorinParametrit();
+
         if (!kaynnissa) {
             kaynnissa = true;
             ((Thread)moottori).start();
@@ -42,22 +55,27 @@ public class Kontrolleri implements IKontrolleri {
 
     @Override
     public void asetaMoottorinParametrit() {
+        setMetronKapasiteetti(metronKapasiteetti);
+        setAsemanKapasiteetti(asemanKapasiteetti);
+
+        setEntranceJakauma(entranceMean, entranceVariance);
+        setSalesJakauma(arrivalMean, arrivalVariance);
+        setCheckJakauma(arrivalMean, arrivalVariance);
+        setMetroJakauma(arrivalMean, arrivalVariance);
+
 
     }
 
     @Override
     public void resetSimulator() {
         moottori.setSimulointiaika(0);
-        Kello.getInstance().setAika(0);
-        moottori = new OmaMoottori(this);
-        setMetronKapasiteetti(metronKapasiteetti);
-        setAsemanKapasiteetti(asemanKapasiteetti);
+        moottori = null;
     }
 
     @Override
     public IMoottori getMoottori() {
         if (moottori == null) {
-            moottori = new OmaMoottori(this); // luodaan uusi moottorisäie jokaista simulointia varten
+            moottori = new OmaMoottori(this, arrivalMean, arrivalVariance); // luodaan uusi moottorisäie jokaista simulointia varten
         }
         return moottori;
     }
@@ -153,4 +171,62 @@ public class Kontrolleri implements IKontrolleri {
         moottori.setMobiililippujakauma(mobiililippujakauma);
     }
 
+
+    public void setArrivalJakauma (int mean, int variance) {
+        arrivalMean = mean;
+        arrivalVariance = variance;
+    }
+    public void setEntranceJakauma (int mean, int variance) {
+        moottori.setEntranceJakauma(mean, variance);
+    }
+    public void setSalesJakauma (int mean, int variance) {
+        moottori.setSalesJakauma(mean, variance);
+    }
+    public void setCheckJakauma (int mean, int variance) {
+        moottori.setCheckJakauma(mean, variance);
+    }
+    public void setMetroJakauma (int mean, int variance) {
+        moottori.setMetroJakauma(mean, variance);
+    }
+
+
+    public int getEntranceMean() {
+        return entranceMean;
+    }
+
+    public int getEntranceVariance() {
+        return entranceVariance;
+    }
+
+    public int getSalesMean() {
+        return salesMean;
+    }
+
+    public int getSalesVariance() {
+        return salesVariance;
+    }
+
+    public int getCheckMean() {
+        return checkMean;
+    }
+
+    public int getCheckVariance() {
+        return checkVariance;
+    }
+
+    public int getMetroMean() {
+        return metroMean;
+    }
+
+    public int getMetroVariance() {
+        return metroVariance;
+    }
+
+    public int getArrivalMean() {
+        return arrivalMean;
+    }
+
+    public int getArrivalVariance() {
+        return arrivalVariance;
+    }
 }

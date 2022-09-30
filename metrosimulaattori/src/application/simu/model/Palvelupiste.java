@@ -112,4 +112,9 @@ public class Palvelupiste {
 	public int getPalvelunro(){
 		return palvelunro;
 	}
+
+
+	public void setJakauma(ContinuousGenerator generator) {
+		this.generator = generator;
+	}
 }

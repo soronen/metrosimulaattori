@@ -31,8 +31,8 @@
                <children>
                   <GridPane prefWidth="200.0">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="170.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="160.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -65,24 +65,28 @@
                         </TextField>
                      </children>
                   </GridPane>
-                  <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="200.0">
+                  <HBox alignment="TOP_RIGHT" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#hidasta" text="Hidasta">
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onAction="#hidasta" prefWidth="80.0" text="Hidasta">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#nopeuta" text="Nopeuta" />
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="-Infinity" mnemonicParsing="false" onAction="#nopeuta" prefWidth="80.0" text="Nopeuta" />
                      </children>
                   </HBox>
-                  <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" text="Käynnistä Simulointi">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" text="Käynnistä Simulointi">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" top="40.0" />
+                        <Insets />
                      </VBox.margin>
-                  </Button>
+                  </HBox>
                   <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="246.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#nollaaSimulaattori" text="Nollaa simulaattori">
@@ -94,10 +98,10 @@
                   </HBox>
                   <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Palvelupisteet">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="5.0" />
                      </VBox.margin>
                   </Label>
                   <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -110,10 +114,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                      <children>
-                        <Button fx:id="bSaapuminen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#valittuPalvelupiste" text="Saapuminen">
+                        <Button fx:id="bSisaankaynti" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#valittuPalvelupiste" text="Sisäänkäynti">
                            <font>
                               <Font size="14.0" />
                            </font></Button>
@@ -131,9 +135,46 @@
                            </font></Button>
                      </children>
                   </GridPane>
+                  <Label text="Palveluajan normaalijakauman parametrit">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox prefWidth="200.0">
+                     <children>
+                        <Label maxWidth="-Infinity" prefWidth="300.0" text="Palvelupisteen odotusarvo">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="tfPalvelupisteenOdotusarvo" text="4" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label maxWidth="-Infinity" prefWidth="300.0" text="Palvelupisteen varianssi">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfPalvelupisteenVarianssi" text="8" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
                </children>
                <HBox.margin>
-                  <Insets />
+                  <Insets right="20.0" />
                </HBox.margin>
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
@@ -161,17 +202,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Palvelupisteen [PALVELUPISTE]  palveluajan varianssi (normaalijakauma)" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
                         <Label text="Esiostettujen lippujen % määärä  (Lipuntarkastuksen ohittavat)" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <Label text="Palvelupisteen [PALVELUPISTE]  palveluajan odotusarvo (normaalijakauma)" GridPane.rowIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -187,9 +218,19 @@
                            </GridPane.margin>
                         </TextField>
                         <TextField fx:id="tfMetronKapasiteetti" maxWidth="-Infinity" prefWidth="80.0" text="40" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="tfPalvelupisteenVarianssi" layoutX="481.0" layoutY="104.0" maxWidth="-Infinity" prefWidth="80.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="tfEsiostetutliput" layoutX="481.0" layoutY="43.0" maxWidth="-Infinity" prefWidth="80.0" text="50" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="tfPalvelupisteenOdotusarvo" layoutX="481.0" layoutY="73.0" maxWidth="-Infinity" prefWidth="80.0" text="7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Asiakkaiden saapumisien normaalijakauman odotusarvo" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfSaapumisenOdotusarvo" layoutX="510.0" layoutY="73.0" maxWidth="-Infinity" prefWidth="80.0" text="5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label layoutX="10.0" layoutY="103.0" text="Asiakkaiden saapumisien normaalijakauman varianssi" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfSaapumisenVarianssi" layoutX="510.0" layoutY="100.0" maxWidth="-Infinity" prefWidth="80.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                      </children>
                   </GridPane>
                   <Label text="Metroaseman tilastot">

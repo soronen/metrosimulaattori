@@ -51,6 +51,10 @@ public class StatsTabController {
     private TextField tfPalvelupisteenOdotusarvo;
     @FXML
     private TextField tfPalvelupisteenVarianssi;
+    @FXML
+    private TextField tfSaapumisenOdotusarvo;
+    @FXML
+    private TextField tfSaapumisenVarianssi;
 
     private IMoottori moottori;
     private Palvelupiste[] palvelupisteet;
@@ -69,14 +73,29 @@ public class StatsTabController {
 
     // Moottorin ohjausta:
     public void kaynnista() {
-        kontrolleri.getMoottori();
-        palvelupisteet = kontrolleri.getPalvelupisteet();
+        setSimunSaapumisJakauma();
         moottori = kontrolleri.getMoottori();
+        palvelupisteet = kontrolleri.getPalvelupisteet();
 
         setSimulaattorinAsetukset();
         asetaAsemanTiedot();
         kontrolleri.kaynnistaSimulointi();
 
+    }
+
+    public void setSimunSaapumisJakauma() {
+        try {
+            int arrmean = Integer.parseInt(tfSaapumisenOdotusarvo.getText());
+            int arrvar = Integer.parseInt(tfSaapumisenVarianssi.getText());
+            kontrolleri.setArrivalJakauma(arrmean, arrvar);
+        } catch (NumberFormatException e) {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Virhe");
+            alert.setHeaderText("Virheellinen syöte");
+            alert.setContentText("Syötöksen pitää olla kokonaisluku");
+            alert.showAndWait();
+        }
     }
 
     public boolean setSimulaattorinAsetukset() {
@@ -87,6 +106,7 @@ public class StatsTabController {
             kontrolleri.setSimulaattorinViive(Integer.parseInt(tfSimuloinninViive.getText()));
 
             kontrolleri.setMobiililippujakauma(Integer.parseInt(tfEsiostetutliput.getText()));
+
 
 
             return true;
@@ -141,7 +161,7 @@ public class StatsTabController {
         switch (palvelupiste) {
             case ENTRANCE:
                 index = 0;
-                labelPalvelupiste.setText("Palvelupisteen \"Saapuminen\" tilastot");
+                labelPalvelupiste.setText("Palvelupisteen \"Sisäänkäynti\" tilastot");
                    break;
             case TICKETSALES:
                 index = 1;
@@ -182,7 +202,7 @@ public class StatsTabController {
         // hakee tapahtuman kutsujan fxid:n mustalla magialla
         String napinID = ((Control)evt.getSource()).getId();
         switch (napinID) {
-            case "bSaapuminen":
+            case "bSisaankaynti":
                 asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(ENTRANCE);
                 setPainettuNappi(ENTRANCE);
@@ -196,7 +216,6 @@ public class StatsTabController {
                 asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(TICKETCHECK);
                 setPainettuNappi(TICKETCHECK);
-
                 break;
             case "bMetro":
                 asetaAsemanTiedot();
@@ -209,8 +228,6 @@ public class StatsTabController {
     @FXML
     public void nollaaSimulaattori() {
         kontrolleri.resetSimulator();
-        asetaAsemanTiedot();
-        asetaPavelupisteenTiedot(ENTRANCE);
     }
 
     // Simulointitulosten välittämistä käyttöliittymään.

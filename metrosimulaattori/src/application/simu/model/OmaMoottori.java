@@ -1,6 +1,7 @@
 package application.simu.model;
 
 import application.controller.IKontrolleri;
+import application.eduni.distributions.ContinuousGenerator;
 import application.eduni.distributions.Normal;
 import application.eduni.distributions.Uniform;
 import application.simu.framework.Kello;
@@ -15,12 +16,24 @@ public class OmaMoottori extends Moottori{
 
 	private int customersWithin = 0;
 	private int servedCustomers = 0;
-	int stationCapacity = 0;
+	private int stationCapacity = 0;
 	private int metroCapacity = 0;
 	private final Saapumisprosessi saapumisprosessi;
 
-	double keskiarvoaika;
+	private double keskiarvoaika;
 	private int mobiililippujakauma = 50;
+
+	private int entranceMean = 4;
+	private int	entranceVariance = 8;
+	private int salesMean = 20;
+	private int salesVariance = 10;
+	private int checkMean = 7;
+	private int checkVariance = 3;
+	private int metroMean = 360;
+	private int metroVariance = 60;
+	private int arrivalMean = 5;
+	private int arrivalVariance = 3;
+
 
 	public OmaMoottori(IKontrolleri kontrolleri){ // UUSI
 
@@ -28,12 +41,27 @@ public class OmaMoottori extends Moottori{
 
 		palvelupisteet = new Palvelupiste[4];
 
-		palvelupisteet[0]=new Palvelupiste(new Uniform(4,8), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
-		palvelupisteet[1]=new Palvelupiste(new Normal(20,10), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
-		palvelupisteet[2]=new Palvelupiste(new Normal(7,3), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
-		palvelupisteet[3]=new Palvelupiste(new Normal(360,60), tapahtumalista, TapahtumanTyyppi.METRO);
+		palvelupisteet[0]=new Palvelupiste(new Uniform(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[1]=new Palvelupiste(new Normal(salesMean,salesVariance), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
+		palvelupisteet[2]=new Palvelupiste(new Normal(checkMean,checkVariance), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
+		palvelupisteet[3]=new Palvelupiste(new Normal(metroMean,metroVariance), tapahtumalista, TapahtumanTyyppi.METRO);
 
-		saapumisprosessi = new Saapumisprosessi(new Normal(5,3), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
+		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
+	}
+	public OmaMoottori(IKontrolleri kontrolleri, int arrivalMean, int arrivalVariance){ // UUSI
+
+		super(kontrolleri); //UUSI
+
+		palvelupisteet = new Palvelupiste[4];
+
+		palvelupisteet[0]=new Palvelupiste(new Uniform(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[1]=new Palvelupiste(new Normal(salesMean,salesVariance), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
+		palvelupisteet[2]=new Palvelupiste(new Normal(checkMean,checkVariance), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
+		palvelupisteet[3]=new Palvelupiste(new Normal(metroMean,metroVariance), tapahtumalista, TapahtumanTyyppi.METRO);
+
+		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
+		this.arrivalMean = arrivalMean;
+		this.arrivalVariance = arrivalVariance;
 	}
 
 
@@ -46,6 +74,7 @@ public class OmaMoottori extends Moottori{
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
 
 		kontrolleri.paivitaUI();
+		System.out.println("Arrival jakauma: " + arrivalMean+ " " + arrivalVariance);
 
 		Asiakas a;
 		switch (t.getTyyppi()){
@@ -178,7 +207,31 @@ public class OmaMoottori extends Moottori{
 		return mobiililippujakauma;
 	}
 
+	public void setArrivalJakauma (int mean, int variance) {
+		arrivalMean = mean;
+		arrivalVariance = variance;
 
+	}
+	public void setEntranceJakauma (int mean, int variance) {
+		entranceMean = mean;
+		entranceVariance = variance;
+		palvelupisteet[0].setJakauma(new Uniform(entranceMean,entranceVariance));
+	}
+	public void setSalesJakauma (int mean, int variance) {
+		salesMean = mean;
+		salesVariance = variance;
+		palvelupisteet[1].setJakauma(new Uniform(entranceMean,entranceVariance));
+	}
+	public void setCheckJakauma (int mean, int variance) {
+		checkMean = mean;
+		checkVariance = variance;
+		palvelupisteet[2].setJakauma(new Uniform(entranceMean,entranceVariance));
+	}
+	public void setMetroJakauma (int mean, int variance) {
+		metroMean = mean;
+		metroVariance = variance;
+		palvelupisteet[3].setJakauma(new Uniform(entranceMean,entranceVariance));
+	}
 
 
 }

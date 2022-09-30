@@ -53,9 +53,4 @@ public interface IKontrolleri {
     void setMobiililippujakauma(int mobiililippujakauma);
 
 
-    /* ehkä jonain päivänä
-    public IMoottori getMoottori();
-    public void asetaMoottorinParametrit();
-    public Palvelupiste[] getPalvelupisteet();
-    */
 }
