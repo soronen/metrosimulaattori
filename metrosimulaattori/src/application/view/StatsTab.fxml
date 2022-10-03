@@ -159,7 +159,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <HBox prefWidth="200.0">
                      <children>
                         <Label maxWidth="-Infinity" prefWidth="300.0" text="Palvelupisteen varianssi">
                            <font>
@@ -171,6 +171,15 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#setPPJakauma" prefWidth="100.0" text="Aseta jakauma">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
                   </HBox>
                </children>
                <HBox.margin>

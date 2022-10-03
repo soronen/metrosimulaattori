@@ -47,6 +47,7 @@ public interface IKontrolleri {
     long getViive();
 
     void setKaynnissa(boolean kaynnissa);
+    public boolean onkoKaynnissa();
 
     int getMobiililippujakauma();
 

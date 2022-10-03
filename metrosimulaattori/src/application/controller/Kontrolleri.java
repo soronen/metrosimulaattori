@@ -1,9 +1,11 @@
 package application.controller;
 
+import application.eduni.distributions.Normal;
 import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
+import application.simu.model.TapahtumanTyyppi;
 import application.view.StatsTabController;
 
 public class Kontrolleri implements IKontrolleri {
@@ -21,6 +23,7 @@ public class Kontrolleri implements IKontrolleri {
     private Palvelupiste palvelupisteet[];
 
 
+    //palvelupisteiden jakaumien mean ja var -arvot
     private int entranceMean = 4;
     private int	entranceVariance = 8;
     private int salesMean = 20;
@@ -29,8 +32,13 @@ public class Kontrolleri implements IKontrolleri {
     private int checkVariance = 3;
     private int metroMean = 360;
     private int metroVariance = 60;
+
+
     private int arrivalMean = 5;
     private int arrivalVariance = 3;
+
+
+
 
     public Kontrolleri(StatsTabController ui) {
         this.ui = ui;
@@ -61,9 +69,9 @@ public class Kontrolleri implements IKontrolleri {
         setAsemanKapasiteetti(asemanKapasiteetti);
 
         setEntranceJakauma(entranceMean, entranceVariance);
-        setSalesJakauma(arrivalMean, arrivalVariance);
-        setCheckJakauma(arrivalMean, arrivalVariance);
-        setMetroJakauma(arrivalMean, arrivalVariance);
+        setSalesJakauma(salesMean, metroVariance);
+        setCheckJakauma(checkMean, metroVariance);
+        setMetroJakauma(metroMean, metroVariance);
 
 
     }
@@ -163,6 +171,11 @@ public class Kontrolleri implements IKontrolleri {
     public void setKaynnissa(boolean kaynnissa) {
         this.kaynnissa = kaynnissa;
     }
+
+    @Override
+    public boolean onkoKaynnissa() {
+        return kaynnissa;
+    }
     @Override
     public int getMobiililippujakauma() {
         return moottori.getMobiililippujakauma();
@@ -177,25 +190,26 @@ public class Kontrolleri implements IKontrolleri {
     public void setEntranceJakauma(int mean, int variance) {
         entranceMean = mean;
         entranceVariance = variance;
-        palvelupisteet[0].setJakauma(new Uniform(entranceMean,entranceVariance));
+        palvelupisteet[0].setJakauma(new Normal(entranceMean,entranceVariance));
     }
     @Override
     public void setSalesJakauma(int mean, int variance) {
         salesMean = mean;
         salesVariance = variance;
-        palvelupisteet[1].setJakauma(new Uniform(entranceMean,entranceVariance));
+
+        palvelupisteet[1].setJakauma(new Normal(entranceMean,entranceVariance));
     }
     @Override
     public void setCheckJakauma(int mean, int variance) {
         checkMean = mean;
         checkVariance = variance;
-        palvelupisteet[2].setJakauma(new Uniform(entranceMean,entranceVariance));
+        palvelupisteet[2].setJakauma(new Normal(entranceMean,entranceVariance));
     }
     @Override
     public void setMetroJakauma(int mean, int variance) {
         metroMean = mean;
         metroVariance = variance;
-        palvelupisteet[3].setJakauma(new Uniform(entranceMean,entranceVariance));
+        palvelupisteet[3].setJakauma(new Normal(entranceMean,entranceVariance));
     }
 
 
@@ -204,46 +218,43 @@ public class Kontrolleri implements IKontrolleri {
         arrivalVariance = variance;
     }
 
-
-
-
-    public int getEntranceMean() {
-        return entranceMean;
+    public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
+        switch(tt) {
+            case ENTRANCE:
+                entranceMean = mean;
+                entranceVariance = variance;
+                break;
+            case TICKETSALES:
+                salesMean = mean;
+                salesVariance = variance;
+                break;
+            case TICKETCHECK:
+                checkMean = mean;
+                checkVariance = variance;
+                break;
+            case METRO:
+                metroMean = mean;
+                metroVariance = variance;
+                break;
+        }
     }
 
-    public int getEntranceVariance() {
-        return entranceVariance;
-    }
-
-    public int getSalesMean() {
-        return salesMean;
-    }
-
-    public int getSalesVariance() {
-        return salesVariance;
-    }
-
-    public int getCheckMean() {
-        return checkMean;
-    }
-
-    public int getCheckVariance() {
-        return checkVariance;
-    }
-
-    public int getMetroMean() {
-        return metroMean;
-    }
-
-    public int getMetroVariance() {
-        return metroVariance;
-    }
-
-    public int getArrivalMean() {
-        return arrivalMean;
-    }
-
-    public int getArrivalVariance() {
-        return arrivalVariance;
+    /**
+     * Palauttaa palvelupisteen generaattorin odotus ja varianssiarvot
+     * @param tt TapahtumanTyyppi, joka vastaa palvelupistettä
+     * @return int[2] taulukon, jossa i[0] = odotusarvo ja i[1] = varianssi
+     */
+    public int[] getPPJakauma(TapahtumanTyyppi tt) {
+        switch(tt) {
+            case ENTRANCE:
+                return new int[]{entranceMean, entranceVariance};
+            case TICKETSALES:
+                return new int[]{salesMean, salesVariance};
+            case TICKETCHECK:
+                return new int[]{checkMean, checkVariance};
+            case METRO:
+                return new int[]{metroMean, metroVariance};
+        }
+        return null;
     }
 }

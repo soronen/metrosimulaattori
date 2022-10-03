@@ -2,6 +2,7 @@ package application.view;
 
 import application.MainApp;
 import application.controller.Kontrolleri;
+import application.eduni.distributions.Normal;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
 import application.simu.model.Palvelupiste;
@@ -115,11 +116,7 @@ public class StatsTabController {
             kontrolleri.setMetronKapasiteetti(Integer.parseInt(tfMetronKapasiteetti.getText()));
             kontrolleri.setsimulaattorinKesto(Integer.parseInt(tfSimuloinninKesto.getText()));
             kontrolleri.setSimulaattorinViive(Integer.parseInt(tfSimuloinninViive.getText()));
-
             kontrolleri.setMobiililippujakauma(Integer.parseInt(tfEsiostetutliput.getText()));
-
-
-
             return true;
 
         } catch (NumberFormatException e) {
@@ -148,58 +145,73 @@ public class StatsTabController {
     public void paivitaUI() {
         Platform.runLater(new Runnable() {
             public void run() {
-                asetaAsemanTiedot();
-                asetaPavelupisteenTiedot(getPainettuNappi());
+                // kun simulaattori nollataan, paivitaUI voi heittää NullPointerExceptionin
+                try {
+                    asetaAsemanTiedot();
+                    asetaPavelupisteenTiedot(getPainettuNappi());
+                } catch (NullPointerException e) {
+                    System.out.println("Simulaattori ei ole käynnissä!");
+                }
             }
         });
     }
 
     private void asetaAsemanTiedot() {
-        if (Kello.getInstance().getAika() < Integer.parseInt(tfSimuloinninKesto.getText())) {
-            labelSimuloinninTila.setText("Käynnissä");
-        } else {
-            labelSimuloinninTila.setText("Ei käynnissä");
+        if (kontrolleri.onkoKaynnissa()) {
+            if (Kello.getInstance().getAika() < Integer.parseInt(tfSimuloinninKesto.getText())) {
+                labelSimuloinninTila.setText("Käynnissä");
+            } else {
+                labelSimuloinninTila.setText("Ei käynnissä");
+            }
+            labelAika.setText(String.valueOf(Kello.getInstance().getAika()));
+            tfMetronKapasiteetti.setText(String.valueOf(kontrolleri.getMetronKapasiteetti()));
+            tfAsemanKapasiteetti.setText(String.valueOf(kontrolleri.getAsemanKapasiteetti()));
+            labelAsemassaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()));
+            labelMetroPoistuneetAsiakkaat.setText(String.valueOf(kontrolleri.getPalvellutAsaiakkaat()));
         }
-        labelAika.setText(String.valueOf(Kello.getInstance().getAika()));
-        tfMetronKapasiteetti.setText(String.valueOf(kontrolleri.getMetronKapasiteetti()));
-        tfAsemanKapasiteetti.setText(String.valueOf(kontrolleri.getAsemanKapasiteetti()));
-        labelAsemassaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()));
-        labelMetroPoistuneetAsiakkaat.setText(String.valueOf(kontrolleri.getPalvellutAsaiakkaat()));
     }
 
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {
+
         int index = 0;
         switch (palvelupiste) {
             case ENTRANCE:
                 index = 0;
                 labelPalvelupiste.setText("Palvelupisteen \"Sisäänkäynti\" tilastot");
-                   break;
+                break;
             case TICKETSALES:
                 index = 1;
                 labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
                 break;
             case TICKETCHECK:
-                labelPalvelupiste.setText("Palvelupisteen \"Lipuntarkastus\" tilastot");
                 index = 2;
+                labelPalvelupiste.setText("Palvelupisteen \"Lipuntarkastus\" tilastot");
                 break;
             case METRO:
-                labelPalvelupiste.setText("Palvelupisteen \"Metro\" tilastot");
                 index = 3;
+                labelPalvelupiste.setText("Palvelupisteen \"Metro\" tilastot");
                 break;
         }
-        if (palvelupisteet[index].onVarattu()) {
-            labelPavelunTila.setText("Varattu");
-        } else {
-            labelPavelunTila.setText("Vapaa");
+
+        if (kontrolleri.onkoKaynnissa()) {
+            if (palvelupisteet[index].onVarattu()) {
+                labelPavelunTila.setText("Varattu");
+            } else {
+                labelPavelunTila.setText("Vapaa");
+            }
+            labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[index].getJonopituus()));
+            labelJononKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskijonoaika()));
+            labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[index].getPalvelunro()));
+            labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskiarvoaika()));
         }
-        labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[index].getJonopituus()));
-        labelJononKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskijonoaika()));
-        labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[index].getPalvelunro()));
-        labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskiarvoaika()));
     }
 
     private void setPainettuNappi(TapahtumanTyyppi tt) {
         painettuNappi = tt;
+
+        int jakauma[] = kontrolleri.getPPJakauma(tt);
+        tfPalvelupisteenOdotusarvo.setText(String.valueOf(jakauma[0]));
+        tfPalvelupisteenVarianssi.setText(String.valueOf(jakauma[1]));
     }
 
     private TapahtumanTyyppi getPainettuNappi() {
@@ -208,28 +220,47 @@ public class StatsTabController {
 
 
     @FXML
+    private void setPPJakauma() {
+        if (!kontrolleri.onkoKaynnissa()) {
+            try {
+                int mean = Integer.valueOf(tfPalvelupisteenOdotusarvo.getText());
+                int variance = Integer.valueOf(tfPalvelupisteenVarianssi.getText());
+                kontrolleri.setPPJakauma(getPainettuNappi(), mean, variance);
+
+            } catch (NumberFormatException e) {
+                // Show the error message.
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Virhe");
+                alert.setHeaderText("Virheellinen syöte");
+                alert.setContentText("Syötöksen pitää olla kokonaisluku");
+                alert.showAndWait();
+            }
+        }
+    }
+
+
+    @FXML
     private void valittuPalvelupiste(Event evt) {
 
+        if (kontrolleri.onkoKaynnissa()) {
+            asetaAsemanTiedot();
+        }
         // hakee tapahtuman kutsujan fxid:n mustalla magialla
         String napinID = ((Control)evt.getSource()).getId();
         switch (napinID) {
             case "bSisaankaynti":
-                asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(ENTRANCE);
                 setPainettuNappi(ENTRANCE);
                 break;
             case "bLipunmyynti":
-                asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(TICKETSALES);
                 setPainettuNappi(TICKETSALES);
                 break;
             case "bLipuntarkastus":
-                asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(TICKETCHECK);
                 setPainettuNappi(TICKETCHECK);
                 break;
             case "bMetro":
-                asetaAsemanTiedot();
                 asetaPavelupisteenTiedot(METRO);
                 setPainettuNappi(METRO);
                 break;
@@ -243,8 +274,7 @@ public class StatsTabController {
 
     }
 
-    // Simulointitulosten välittämistä käyttöliittymään.
-    // Koska FX-ui:n päivitykset tulevat moottorisäikeestä, ne pitää ohjata JavaFX-säikeeseen:
+
 
     // Reference to the main application
     private MainApp mainApp;
