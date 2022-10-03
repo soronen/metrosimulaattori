@@ -166,7 +166,6 @@ public class OmaMoottori extends Moottori{
 					customersWithin++;
 					p.aloitaPalvelu();
 					}
-
 				}
 			}
 		}
@@ -206,32 +205,4 @@ public class OmaMoottori extends Moottori{
 	public int getMobiililippujakauma() {
 		return mobiililippujakauma;
 	}
-
-	public void setArrivalJakauma (int mean, int variance) {
-		arrivalMean = mean;
-		arrivalVariance = variance;
-
-	}
-	public void setEntranceJakauma (int mean, int variance) {
-		entranceMean = mean;
-		entranceVariance = variance;
-		palvelupisteet[0].setJakauma(new Uniform(entranceMean,entranceVariance));
-	}
-	public void setSalesJakauma (int mean, int variance) {
-		salesMean = mean;
-		salesVariance = variance;
-		palvelupisteet[1].setJakauma(new Uniform(entranceMean,entranceVariance));
-	}
-	public void setCheckJakauma (int mean, int variance) {
-		checkMean = mean;
-		checkVariance = variance;
-		palvelupisteet[2].setJakauma(new Uniform(entranceMean,entranceVariance));
-	}
-	public void setMetroJakauma (int mean, int variance) {
-		metroMean = mean;
-		metroVariance = variance;
-		palvelupisteet[3].setJakauma(new Uniform(entranceMean,entranceVariance));
-	}
-
-
 }

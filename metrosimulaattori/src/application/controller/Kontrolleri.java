@@ -69,8 +69,8 @@ public class Kontrolleri implements IKontrolleri {
         setAsemanKapasiteetti(asemanKapasiteetti);
 
         setEntranceJakauma(entranceMean, entranceVariance);
-        setSalesJakauma(salesMean, metroVariance);
-        setCheckJakauma(checkMean, metroVariance);
+        setSalesJakauma(salesMean, salesVariance);
+        setCheckJakauma(checkMean, checkVariance);
         setMetroJakauma(metroMean, metroVariance);
 
 

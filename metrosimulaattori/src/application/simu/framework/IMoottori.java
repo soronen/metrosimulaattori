@@ -32,13 +32,4 @@ public interface IMoottori { // UUSI
 	public void setMobiililippujakauma(int mobiililippujakauma);
 
 	public int getMobiililippujakauma();
-
-
-	public void setArrivalJakauma (int mean, int variance);
-	public void setEntranceJakauma (int mean, int variance);
-	public void setSalesJakauma (int mean, int variance);
-	public void setCheckJakauma (int mean, int variance);
-	public void setMetroJakauma (int mean, int variance);
-
-
 }

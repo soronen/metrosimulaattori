@@ -218,7 +218,6 @@ public class StatsTabController {
         return painettuNappi;
     }
 
-
     @FXML
     private void setPPJakauma() {
         if (!kontrolleri.onkoKaynnissa()) {
