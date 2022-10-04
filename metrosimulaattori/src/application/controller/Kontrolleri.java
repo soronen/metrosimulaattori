@@ -3,6 +3,7 @@ package application.controller;
 import application.eduni.distributions.Normal;
 import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
+import application.simu.framework.Kello;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
@@ -52,6 +53,7 @@ public class Kontrolleri implements IKontrolleri {
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
+        Kello.getInstance().setAika(0);
         moottori = getMoottori();
         palvelupisteet = moottori.getPalvelupisteet();
 
@@ -80,6 +82,7 @@ public class Kontrolleri implements IKontrolleri {
     public void resetSimulator() {
         moottori.setSimulointiaika(0);
         moottori = null;
+        setKaynnissa(false);
     }
 
     @Override
