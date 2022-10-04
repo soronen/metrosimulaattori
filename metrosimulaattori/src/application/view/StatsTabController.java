@@ -10,11 +10,14 @@ import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 
@@ -68,6 +71,13 @@ public class StatsTabController implements  IVisualisointi{
     @FXML
     private void initialize() {
         kontrolleri = (Kontrolleri) MainApp.getKontrol();
+
+        // simuloinnin viiveen voi antaa enteriä painamalla kun simu on käynnissä
+        tfSimuloinninViive.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER && kontrolleri.onkoKaynnissa()){
+                kontrolleri.setSimulaattorinViive(Integer.parseInt(tfSimuloinninViive.getText()));
+            }
+        });
     }
 
 
@@ -109,6 +119,7 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
+
     public boolean setSimulaattorinAsetukset() {
         try {
             kontrolleri.setAsemanKapasiteetti(Integer.parseInt(tfAsemanKapasiteetti.getText()));
@@ -130,14 +141,18 @@ public class StatsTabController implements  IVisualisointi{
     }
 
     public void hidasta() { // hidastetaan moottorisäiettä
-        kontrolleri.hidasta();
-        tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
+        if (kontrolleri.onkoKaynnissa()) {
+            kontrolleri.hidasta();
+            tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
+        }
     }
 
 
     public void nopeuta() { // nopeutetaan moottorisäiettä
-        kontrolleri.nopeuta();
-        tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
+        if (kontrolleri.onkoKaynnissa()) {
+            kontrolleri.nopeuta();
+            tfSimuloinninViive.setText(String.valueOf(kontrolleri.getViive()));
+        }
     }
 
 
@@ -260,10 +275,15 @@ public class StatsTabController implements  IVisualisointi{
 
     @FXML
     public void nollaaSimulaattori() {
-        kontrolleri.resetSimulator();
-        salliSimunasetuksienmuutos(true);
+        if (kontrolleri.onkoKaynnissa()) {
+            kontrolleri.resetSimulator();
+            salliSimunasetuksienmuutos(true);
+        }
 
     }
+
+
+
 
 
 
