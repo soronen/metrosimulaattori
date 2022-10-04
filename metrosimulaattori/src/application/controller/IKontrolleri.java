@@ -2,6 +2,8 @@ package application.controller;
 
 import application.simu.framework.IMoottori;
 import application.simu.model.Palvelupiste;
+import application.view.IVisualisointi;
+
 
 public interface IKontrolleri {
 
@@ -57,6 +59,8 @@ public interface IKontrolleri {
     void setCheckJakauma(int mean, int variance);
 
     void setMetroJakauma(int mean, int variance);
+
+    void setUi(IVisualisointi iv);
 
     void setEntranceJakauma(int mean, int variance);
 

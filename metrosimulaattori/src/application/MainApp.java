@@ -2,9 +2,12 @@ package application;
 
 import java.io.IOException;
 
+import application.controller.IKontrolleri;
+import application.view.IVisualisointi;
 import application.view.RootLayoutController;
 import application.view.StatsTabController;
 import application.simu.framework.Trace;
+import application.view.simviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,6 +19,8 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    private static IKontrolleri kontrol;
 
     @Override
     public void init(){
@@ -33,6 +38,15 @@ public class MainApp extends Application {
         showStatsTab();
     }
 
+    public static void setKontrol(IKontrolleri ii){
+        kontrol = ii;
+    }
+
+
+    public static IKontrolleri getKontrol(){
+        return kontrol;
+    }
+
     /**
      * Initializes the root layout.
      */
@@ -44,6 +58,7 @@ public class MainApp extends Application {
             rootLayout = (BorderPane) loader.load();
 
             // Give the controller access to the main app.
+
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
 
@@ -73,10 +88,36 @@ public class MainApp extends Application {
             StatsTabController controller = loader.getController();
             controller.setMainApp(this);
 
+
+            kontrol.setUi((IVisualisointi) controller);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void showSimview() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/simview.fxml"));
+            AnchorPane sw = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(sw);
+
+            // Give the controller access to the main app.
+            simviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+
+            kontrol.setUi((IVisualisointi) controller);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Returns the main stage.

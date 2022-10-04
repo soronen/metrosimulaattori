@@ -77,6 +77,7 @@ public class OmaMoottori extends Moottori{
 		System.out.println("Arrival jakauma: " + arrivalMean+ " " + arrivalVariance);
 
 		Asiakas a;
+
 		switch (t.getTyyppi()){
 			// menee toistaiseksi suoraan ticketcheck-pisteeseen
 			case ARRIVAL:

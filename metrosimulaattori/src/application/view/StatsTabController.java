@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 
-public class StatsTabController {
+public class StatsTabController implements  IVisualisointi{
     @FXML
     private TextField tfAsemanKapasiteetti;
     @FXML
@@ -68,12 +68,13 @@ public class StatsTabController {
      */
     @FXML
     private void initialize() {
-        kontrolleri = new Kontrolleri(this);
+        kontrolleri = (Kontrolleri) MainApp.getKontrol();
     }
 
 
     // Moottorin ohjausta:
     public void kaynnista() {
+        kontrolleri.setUi(this);
         setSimunSaapumisJakauma();
         moottori = kontrolleri.getMoottori();
         palvelupisteet = kontrolleri.getPalvelupisteet();

@@ -1,17 +1,20 @@
 package application.controller;
 
+import application.MainApp;
 import application.eduni.distributions.Normal;
 import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
+import application.view.IVisualisointi;
 import application.view.StatsTabController;
+import application.view.simviewController;
 
 public class Kontrolleri implements IKontrolleri {
 
     private IMoottori moottori;
-    private StatsTabController ui;
+    private IVisualisointi ui;
 
     private int simukesto = 1000;
     private int simuviive = 100;
@@ -40,14 +43,14 @@ public class Kontrolleri implements IKontrolleri {
 
 
 
-    public Kontrolleri(StatsTabController ui) {
+    public Kontrolleri(IVisualisointi ui) {
         this.ui = ui;
-
-    }
-    public Kontrolleri() {
-
+        MainApp.setKontrol(this);
     }
 
+    public Kontrolleri(){
+        MainApp.setKontrol(this);
+    }
 
     // Moottorin ohjausta:
     @Override
@@ -75,6 +78,8 @@ public class Kontrolleri implements IKontrolleri {
 
 
     }
+
+
 
     @Override
     public void resetSimulator() {
@@ -120,6 +125,9 @@ public class Kontrolleri implements IKontrolleri {
     }
     @Override
     public void paivitaUI() {
+
+
+
         ui.paivitaUI();
     }
 
@@ -257,4 +265,16 @@ public class Kontrolleri implements IKontrolleri {
         }
         return null;
     }
+
+
+
+    public void setUi(IVisualisointi iv){
+
+        System.out.println(iv + " vaihdettu");
+
+        this.ui = iv;
+    }
+
+
+
 }

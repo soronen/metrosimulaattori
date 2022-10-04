@@ -1,6 +1,7 @@
 package application.view;
 
 import application.MainApp;
+import application.controller.Kontrolleri;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -21,10 +22,20 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 
+    @FXML
+    private void initialize(){
+        Kontrolleri kontrolleri = new Kontrolleri();
+    }
+
 
     @FXML
     public void avaaSimulaattori() {
         mainApp.showStatsTab();
+    }
+
+    @FXML
+    public void avaasimview() {
+        mainApp.showSimview();
     }
 
 }

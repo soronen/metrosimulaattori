@@ -1,11 +1,14 @@
 package application.view;
 
 
+import application.MainApp;
+
 public interface IVisualisointi {
 
-    public void tyhjennaNaytto();
+    void paivitaUI();
 
-    public void uusiAsiakas();
+    void setMainApp(MainApp mainApp);
+
 
 }
 

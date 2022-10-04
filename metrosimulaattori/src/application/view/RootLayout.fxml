@@ -17,9 +17,10 @@
                   <MenuItem mnemonicParsing="false" text="Poistu" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" onAction="#avaaSimulaattori" text="Simulaattori">
+          <Menu mnemonicParsing="false" text="Simulaattori">
             <items>
-              <MenuItem mnemonicParsing="false" text="Avaa simulaattori" />
+              <MenuItem mnemonicParsing="false" onAction="#avaaSimulaattori" text="Avaa simulaattori" />
+                  <MenuItem mnemonicParsing="false" onAction="#avaasimview" text="Avaa simview" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Tilastot">
