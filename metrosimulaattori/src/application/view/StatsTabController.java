@@ -193,17 +193,16 @@ public class StatsTabController {
                 break;
         }
 
-        if (kontrolleri.onkoKaynnissa()) {
-            if (palvelupisteet[index].onVarattu()) {
-                labelPavelunTila.setText("Varattu");
-            } else {
-                labelPavelunTila.setText("Vapaa");
-            }
-            labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[index].getJonopituus()));
-            labelJononKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskijonoaika()));
-            labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[index].getPalvelunro()));
-            labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskiarvoaika()));
+        if (palvelupisteet[index].onVarattu()) {
+            labelPavelunTila.setText("Varattu");
+        } else {
+            labelPavelunTila.setText("Vapaa");
         }
+        labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[index].getJonopituus()));
+        labelJononKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskijonoaika()));
+        labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[index].getPalvelunro()));
+        labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskiarvoaika()));
+
     }
 
     private void setPainettuNappi(TapahtumanTyyppi tt) {
