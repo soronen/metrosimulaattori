@@ -26,5 +26,4 @@ public class RootLayoutController {
     public void avaaSimulaattori() {
         mainApp.showStatsTab();
     }
-
 }

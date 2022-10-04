@@ -2,6 +2,7 @@ package application.controller;
 
 import application.simu.framework.IMoottori;
 import application.simu.model.Palvelupiste;
+import application.simu.model.TapahtumanTyyppi;
 
 public interface IKontrolleri {
 
@@ -61,4 +62,20 @@ public interface IKontrolleri {
     void setEntranceJakauma(int mean, int variance);
 
     void setSalesJakauma(int mean, int variance);
+
+    int getPPjononpituus(TapahtumanTyyppi palvelupiste);
+
+    double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste);
+
+    int getPPpalvellutAsiakkaat(TapahtumanTyyppi palvelupiste);
+
+    int[] getPPJakauma(TapahtumanTyyppi tt);
+
+    double getPPkeskijonoaika(TapahtumanTyyppi palvelupiste);
+
+    boolean onkoPPVarattu(TapahtumanTyyppi palvelupiste);
+
+    void setPPJakauma(TapahtumanTyyppi painettuNappi, int mean, int variance);
+
+    void setArrivalJakauma(int arrmean, int arrvar);
 }

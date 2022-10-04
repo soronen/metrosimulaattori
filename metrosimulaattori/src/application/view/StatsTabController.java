@@ -1,6 +1,7 @@
 package application.view;
 
 import application.MainApp;
+import application.controller.IKontrolleri;
 import application.controller.Kontrolleri;
 import application.eduni.distributions.Normal;
 import application.simu.framework.IMoottori;
@@ -58,7 +59,7 @@ public class StatsTabController {
     private TextField tfSaapumisenVarianssi;
 
     private TapahtumanTyyppi painettuNappi = TapahtumanTyyppi.ENTRANCE;
-    private Kontrolleri kontrolleri;
+    private IKontrolleri kontrolleri;
 
     /**
      * Initializes the controller class. This method is automatically called
