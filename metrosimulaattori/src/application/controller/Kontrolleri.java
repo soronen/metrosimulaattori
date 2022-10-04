@@ -53,8 +53,8 @@ public class Kontrolleri implements IKontrolleri {
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
-        Kello.getInstance().setAika(0);
         moottori = getMoottori();
+        Kello.getInstance().setAika(0);
         palvelupisteet = moottori.getPalvelupisteet();
 
         asetaMoottorinParametrit();
@@ -200,19 +200,19 @@ public class Kontrolleri implements IKontrolleri {
         salesMean = mean;
         salesVariance = variance;
 
-        palvelupisteet[1].setJakauma(new Normal(entranceMean,entranceVariance));
+        palvelupisteet[1].setJakauma(new Normal(salesMean,salesVariance));
     }
     @Override
     public void setCheckJakauma(int mean, int variance) {
         checkMean = mean;
         checkVariance = variance;
-        palvelupisteet[2].setJakauma(new Normal(entranceMean,entranceVariance));
+        palvelupisteet[2].setJakauma(new Normal(checkMean,checkVariance));
     }
     @Override
     public void setMetroJakauma(int mean, int variance) {
         metroMean = mean;
         metroVariance = variance;
-        palvelupisteet[3].setJakauma(new Normal(entranceMean,entranceVariance));
+        palvelupisteet[3].setJakauma(new Normal(metroMean,metroVariance));
     }
 
 
@@ -241,6 +241,99 @@ public class Kontrolleri implements IKontrolleri {
                 break;
         }
     }
+
+    public boolean onkoPPVarattu(TapahtumanTyyppi palvelupiste) {
+        switch (palvelupiste) {
+            case ENTRANCE:
+                return palvelupisteet[0].onVarattu();
+            case TICKETSALES:
+                return palvelupisteet[1].onVarattu();
+            case TICKETCHECK:
+                return palvelupisteet[2].onVarattu();
+            case METRO:
+                return palvelupisteet[3].onVarattu();
+        }
+        return false;
+    }
+
+    public int getPPjononpituus(TapahtumanTyyppi palvelupiste) {
+        int index = 0;
+        switch (palvelupiste) {
+            case ENTRANCE:
+                index = 0;
+                break;
+            case TICKETSALES:
+                index = 1;
+                break;
+            case TICKETCHECK:
+                index = 2;
+                break;
+            case METRO:
+                index = 3;
+                break;
+        }
+        return palvelupisteet[index].getJonopituus();
+    }
+
+    public double getPPkeskijonoaika(TapahtumanTyyppi palvelupiste) {
+        int index = 0;
+        switch (palvelupiste) {
+            case ENTRANCE:
+                index = 0;
+                break;
+            case TICKETSALES:
+                index = 1;
+                break;
+            case TICKETCHECK:
+                index = 2;
+                break;
+            case METRO:
+                index = 3;
+                break;
+        }
+        return palvelupisteet[index].getKeskijonoaika();
+    }
+
+    public int getPPpalvellutAsiakkaat(TapahtumanTyyppi palvelupiste) {
+        int index = 0;
+        switch (palvelupiste) {
+            case ENTRANCE:
+                index = 0;
+                break;
+            case TICKETSALES:
+                index = 1;
+                break;
+            case TICKETCHECK:
+                index = 2;
+                break;
+            case METRO:
+                index = 3;
+                System.out.println("metron palvelunro = " + palvelupisteet[3].getPalvelunro());
+                break;
+        }
+        return palvelupisteet[index].getPalvelunro();
+    }
+
+    public double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste) {
+        int index = 0;
+        switch (palvelupiste) {
+            case ENTRANCE:
+                index = 0;
+                break;
+            case TICKETSALES:
+                index = 1;
+                break;
+            case TICKETCHECK:
+                index = 2;
+                break;
+            case METRO:
+                index = 3;
+                break;
+        }
+        return palvelupisteet[index].getKeskiarvoaika();
+    }
+
+
 
     /**
      * Palauttaa palvelupisteen generaattorin odotus ja varianssiarvot

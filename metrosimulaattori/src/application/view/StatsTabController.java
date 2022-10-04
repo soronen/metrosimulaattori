@@ -57,8 +57,6 @@ public class StatsTabController {
     @FXML
     private TextField tfSaapumisenVarianssi;
 
-    private IMoottori moottori;
-    private Palvelupiste[] palvelupisteet;
     private TapahtumanTyyppi painettuNappi = TapahtumanTyyppi.ENTRANCE;
     private Kontrolleri kontrolleri;
 
@@ -75,8 +73,7 @@ public class StatsTabController {
     // Moottorin ohjausta:
     public void kaynnista() {
         setSimunSaapumisJakauma();
-        moottori = kontrolleri.getMoottori();
-        palvelupisteet = kontrolleri.getPalvelupisteet();
+        kontrolleri.getMoottori();
 
         setSimulaattorinAsetukset();
         asetaAsemanTiedot();
@@ -172,36 +169,30 @@ public class StatsTabController {
     }
 
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {
-
-        int index = 0;
         switch (palvelupiste) {
             case ENTRANCE:
-                index = 0;
                 labelPalvelupiste.setText("Palvelupisteen \"Sisäänkäynti\" tilastot");
                 break;
             case TICKETSALES:
-                index = 1;
                 labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
                 break;
             case TICKETCHECK:
-                index = 2;
                 labelPalvelupiste.setText("Palvelupisteen \"Lipuntarkastus\" tilastot");
                 break;
             case METRO:
-                index = 3;
                 labelPalvelupiste.setText("Palvelupisteen \"Metro\" tilastot");
                 break;
         }
 
-        if (palvelupisteet[index].onVarattu()) {
+        if (kontrolleri.onkoPPVarattu(palvelupiste)) {
             labelPavelunTila.setText("Varattu");
         } else {
             labelPavelunTila.setText("Vapaa");
         }
-        labelJonossaOlevatAsiakkaat.setText(String.valueOf(palvelupisteet[index].getJonopituus()));
-        labelJononKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskijonoaika()));
-        labelPavellutAsiakkaat.setText(String.valueOf(palvelupisteet[index].getPalvelunro()));
-        labelPavelunKeskipituus.setText(String.valueOf(palvelupisteet[index].getKeskiarvoaika()));
+        labelJonossaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getPPjononpituus(palvelupiste)));
+        labelJononKeskipituus.setText(String.valueOf(kontrolleri.getPPkeskijonoaika(palvelupiste)));
+        labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getPPpalvellutAsiakkaat(palvelupiste)));
+        labelPavelunKeskipituus.setText(String.valueOf(kontrolleri.getPPkeskiarvoaika(palvelupiste)));
 
     }
 
