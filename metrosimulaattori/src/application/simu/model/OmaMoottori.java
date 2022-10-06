@@ -73,7 +73,7 @@ public class OmaMoottori extends Moottori{
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
 
-		kontrolleri.paivitaUI();
+		kontrolleri.paivitaUI(t);
 		System.out.println("Arrival jakauma: " + arrivalMean+ " " + arrivalVariance);
 
 		Asiakas a;

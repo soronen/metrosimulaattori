@@ -6,6 +6,7 @@ import application.controller.Kontrolleri;
 import application.eduni.distributions.Normal;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
+import application.simu.framework.Tapahtuma;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import javafx.application.Platform;

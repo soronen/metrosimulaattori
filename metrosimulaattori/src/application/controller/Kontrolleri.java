@@ -5,6 +5,7 @@ import application.eduni.distributions.Normal;
 import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
+import application.simu.framework.Tapahtuma;
 import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
@@ -135,11 +136,11 @@ public class Kontrolleri implements IKontrolleri {
 
     }
     @Override
-    public void paivitaUI() {
+    public void paivitaUI(Tapahtuma t) {
 
 
 
-        ui.paivitaUI();
+        ui.paivitaUI(t);
     }
 
     @Override
