@@ -195,8 +195,10 @@ public class StatsTabController implements  IVisualisointi{
     /**
      * luo Runnable() -olion joka kutsuu asetaAsemanTiedot() ja asetaPavelupisteenTiedot(getPainettuNappi()) metodeja
      * jotka vastaavat käyttöliittymän päivittämisestä.
+      * @param t ei käytetä mutta IVisualisointi-rajapinta vaatii
      */
-    public void paivitaUI() {
+    @Override
+    public void paivitaUI(Tapahtuma t) {
         Platform.runLater(new Runnable() {
             public void run() {
                 // kun simulaattori nollataan, paivitaUI voi heittää NullPointerExceptionin
