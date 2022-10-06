@@ -2,9 +2,12 @@ package application.view;
 
 import application.simu.model.TapahtumanTyyppi;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -12,7 +15,7 @@ import javafx.scene.text.TextAlignment;
 
 public class ppVisualizer {
 
-    private Group group = new Group();
+    private StackPane group = new StackPane();
     private Text pptext = null;
     private Rectangle box = null;
 
@@ -29,14 +32,18 @@ public class ppVisualizer {
 
         this.pptext = new Text(tt.name() + " 0");
         pptext.setTextAlignment(TextAlignment.CENTER);
+        pptext.setFill(Color.RED);
 
 
-        group.getChildren().add(pptext);
         csquare();
+        group.getChildren().add(pptext);
 
+        StackPane.setMargin(pptext, new Insets(0,0,55,0));
 
         GridPane.setHalignment(group, HPos.CENTER); // To align horizontally in the cell
         GridPane.setValignment(group, VPos.CENTER); // To align vertically in the cell
+
+
 
     }
 
@@ -47,7 +54,7 @@ public class ppVisualizer {
 
     }
 
-    public Group getGroup(){
+    public StackPane getGroup(){
         return this.group;
     }
 

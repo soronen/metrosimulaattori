@@ -13,10 +13,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
-import javafx.geometry.HPos;
-import javafx.geometry.Point2D;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
@@ -54,6 +51,9 @@ public class simviewController implements IVisualisointi{
     @FXML
     private void initialize() {
 
+        gp.setAlignment(Pos.CENTER);
+        gp.toFront();
+        bg.toBack();
 
         lista.add(new ppVisualizer(1, 1, TapahtumanTyyppi.ENTRANCE));
         lista.add(new ppVisualizer(2, 1, TapahtumanTyyppi.TICKETCHECK));
@@ -72,7 +72,6 @@ public class simviewController implements IVisualisointi{
                 gp.addColumn(2,lista.get(3).getGroup());
                 gp.addColumn(3,lista.get(4).getGroup());
 
-                gp.setStyle(" -fx-background-color: pink;");
 
                 if (MainApp.getKontrol().getMoottori() != null){
                     Palvelupiste[] ppt = MainApp.getKontrol().getMoottori().getPalvelupisteet();
@@ -98,6 +97,8 @@ public class simviewController implements IVisualisointi{
 
                 System.out.println(bg.getBoundsInLocal());
                 System.out.println(bg.getBoundsInParent());
+                System.out.println(gp.getBoundsInParent());
+                System.out.println(gp.getBoundsInLocal());
 
             }
         });
@@ -146,6 +147,10 @@ public class simviewController implements IVisualisointi{
 
                             endpos = getboxc2(ppv.getXaxis(), ppv.getYaxis());
                         }
+                    }
+
+                    if (startpos == null || endpos == null){
+                        System.out.println("Null tapahtumalla" + t.getTyyppi().name());
                     }
 
                     draw(startpos, endpos, bg);
