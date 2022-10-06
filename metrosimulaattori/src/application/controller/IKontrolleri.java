@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.simu.framework.IMoottori;
+import application.simu.framework.Tapahtuma;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
@@ -29,7 +30,7 @@ public interface IKontrolleri {
     public void naytaLoppuaika(double aika);
     public void visualisoiAsiakas();
 
-    public void paivitaUI();
+    public void paivitaUI(Tapahtuma t);
 
     void setMetronKapasiteetti(int metronKapasiteetti);
 

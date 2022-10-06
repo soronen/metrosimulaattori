@@ -6,6 +6,8 @@ import application.controller.Kontrolleri;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Tapahtuma;
 import application.simu.model.OmaMoottori;
+import application.simu.model.Palvelupiste;
+import application.simu.model.TapahtumanTyyppi;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -16,6 +18,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -28,6 +31,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class simviewController implements IVisualisointi{
     @FXML
@@ -38,65 +44,130 @@ public class simviewController implements IVisualisointi{
 
     private MainApp mainApp;
 
-    private IMoottori m;
-
+    private Palvelupiste[] pt;
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-
+    private ArrayList<ppVisualizer> lista = new ArrayList<ppVisualizer>();
 
     @FXML
-    public void paivitaUI(){
+    private void initialize() {
+
+
+        lista.add(new ppVisualizer(1, 1, TapahtumanTyyppi.ENTRANCE));
+        lista.add(new ppVisualizer(2, 1, TapahtumanTyyppi.TICKETCHECK));
+        lista.add(new ppVisualizer(2, 2, TapahtumanTyyppi.TICKETSALES));
+        lista.add(new ppVisualizer(3, 1, TapahtumanTyyppi.TICKETCHECK));
+        lista.add(new ppVisualizer(4, 1, TapahtumanTyyppi.METRO));
 
         Platform.runLater(new Runnable() {
             @Override public void run() {
-                Group g1 = new Group();
-                Group g2 = new Group();
-
-                GridPane.setHalignment(g1, HPos.CENTER); // To align horizontally in the cell
-                GridPane.setValignment(g1, VPos.CENTER); // To align vertically in the cell
-
-                GridPane.setHalignment(g2, HPos.CENTER); // To align horizontally in the cell
-                GridPane.setValignment(g2, VPos.CENTER); // To align vertically in the cell
-
-                g1.getChildren().add(new Text("Pp 1"));
-                Rectangle r1 = new Rectangle(40,40);
-                r1.setFill(Color.BLACK);
-                g1.getChildren().add(r1);
-
-                g2.getChildren().add(new Text("Pp 2"));
-                Rectangle r2 = new Rectangle(40,40);
-                r2.setFill(Color.BLUE);
-                g2.getChildren().add(r2);
 
 
 
-                gp.addColumn(0, g1);
-                gp.addColumn(1,g2);
+                gp.addColumn(0,lista.get(0).getGroup());
+                gp.addColumn(1,lista.get(1).getGroup());
+                gp.addColumn(1,lista.get(2).getGroup());
+                gp.addColumn(2,lista.get(3).getGroup());
+                gp.addColumn(3,lista.get(4).getGroup());
 
                 gp.setStyle(" -fx-background-color: pink;");
 
+                if (MainApp.getKontrol().getMoottori() != null){
+                    Palvelupiste[] ppt = MainApp.getKontrol().getMoottori().getPalvelupisteet();
 
-                Bounds b = bg.getBoundsInParent();
+                    for (Palvelupiste p : ppt){
+
+                        for (ppVisualizer v : lista){
+
+                            if (p.getTapahtumanTyyppi() == v.getTapahtumanTyyppi()){
+                                v.setNumber(p.getJonopituus());
+                            }
+
+                        }
+
+                    }
+
+                } // if loppuu
 
 
-                Point2D i = getboxc2(1,1);
-                Point2D e = getboxc2(2, 1);
-                Point2D e2 = getboxc2(2, 2);
+                for (int i = 1; i<5; i++){
+                    viivapiirra(i, i+1);
+                }
+
+                System.out.println(bg.getBoundsInLocal());
+                System.out.println(bg.getBoundsInParent());
+
+            }
+        });
+
+    }
 
 
-                System.out.println("bg min" + b.getMinX() + " : " + b.getMinY());
-                System.out.println("bg max" + b.getMaxX() + " : " + b.getMaxY());
-                System.out.println("bg w " + b.getWidth() + " bg h " + b.getHeight());
-                System.out.println(i);
-                System.out.println(e);
+    @FXML
+    public void paivitaUI(Tapahtuma t){
 
-                bg.getChildren().add(new Line(i.getX(), i.getY(), e.getX(), e.getY()));
-                bg.getChildren().add(new Line(i.getX(), i.getY(), e2.getX(), e2.getY()));
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
 
-                draw(i, e, bg);
-                draw(i, e2, bg);
+
+
+                pt = MainApp.getKontrol().getPalvelupisteet();
+
+
+                lista.get(0).setNumber(pt[0].getJonopituus());
+
+                if (t.getTyyppi() != TapahtumanTyyppi.ENTRANCE && t.getTyyppi() != TapahtumanTyyppi.ARRIVAL){
+                    Point2D startpos = null;
+                    Point2D endpos = null;
+
+                    int sx = 0;
+
+                    for (ppVisualizer ppv: lista){
+                        if (ppv.getTapahtumanTyyppi() == t.getTyyppi() && ppv.getTapahtumanTyyppi() != TapahtumanTyyppi.ENTRANCE){
+                            startpos = getboxc2(ppv.getXaxis(), ppv.getYaxis());
+                            sx = ppv.getXaxis();
+                        }
+                    }
+
+                    for (ppVisualizer ppv: lista){
+                        if (ppv.getXaxis() == sx+1){
+
+                            for (Palvelupiste v: pt){
+                                if (ppv.getTapahtumanTyyppi() == v.getTapahtumanTyyppi()){
+                                    ppv.setNumber(v.getJonopituus());
+                                }
+                            }
+
+                            if (startpos == null){
+                                System.out.println("Tyypilla " + t.getTyyppi().name());
+                            }
+
+                            endpos = getboxc2(ppv.getXaxis(), ppv.getYaxis());
+                        }
+                    }
+
+                    draw(startpos, endpos, bg);
+                } else if (t.getTyyppi() == TapahtumanTyyppi.ENTRANCE){
+
+                    Point2D startpos = getboxc2(1, 1);
+                    Point2D endpos1 = getboxc2(2, 1);
+                    Point2D endpos2 = getboxc2(2, 2);
+
+                    if (ThreadLocalRandom.current().nextBoolean()){
+                        draw(startpos, endpos1, bg);
+                        lista.get(1).setNumber(pt[2].getJonopituus());
+                    } else {
+                        draw(startpos, endpos2, bg);
+                        lista.get(2).setNumber(pt[1].getJonopituus());
+                    }
+
+
+                }
+
+
+
 
             }
         });
@@ -108,7 +179,8 @@ public class simviewController implements IVisualisointi{
 
     private Point2D getboxc2(int x, int y){
 
-        Bounds b = bg.getBoundsInParent();
+        Bounds b = bg.getBoundsInLocal();
+
 
         double boxw = b.getWidth() / 4;
         double boxh = b.getHeight() / 5;
@@ -118,6 +190,33 @@ public class simviewController implements IVisualisointi{
 
         return new Point2D(endx, endy);
 
+
+    }
+
+    private void viivapiirra(int x1, int x2){
+        ArrayList<ppVisualizer> start = new ArrayList<ppVisualizer>();
+        ArrayList<ppVisualizer> end = new ArrayList<ppVisualizer>();
+
+
+        for (ppVisualizer p : lista){
+            if (p.getXaxis() == x1){
+                start.add(p);
+            } else if (p.getXaxis() == x2){
+                end.add(p);
+            }
+        }
+
+        for (ppVisualizer p : start){
+
+            for (ppVisualizer o : end){
+                Point2D startpos = getboxc2(p.getXaxis(), p.getYaxis());
+                Point2D endpos = getboxc2(o.getXaxis(), o.getYaxis());
+
+                bg.getChildren().add(new Line(startpos.getX(), startpos.getY(), endpos.getX(), endpos.getY()));
+
+            }
+
+        }
 
     }
 
