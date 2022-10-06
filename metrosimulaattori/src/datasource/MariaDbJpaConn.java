@@ -1,6 +1,6 @@
 package datasource;
 
-/*import jakarta.persistence.*;
+import jakarta.persistence.*;
 
 public class MariaDbJpaConn {
 
@@ -19,4 +19,4 @@ public class MariaDbJpaConn {
     }
 }
 
- */
+
