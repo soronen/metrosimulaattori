@@ -56,10 +56,11 @@ public class simviewController implements IVisualisointi{
         bg.toBack();
 
         lista.add(new ppVisualizer(1, 1, TapahtumanTyyppi.ENTRANCE));
-        lista.add(new ppVisualizer(2, 1, TapahtumanTyyppi.TICKETCHECK));
         lista.add(new ppVisualizer(2, 2, TapahtumanTyyppi.TICKETSALES));
         lista.add(new ppVisualizer(3, 1, TapahtumanTyyppi.TICKETCHECK));
         lista.add(new ppVisualizer(4, 1, TapahtumanTyyppi.METRO));
+
+
 
         Platform.runLater(new Runnable() {
             @Override public void run() {
@@ -67,10 +68,10 @@ public class simviewController implements IVisualisointi{
 
 
                 gp.addColumn(0,lista.get(0).getGroup());
+                gp.addColumn(1, new Text(""));
                 gp.addColumn(1,lista.get(1).getGroup());
-                gp.addColumn(1,lista.get(2).getGroup());
-                gp.addColumn(2,lista.get(3).getGroup());
-                gp.addColumn(3,lista.get(4).getGroup());
+                gp.addColumn(2,lista.get(2).getGroup());
+                gp.addColumn(3,lista.get(3).getGroup());
 
 
                 if (MainApp.getKontrol().getMoottori() != null){
@@ -91,9 +92,10 @@ public class simviewController implements IVisualisointi{
                 } // if loppuu
 
 
-                for (int i = 1; i<5; i++){
-                    viivapiirra(i, i+1);
-                }
+                viivapiirra(lista.get(0), lista.get(1));
+                viivapiirra(lista.get(0), lista.get(2));
+                viivapiirra(lista.get(1), lista.get(2));
+                viivapiirra(lista.get(2), lista.get(3));
 
                 System.out.println(bg.getBoundsInLocal());
                 System.out.println(bg.getBoundsInParent());
@@ -117,60 +119,44 @@ public class simviewController implements IVisualisointi{
                 pt = MainApp.getKontrol().getPalvelupisteet();
 
 
-                lista.get(0).setNumber(pt[0].getJonopituus());
+                for (Palvelupiste p : pt){
 
-                if (t.getTyyppi() != TapahtumanTyyppi.ENTRANCE && t.getTyyppi() != TapahtumanTyyppi.ARRIVAL){
-                    Point2D startpos = null;
-                    Point2D endpos = null;
+                    for (ppVisualizer v : lista){
 
-                    int sx = 0;
-
-                    for (ppVisualizer ppv: lista){
-                        if (ppv.getTapahtumanTyyppi() == t.getTyyppi() && ppv.getTapahtumanTyyppi() != TapahtumanTyyppi.ENTRANCE){
-                            startpos = getboxc2(ppv.getXaxis(), ppv.getYaxis());
-                            sx = ppv.getXaxis();
+                        if (p.getTapahtumanTyyppi() == v.getTapahtumanTyyppi()){
+                            v.setNumber(p.getJonopituus());
                         }
+
                     }
-
-                    for (ppVisualizer ppv: lista){
-                        if (ppv.getXaxis() == sx+1){
-
-                            for (Palvelupiste v: pt){
-                                if (ppv.getTapahtumanTyyppi() == v.getTapahtumanTyyppi()){
-                                    ppv.setNumber(v.getJonopituus());
-                                }
-                            }
-
-                            if (startpos == null){
-                                System.out.println("Tyypilla " + t.getTyyppi().name());
-                            }
-
-                            endpos = getboxc2(ppv.getXaxis(), ppv.getYaxis());
-                        }
-                    }
-
-                    if (startpos == null || endpos == null){
-                        System.out.println("Null tapahtumalla" + t.getTyyppi().name());
-                    }
-
-                    draw(startpos, endpos, bg);
-                } else if (t.getTyyppi() == TapahtumanTyyppi.ENTRANCE){
-
-                    Point2D startpos = getboxc2(1, 1);
-                    Point2D endpos1 = getboxc2(2, 1);
-                    Point2D endpos2 = getboxc2(2, 2);
-
-                    if (ThreadLocalRandom.current().nextBoolean()){
-                        draw(startpos, endpos1, bg);
-                        lista.get(1).setNumber(pt[2].getJonopituus());
-                    } else {
-                        draw(startpos, endpos2, bg);
-                        lista.get(2).setNumber(pt[1].getJonopituus());
-                    }
-
 
                 }
 
+
+                switch (t.getTyyppi()){
+
+                    case ENTRANCE:
+
+                        if (ThreadLocalRandom.current().nextBoolean()){
+                            smartpiirra(lista.get(0), lista.get(1));
+                        } else {
+                            smartpiirra(lista.get(0), lista.get(2));
+                        }
+
+                        break;
+
+                    case TICKETCHECK:
+
+                        smartpiirra(lista.get(2), lista.get(3));
+
+                        break;
+
+                    case TICKETSALES:
+
+                        smartpiirra(lista.get(1), lista.get(2));
+
+                        break;
+
+                }
 
 
 
@@ -198,30 +184,12 @@ public class simviewController implements IVisualisointi{
 
     }
 
-    private void viivapiirra(int x1, int x2){
-        ArrayList<ppVisualizer> start = new ArrayList<ppVisualizer>();
-        ArrayList<ppVisualizer> end = new ArrayList<ppVisualizer>();
+    private void viivapiirra(ppVisualizer x1, ppVisualizer x2){
+        Point2D startpos = getboxc2(x1.getXaxis(), x1.getYaxis());
+        Point2D endpos = getboxc2(x2.getXaxis(), x2.getYaxis());
 
+        bg.getChildren().add(new Line(startpos.getX(), startpos.getY(), endpos.getX(), endpos.getY()));
 
-        for (ppVisualizer p : lista){
-            if (p.getXaxis() == x1){
-                start.add(p);
-            } else if (p.getXaxis() == x2){
-                end.add(p);
-            }
-        }
-
-        for (ppVisualizer p : start){
-
-            for (ppVisualizer o : end){
-                Point2D startpos = getboxc2(p.getXaxis(), p.getYaxis());
-                Point2D endpos = getboxc2(o.getXaxis(), o.getYaxis());
-
-                bg.getChildren().add(new Line(startpos.getX(), startpos.getY(), endpos.getX(), endpos.getY()));
-
-            }
-
-        }
 
     }
 
@@ -268,6 +236,15 @@ public class simviewController implements IVisualisointi{
 
             }
         });
+
+    }
+
+    private void smartpiirra(ppVisualizer p1, ppVisualizer p2){
+
+        Point2D startpos = getboxc2(p1.getXaxis(), p1.getYaxis());
+        Point2D endpos = getboxc2(p2.getXaxis(), p2.getYaxis());
+
+        draw(startpos, endpos, bg);
 
     }
 
