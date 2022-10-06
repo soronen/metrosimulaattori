@@ -21,6 +21,13 @@ import javafx.scene.input.KeyEvent;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 
+/**
+ * StatsTabController toimii saman nimisen fxml-tiedoston kontrollerina
+ *
+ * @author Eetu Soronen
+ * @version 1
+ */
+
 public class StatsTabController implements  IVisualisointi{
     @FXML
     private TextField tfAsemanKapasiteetti;
@@ -61,7 +68,14 @@ public class StatsTabController implements  IVisualisointi{
     @FXML
     private TextField tfSaapumisenVarianssi;
 
+    /**
+     * enum-arvo, joka pitää kirjaa siitä mitä palvelupistettä vastaavaa nappia on painettu
+     */
     private TapahtumanTyyppi painettuNappi = TapahtumanTyyppi.ENTRANCE;
+
+    /**
+     * Kontrolleri-luokka, joka kommunikoi simulaattorimallin kanssa
+     */
     private IKontrolleri kontrolleri;
 
     /**
@@ -81,7 +95,10 @@ public class StatsTabController implements  IVisualisointi{
     }
 
 
-    // Moottorin ohjausta:
+    /**
+     * Kutsuu tarvittavia metodeja simulaattorin käynnistämiseen,
+     * sen parametrien asettamiseen ja käyttöliittymän tekstikenttien lukitsemiseen.
+     */
     public void kaynnista() {
         kontrolleri.setUi(this);
         setSimunSaapumisJakauma();
@@ -94,6 +111,11 @@ public class StatsTabController implements  IVisualisointi{
         salliSimunasetuksienmuutos(false);
 
     }
+
+    /**
+     * kutsuu tekstikenttien, joita ei saa muuttaa simun aikana setEditable() -metodia.
+     * @param sallitaanko boolean joka asettaa
+     */
     private void salliSimunasetuksienmuutos(boolean sallitaanko) {
         tfPalvelupisteenOdotusarvo.setEditable(sallitaanko);
         tfPalvelupisteenVarianssi.setEditable(sallitaanko);
@@ -103,6 +125,10 @@ public class StatsTabController implements  IVisualisointi{
         tfSaapumisenVarianssi.setEditable(sallitaanko);
         tfSaapumisenOdotusarvo.setEditable(sallitaanko);
     }
+
+    /**
+     * Lukee aseman saapumisten jakauman arvot käyttöliittymästä ja lähettää ne kontrollerille.
+     */
 
     public void setSimunSaapumisJakauma() {
         try {
@@ -119,6 +145,10 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
+
+    /**
+     * Lukee simulaattorin parameteja käyttöliittymästä ja lähettää ne kontrollerille.
+     */
 
     public boolean setSimulaattorinAsetukset() {
         try {
@@ -140,6 +170,9 @@ public class StatsTabController implements  IVisualisointi{
         return false;
     }
 
+    /**
+     * Kutsuu kontrollerin hidasta() metodia ja päivittää uuden viiveen käyttöliittymään.
+     */
     public void hidasta() { // hidastetaan moottorisäiettä
         if (kontrolleri.onkoKaynnissa()) {
             kontrolleri.hidasta();
@@ -147,7 +180,9 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
-
+    /**
+     * Kutsuu kontrollerin nopeuta() metodia ja päivittää uuden viiveen käyttöliittymään.
+     */
     public void nopeuta() { // nopeutetaan moottorisäiettä
         if (kontrolleri.onkoKaynnissa()) {
             kontrolleri.nopeuta();
@@ -156,6 +191,10 @@ public class StatsTabController implements  IVisualisointi{
     }
 
 
+    /**
+     * luo Runnable() -olion joka kutsuu asetaAsemanTiedot() ja asetaPavelupisteenTiedot(getPainettuNappi()) metodeja
+     * jotka vastaavat käyttöliittymän päivittämisestä.
+     */
     public void paivitaUI() {
         Platform.runLater(new Runnable() {
             public void run() {
@@ -170,6 +209,9 @@ public class StatsTabController implements  IVisualisointi{
         });
     }
 
+    /**
+     * päivittää Metroaseman tiedot käyttöliittymässä kontrollerin tietojen perusteella.
+     */
     private void asetaAsemanTiedot() {
         if (kontrolleri.onkoKaynnissa()) {
             if (Kello.getInstance().getAika() < Integer.parseInt(tfSimuloinninKesto.getText())) {
@@ -185,6 +227,10 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
+    /**
+     * Päivittää valitun palvelupisteen tiedot kontrollerin tietojen perusteilla.
+     * @param palvelupiste Palvelupiste, jonka tiedot haetaan ja näytetään.
+     */
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {
         switch (palvelupiste) {
             case ENTRANCE:
@@ -213,6 +259,13 @@ public class StatsTabController implements  IVisualisointi{
 
     }
 
+
+    /**
+     * Asettaa tämän hetkisen painetun napin, sekä hakee ja näyttää käyttöliittymässä
+     * valitun palvelupisteen jakauman arvot
+     *
+     * @param tt palvelupiste, jota vastaavaa nappia on painettu
+     */
     private void setPainettuNappi(TapahtumanTyyppi tt) {
         painettuNappi = tt;
 
@@ -221,10 +274,19 @@ public class StatsTabController implements  IVisualisointi{
         tfPalvelupisteenVarianssi.setText(String.valueOf(jakauma[1]));
     }
 
+    /**
+     * palauttaa painetun napin TapahtumanTyyppi arvon.
+     *
+     * @return TapahtumanTyyppi painettuNappi, joka vastaa tiettyä palvelupistettä
+     */
     private TapahtumanTyyppi getPainettuNappi() {
         return painettuNappi;
     }
 
+
+    /**
+     * Asettaa valitun palvelupisteen jakaumat käyttöliittymän tietojen perusteella
+     */
     @FXML
     private void setPPJakauma() {
         if (!kontrolleri.onkoKaynnissa()) {
@@ -245,6 +307,11 @@ public class StatsTabController implements  IVisualisointi{
     }
 
 
+    /**
+     *  Kun nappia painetaan, asettaa painetun napin ja päivittää käyttöliittymän sitä vastaavan
+     *  palvelupisteen tiedoilla.
+     * @param evt Napin painallus
+     */
     @FXML
     private void valittuPalvelupiste(Event evt) {
 
@@ -273,6 +340,9 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
+    /**
+     * Kutsuu kontrolleri-luokan nollaaSimulaattori metodia ja sallii simulaattorin parametrien muokkauksen
+     */
     @FXML
     public void nollaaSimulaattori() {
         if (kontrolleri.onkoKaynnissa()) {

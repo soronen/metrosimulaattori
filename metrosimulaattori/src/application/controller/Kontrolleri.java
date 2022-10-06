@@ -12,6 +12,14 @@ import application.view.IVisualisointi;
 import application.view.StatsTabController;
 import application.view.simviewController;
 
+
+/**
+ * MVC-mallin mukainen controller, jota käyttöliittymä käyttää mallin kanssa kommunikointiin.
+ *
+ * @author Eetu Soronen, Emil Ålgars
+ * @version 1
+ */
+
 public class Kontrolleri implements IKontrolleri {
 
     private IMoottori moottori;
