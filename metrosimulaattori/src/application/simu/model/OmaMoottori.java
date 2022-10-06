@@ -8,6 +8,7 @@ import application.simu.framework.Kello;
 import application.simu.framework.Moottori;
 import application.simu.framework.Saapumisprosessi;
 import application.simu.framework.Tapahtuma;
+import entity.Simulaattori;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -157,6 +158,9 @@ public class OmaMoottori extends Moottori{
 			System.out.println("Palvelupisteen " + i + " jonopituus lopussa: " + palvelupisteet[i].getJonopituus());
 		}
 		kontrolleri.setKaynnissa(false);
+
+		kontrolleri.tallenaEntity(this);
+
 	}
 
 	protected void yritaCTapahtumat(){

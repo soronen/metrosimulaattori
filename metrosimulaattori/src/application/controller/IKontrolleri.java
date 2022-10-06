@@ -2,6 +2,7 @@ package application.controller;
 
 import application.simu.framework.IMoottori;
 import application.simu.framework.Tapahtuma;
+import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
@@ -83,4 +84,6 @@ public interface IKontrolleri {
     void setPPJakauma(TapahtumanTyyppi painettuNappi, int mean, int variance);
 
     void setArrivalJakauma(int arrmean, int arrvar);
+
+    void tallenaEntity(OmaMoottori mtr);
 }

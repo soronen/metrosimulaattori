@@ -2,7 +2,6 @@ package application.controller;
 
 import application.MainApp;
 import application.eduni.distributions.Normal;
-import application.eduni.distributions.Uniform;
 import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
 import application.simu.framework.Tapahtuma;
@@ -10,8 +9,10 @@ import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
-import application.view.StatsTabController;
-import application.view.simviewController;
+import dao.SimulaattoriDAO;
+import entity.ServicePoint;
+import entity.Simulaattori;
+import entity.Station;
 
 
 /**
@@ -381,5 +382,53 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
+    /**
+     * Tallentaa simulaattorin asetukset ja loppuarvot ensiksi olioksi ja sitten tietokantaan.
+     *
+     * @param mtr OmaMoottori-olio, jonka parametrit ja palvelupisteet tallennetaan.
+     */
+    @Override
+    public void tallenaEntity(OmaMoottori mtr) {
+        Palvelupiste[] ppt = mtr.getPalvelupisteet();
+        ServicePoint[] spoints = new ServicePoint[4];
 
+        Station station = new Station(
+                getMobiililippujakauma(), arrivalMean, arrivalVariance,
+                mtr.getCustomersWithin(), mtr.getServedCustomers(),
+                mtr.getStationCapacity());
+
+
+        // luo ServicePoint-olion jokaisesta palvelupisteestä
+        for (int i = 0; i<4; i++) {
+        TapahtumanTyyppi t = TapahtumanTyyppi.ENTRANCE;
+
+            switch (i) {
+                case 0:
+                    t=TapahtumanTyyppi.ENTRANCE;
+                    break;
+                case 1:
+                    t=TapahtumanTyyppi.TICKETSALES;
+                    break;
+                case 2:
+                    t=TapahtumanTyyppi.TICKETCHECK;
+                    break;
+                case 3:
+                    t=TapahtumanTyyppi.METRO;
+                    break;
+            }
+            spoints[i] = new ServicePoint(
+                    t,
+                    ppt[i].getPalvelunro(),
+                    ppt[i].getJonopituus(),
+                    ppt[i].getKeskiarvoaika(),
+                    ppt[i].getKeskijonoaika(),
+                    getPPJakauma(t)[0],
+                    getPPJakauma(t)[1],
+                    ppt[i].getMaxSize());
+        }
+
+        Simulaattori sim = new Simulaattori(simukesto, spoints[0], spoints[1], spoints[2], spoints[3], station);
+        SimulaattoriDAO.lisaaSimulaattori(sim);
+
+    }
 }
