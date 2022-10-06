@@ -25,6 +25,8 @@ public class Palvelupiste {
 
 	//JonoStartegia strategia; //optio: asiakkaiden järjestys
 
+
+
 	private boolean varattu = false;
 
 	private double asiakasKeskiaika = 0;
@@ -113,6 +115,9 @@ public class Palvelupiste {
 		return palvelunro;
 	}
 
+	public void setVarattu(boolean varattu) {
+		this.varattu = varattu;
+	}
 
 	public void setJakauma(ContinuousGenerator generator) {
 		this.generator = generator;

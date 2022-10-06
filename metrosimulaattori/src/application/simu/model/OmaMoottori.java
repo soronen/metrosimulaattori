@@ -123,7 +123,10 @@ public class OmaMoottori extends Moottori{
 						a.valiraportti();
 						palvelupisteet[1].lisaaJonoon(a);
 					}
+				} else {
+					palvelupisteet[0].setVarattu(false);
 				}
+
 				break;
 			case METRO:
 				for (int i = 0; i < metroCapacity ; i++) {

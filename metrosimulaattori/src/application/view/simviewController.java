@@ -197,6 +197,7 @@ public class simviewController implements IVisualisointi{
     /*
     Piirtää Panelle p liikkuvan pallon pisteestä x pisteeseen y.
     (Point2D on classi jolla on x ja y arvo)
+    preffered metodi piirtämiseen on smartpiirrä()
      */
     private void draw(Point2D x, Point2D y, Pane p){
 
