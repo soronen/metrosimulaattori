@@ -1,10 +1,18 @@
 import application.MainApp;
 
-public class Start { // Simulaattorin käynnistyspääohjelma
-	
+/**
+ * Käynnistää simulaattorin 🚇
+ * @author Eetu Soronen
+ * @version 1
+ */
+public class Start {
+
+	/**
+	 * public static void main string args
+	 * kutsuu MainApp.main(args) ja käynnistää simulaattorin
+	 * @param args
+	 */
 	public static void main(String args[]) {
-		
-		//view.SimulaattorinGUI.main(args);
 
 		MainApp.main(args);
 		
