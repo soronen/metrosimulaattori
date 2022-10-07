@@ -23,49 +23,125 @@ import javafx.scene.input.KeyEvent;
 import static application.simu.model.TapahtumanTyyppi.*;
 
 /**
- * StatsTabController toimii saman nimisen fxml-tiedoston kontrollerina
+ * StatsTabController toimii saman nimisen fxml-tiedoston kontrollerina.
+ * @FXML annotoidut muuttujat joiden nimi on niiden fxid vastaavat käyttöliittymän elementeistä.
  *
  * @author Eetu Soronen
  * @version 1
  */
+public class StatsTabController implements  IVisualisointi {
 
-public class StatsTabController implements  IVisualisointi{
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfAsemanKapasiteetti
+     */
     @FXML
     private TextField tfAsemanKapasiteetti;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfMetronKapasiteetti
+     */
     @FXML
     private TextField tfMetronKapasiteetti;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelSimuloinninTila
+     */
     @FXML
     private Label labelSimuloinninTila;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelAsemassaOlevatAsiakkaat
+     */
     @FXML
     private Label labelAsemassaOlevatAsiakkaat;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelMetroPoistuneetAsiakkaat
+     */
     @FXML
     private Label labelMetroPoistuneetAsiakkaat;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelAika
+     */
     @FXML
     private Label labelAika;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelPavelunTila
+     */
     @FXML
     private Label labelPavelunTila;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelPavellutAsiakkaat
+     */
     @FXML
     private Label labelPavellutAsiakkaat;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelPavelunKeskipituus
+     */
     @FXML
     private Label labelPavelunKeskipituus;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelJonossaOlevatAsiakkaat
+     */
     @FXML
     private Label labelJonossaOlevatAsiakkaat;
+
+    /**
+     * Käyttöliittymän Label elementti fx:id labelJononKeskipituus
+     */
     @FXML
     private Label labelJononKeskipituus;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id labelJonossaOlevatAsiakkaat
+     */
     @FXML
     private TextField tfSimuloinninKesto;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfSimuloinninViive
+     */
     @FXML
     private TextField tfSimuloinninViive;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id labelPalvelupiste
+     */
     @FXML
     private Label labelPalvelupiste;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfEsiostetutliput
+     */
     @FXML
     private TextField tfEsiostetutliput;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfPalvelupisteenOdotusarvo
+     */
     @FXML
     private TextField tfPalvelupisteenOdotusarvo;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfPalvelupisteenVarianssi
+     */
     @FXML
     private TextField tfPalvelupisteenVarianssi;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfSaapumisenOdotusarvo
+     */
     @FXML
     private TextField tfSaapumisenOdotusarvo;
+
+    /**
+     * Käyttöliittymän TextField elementti fx:id tfSaapumisenVarianssi
+     */
     @FXML
     private TextField tfSaapumisenVarianssi;
 
@@ -78,6 +154,8 @@ public class StatsTabController implements  IVisualisointi{
      * Kontrolleri-luokka, joka kommunikoi simulaattorimallin kanssa
      */
     private IKontrolleri kontrolleri;
+    // Reference to the main application
+    private MainApp mainApp;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -85,7 +163,7 @@ public class StatsTabController implements  IVisualisointi{
      */
     @FXML
     private void initialize() {
-        kontrolleri = (Kontrolleri) MainApp.getKontrol();
+        kontrolleri = MainApp.getKontrol();
 
         // simuloinnin viiveen voi antaa enteriä painamalla kun simu on käynnissä
         tfSimuloinninViive.setOnKeyPressed(event -> {
@@ -94,7 +172,6 @@ public class StatsTabController implements  IVisualisointi{
             }
         });
     }
-
 
     /**
      * Kutsuu tarvittavia metodeja simulaattorin käynnistämiseen,
@@ -146,11 +223,10 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
-
     /**
      * Lukee simulaattorin parameteja käyttöliittymästä ja lähettää ne kontrollerille.
+     * luo varoitusponnahdusikkunan virheellisiä arvoja syöttäessä.
      */
-
     public boolean setSimulaattorinAsetukset() {
         try {
             kontrolleri.setAsemanKapasiteetti(Integer.parseInt(tfAsemanKapasiteetti.getText()));
@@ -191,11 +267,10 @@ public class StatsTabController implements  IVisualisointi{
         }
     }
 
-
     /**
      * luo Runnable() -olion joka kutsuu asetaAsemanTiedot() ja asetaPavelupisteenTiedot(getPainettuNappi()) metodeja
      * jotka vastaavat käyttöliittymän päivittämisestä.
-      * @param t ei käytetä mutta IVisualisointi-rajapinta vaatii
+      * @param t ei käytetä mutta IVisualisointi-rajapinta vaatii sen
      */
     @Override
     public void paivitaUI(Tapahtuma t) {
@@ -262,6 +337,14 @@ public class StatsTabController implements  IVisualisointi{
 
     }
 
+    /**
+     * palauttaa painetun napin TapahtumanTyyppi arvon.
+     *
+     * @return TapahtumanTyyppi painettuNappi, joka vastaa tiettyä palvelupistettä
+     */
+    private TapahtumanTyyppi getPainettuNappi() {
+        return painettuNappi;
+    }
 
     /**
      * Asettaa tämän hetkisen painetun napin, sekä hakee ja näyttää käyttöliittymässä
@@ -272,20 +355,10 @@ public class StatsTabController implements  IVisualisointi{
     private void setPainettuNappi(TapahtumanTyyppi tt) {
         painettuNappi = tt;
 
-        int jakauma[] = kontrolleri.getPPJakauma(tt);
+        int[] jakauma = kontrolleri.getPPJakauma(tt);
         tfPalvelupisteenOdotusarvo.setText(String.valueOf(jakauma[0]));
         tfPalvelupisteenVarianssi.setText(String.valueOf(jakauma[1]));
     }
-
-    /**
-     * palauttaa painetun napin TapahtumanTyyppi arvon.
-     *
-     * @return TapahtumanTyyppi painettuNappi, joka vastaa tiettyä palvelupistettä
-     */
-    private TapahtumanTyyppi getPainettuNappi() {
-        return painettuNappi;
-    }
-
 
     /**
      * Asettaa valitun palvelupisteen jakaumat käyttöliittymän tietojen perusteella
@@ -308,7 +381,6 @@ public class StatsTabController implements  IVisualisointi{
             }
         }
     }
-
 
     /**
      *  Kun nappia painetaan, asettaa painetun napin ja päivittää käyttöliittymän sitä vastaavan
@@ -354,14 +426,6 @@ public class StatsTabController implements  IVisualisointi{
         }
 
     }
-
-
-
-
-
-
-    // Reference to the main application
-    private MainApp mainApp;
 
     /**
      * Is called by the main application to give a reference back to itself.
