@@ -1,13 +1,10 @@
 package entity;
 
 import application.simu.model.TapahtumanTyyppi;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
- * Luo olion palvelupisteen ylläpidetyistä arvoista
+ * Luo olion palvelupisteen ylläpidetyistä arvoista, jonka hibernate tallentaa tietokantaan.
  *
  * @author Eetu Soronen
  * @version 1
@@ -17,7 +14,9 @@ public class ServicePoint {
 
     /**
      * Palvelupisteen tyyppi (saapuminen, myynti, tarkastus, metro).
+     * Enum-arvo, joka luetaan string-muodossa
      */
+    @Enumerated(EnumType.STRING)
     private TapahtumanTyyppi palvelupiste;
 
     /**
