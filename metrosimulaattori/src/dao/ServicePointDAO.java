@@ -5,8 +5,17 @@ import entity.ServicePoint;
 import entity.Simulaattori;
 import jakarta.persistence.EntityManager;
 
+/**
+ * sisältää metodit, joilla käsitellään ja välitetään dataa tietokannan ja ServicePoint-olioiden välillä.
+ * @author Eetu Soronen
+ * @version 1
+ */
 public class ServicePointDAO {
 
+    /**
+     * Lisää Station-olion tietokantaan
+     * @param p Palvelupiste-olio
+     */
     public void lisaaPalvelupiste(Palvelupiste p) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -14,6 +23,11 @@ public class ServicePointDAO {
         em.getTransaction().commit();
     }
 
+    /**
+     * Hakee Station-olion tietokannasta sen id:n perusteella
+     * @param id
+     * @return
+     */
     public ServicePoint haePalvelupiste(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -22,6 +36,10 @@ public class ServicePointDAO {
         return p;
     }
 
+    /**
+     * poistaa Station-olion tietokannasta sen id:n perusteella
+     * @param id
+     */
     public void poistaPalvelupiste(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();

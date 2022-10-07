@@ -4,8 +4,17 @@ import entity.Simulaattori;
 import entity.Station;
 import jakarta.persistence.EntityManager;
 
+/**
+ * sisältää metodit, joilla käsitellään ja välitetään dataa tietokannan ja Station-olioiden välillä.
+ * @author Eetu Soronen
+ * @version 1
+ */
 public class StationDAO {
 
+    /**
+     * Lisää Station-olion tietokantaan
+     * @param s
+     */
     public void lisaaAsema(Station s) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -13,6 +22,11 @@ public class StationDAO {
         em.getTransaction().commit();
     }
 
+    /**
+     * Hakee Station-olion tietokannasta sen id:n perusteella.
+     * @param id
+     * @return
+     */
     public Station haeAsema(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -21,6 +35,10 @@ public class StationDAO {
         return s;
     }
 
+    /**
+     * Poistaa Station-olion tietokannasta sen id:n perusteella.
+     * @param id
+     */
     public void poistaAsema(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
