@@ -3,16 +3,14 @@ package application;
 import java.io.IOException;
 
 import application.controller.IKontrolleri;
-import application.view.IVisualisointi;
-import application.view.RootLayoutController;
-import application.view.StatsTabController;
+import application.view.*;
 import application.simu.framework.Trace;
-import application.view.simviewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
@@ -66,6 +64,38 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showgraphview() {
+
+
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/graphview.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Kraaffi näkymä");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            graphviewcontroller controller = loader.getController();
+
+
+            dialogStage.show();
+
+            controller.setChart(1);
+
+
+
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

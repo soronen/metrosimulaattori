@@ -3,10 +3,6 @@ package application.view;
 import application.MainApp;
 import application.controller.Kontrolleri;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
 
 public class RootLayoutController {
 
@@ -37,5 +33,8 @@ public class RootLayoutController {
     public void avaasimview() {
         mainApp.showSimview();
     }
+
+    @FXML
+    public void avaagraphview(){mainApp.showgraphview();}
 
 }

@@ -6,6 +6,7 @@ import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
+import application.view.graphviewcontroller;
 
 
 public interface IKontrolleri {
@@ -86,4 +87,6 @@ public interface IKontrolleri {
     void setArrivalJakauma(int arrmean, int arrvar);
 
     void tallenaEntity(OmaMoottori mtr);
+
+    void asetachart(graphviewcontroller i, int x);
 }

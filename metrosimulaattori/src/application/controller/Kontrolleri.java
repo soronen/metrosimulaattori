@@ -9,10 +9,18 @@ import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
+import application.view.graphviewcontroller;
+import dao.ServicePointDAO;
 import dao.SimulaattoriDAO;
+import datasource.MariaDbJpaConn;
 import entity.ServicePoint;
 import entity.Simulaattori;
 import entity.Station;
+import jakarta.persistence.EntityManager;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
+
+import javax.sql.DataSource;
 
 
 /**
@@ -429,6 +437,62 @@ public class Kontrolleri implements IKontrolleri {
 
         Simulaattori sim = new Simulaattori(simukesto, spoints[0], spoints[1], spoints[2], spoints[3], station);
         SimulaattoriDAO.lisaaSimulaattori(sim);
+
+    }
+
+    @Override
+    public void asetachart(graphviewcontroller i, int x) {
+
+        i.getbarChart().getData().clear();
+
+        ServicePointDAO cx = new ServicePointDAO();
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
+
+        if (cx.haePalvelupiste(1) == null){
+            Alert a = new Alert(Alert.AlertType.NONE);
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Sql tietokannassa ei simulaation tuloksia! >:D");
+            a.show();
+            return;
+        }
+
+        switch (x){
+            case 1:
+
+                for (int v = 1; v<5; v++){
+
+                    ServicePoint sp = cx.haePalvelupiste(v);
+                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
+
+                }
+
+                i.getbarChart().getData().add(series);
+
+                break;
+            case 2:
+
+                for (int v = 1; v<5; v++){
+
+                    ServicePoint sp = cx.haePalvelupiste(v);
+                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
+                }
+
+                i.getbarChart().getData().add(series);
+
+                break;
+            case 3:
+
+                for (int v = 1; v<5; v++){
+
+                    ServicePoint sp = cx.haePalvelupiste(v);
+                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
+                }
+
+                i.getbarChart().getData().add(series);
+
+
+                break;
+        }
 
     }
 }
