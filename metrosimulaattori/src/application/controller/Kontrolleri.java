@@ -17,10 +17,13 @@ import entity.ServicePoint;
 import entity.Simulaattori;
 import entity.Station;
 import jakarta.persistence.EntityManager;
+import javafx.application.Platform;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 
 /**
@@ -440,59 +443,121 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+
+
     @Override
     public void asetachart(graphviewcontroller i, int x) {
 
         i.getbarChart().getData().clear();
 
-        ServicePointDAO cx = new ServicePointDAO();
         XYChart.Series<String, Double> series = new XYChart.Series<>();
 
-        if (cx.haePalvelupiste(1) == null){
+        ListView lv = i.getListView();
+
+        lv.getSelectionModel().getSelectedIndex();
+
+        SimulaattoriDAO sdao = new SimulaattoriDAO();
+
+
+
+        Simulaattori sim = sdao.haeSimulaattori((lv.getSelectionModel().getSelectedIndex()+1));
+
+        if (lv.getSelectionModel().getSelectedIndex() < 0){
+            sim = sdao.haeSimulaattori(1);
+            System.out.println("override");
+        }
+
+
+        if (sim == null){
+
+            Alert a = new Alert(Alert.AlertType.NONE);
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Sql tietokannassa ei simulaation tuloksia! D:");
+            a.show();
+            return;
+
+        }
+
+        ServicePoint sp = new ServicePoint();
+
+        switch (x){
+            case 1:
+
+                sp = sim.getEntrance();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
+
+                sp = sim.getMetro();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
+
+                sp = sim.getTicketcheck();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
+
+                sp = sim.getTicketsales();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
+
+
+                break;
+            case 2:
+
+
+                sp = sim.getEntrance();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
+
+                sp = sim.getMetro();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
+
+                sp = sim.getTicketcheck();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
+
+                sp = sim.getTicketsales();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
+
+
+                break;
+            case 3:
+
+                sp = sim.getEntrance();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
+
+                sp = sim.getMetro();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
+
+                sp = sim.getTicketcheck();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
+
+                sp = sim.getTicketsales();
+                series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
+
+                break;
+        }
+
+        i.getbarChart().getData().add(series);
+
+
+    }
+
+    public void initchart(graphviewcontroller i){
+        SimulaattoriDAO sdao = new SimulaattoriDAO();
+
+        List<Simulaattori> simlist = sdao.listaaSimulaattorit();
+
+        if (simlist == null || simlist.size() == 0){
             Alert a = new Alert(Alert.AlertType.NONE);
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("Sql tietokannassa ei simulaation tuloksia! >:D");
             a.show();
             return;
+
         }
 
-        switch (x){
-            case 1:
+        for (Simulaattori sim : simlist){
 
-                for (int v = 1; v<5; v++){
+            i.getListView().getItems().add(sim.getId());
 
-                    ServicePoint sp = cx.haePalvelupiste(v);
-                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getJononKeskikesto()));
-
-                }
-
-                i.getbarChart().getData().add(series);
-
-                break;
-            case 2:
-
-                for (int v = 1; v<5; v++){
-
-                    ServicePoint sp = cx.haePalvelupiste(v);
-                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), Double.valueOf(sp.getPalvellutAsiakkaat())));
-                }
-
-                i.getbarChart().getData().add(series);
-
-                break;
-            case 3:
-
-                for (int v = 1; v<5; v++){
-
-                    ServicePoint sp = cx.haePalvelupiste(v);
-                    series.getData().add(new XYChart.Data<>(sp.getPalvelupiste().name(), sp.getPalvelunKeskiaika()));
-                }
-
-                i.getbarChart().getData().add(series);
-
-
-                break;
         }
+
+        asetachart(i, 1);
 
     }
+
 }

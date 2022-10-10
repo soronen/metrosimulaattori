@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
@@ -33,12 +34,13 @@ public class ppVisualizer {
         this.pptext = new Text(tt.name() + " 0");
         pptext.setTextAlignment(TextAlignment.CENTER);
         pptext.setFill(Color.RED);
+        pptext.setFont(new Font(40));
 
 
         csquare();
         group.getChildren().add(pptext);
 
-        StackPane.setMargin(pptext, new Insets(0,0,55,0));
+        StackPane.setMargin(pptext, new Insets(0,0,160,0));
 
         GridPane.setHalignment(group, HPos.CENTER); // To align horizontally in the cell
         GridPane.setValignment(group, VPos.CENTER); // To align vertically in the cell
@@ -48,7 +50,7 @@ public class ppVisualizer {
     }
 
     private void csquare(){
-        Rectangle r1 = new Rectangle(40,40);
+        Rectangle r1 = new Rectangle(80,80);
         r1.setFill(Color.BLACK);
         group.getChildren().add(r1);
 

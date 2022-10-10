@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -28,21 +29,23 @@ public class graphviewcontroller {
     private Button jonoaika;
 
     @FXML
+    private ListView lv;
+
+    @FXML
     private Button palvelluasiakkaat;
 
     @FXML
     private Button palveluaika;
 
+    private int currentnum = 1;
 
-    @FXML
-    private void initialize(){
 
-    }
 
 
     public graphviewcontroller(){}
 
     public void setChart(int x){
+        this.currentnum = x;
         MainApp.getKontrol().asetachart(this, x);
     }
 
@@ -52,6 +55,10 @@ public class graphviewcontroller {
 
     public CategoryAxis getxAxis(){
         return this.xAxis;
+    }
+
+    public ListView getListView(){
+        return this.lv;
     }
 
 
@@ -67,6 +74,11 @@ public class graphviewcontroller {
     @FXML
     private void nappain3(){
         setChart(3);
+    }
+
+    @FXML
+    private void lvhandleclick(){
+        MainApp.getKontrol().asetachart(this, currentnum);
     }
 
 

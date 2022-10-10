@@ -5,38 +5,44 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="450.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.graphviewcontroller">
    <children>
-      <BorderPane prefHeight="450.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <BarChart fx:id="barChart" prefHeight="355.0" prefWidth="639.0" BorderPane.alignment="CENTER">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </BarChart>
-         </center>
-         <top>
-            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="750.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="jonoaika" mnemonicParsing="false" onAction="#nappain1" text="Jono aika" />
-                  <Button fx:id="palvelluasiakkaat" mnemonicParsing="false" onAction="#nappain2" text="Palvellut asiakkaat" />
-                  <Button fx:id="palveluaika" mnemonicParsing="false" onAction="#nappain3" text="Palvelu aika" />
-               </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </HBox>
-         </top>
-      </BorderPane>
+      <HBox prefHeight="450.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ListView fx:id="lv" onMouseClicked="#lvhandleclick" prefHeight="450.0" prefWidth="357.0" />
+            <BorderPane prefHeight="450.0" prefWidth="750.0">
+               <center>
+                  <BarChart fx:id="barChart" animated="false" prefHeight="355.0" prefWidth="639.0" BorderPane.alignment="CENTER">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </center>
+               <top>
+                  <HBox alignment="CENTER" prefHeight="55.0" prefWidth="750.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="jonoaika" mnemonicParsing="false" onAction="#nappain1" text="Jono aika" />
+                        <Button fx:id="palvelluasiakkaat" mnemonicParsing="false" onAction="#nappain2" text="Palvellut asiakkaat" />
+                        <Button fx:id="palveluaika" mnemonicParsing="false" onAction="#nappain3" text="Palvelu aika" />
+                     </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </top>
+            </BorderPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

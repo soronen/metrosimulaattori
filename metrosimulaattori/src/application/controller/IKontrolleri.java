@@ -89,4 +89,6 @@ public interface IKontrolleri {
     void tallenaEntity(OmaMoottori mtr);
 
     void asetachart(graphviewcontroller i, int x);
+
+    void initchart(graphviewcontroller i);
 }
