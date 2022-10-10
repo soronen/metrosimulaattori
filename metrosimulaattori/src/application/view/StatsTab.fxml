@@ -22,7 +22,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </Label>
-      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+      <HBox layoutX="-14.0" layoutY="100.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="100.0">
          <padding>
             <Insets left="20.0" right="20.0" />
          </padding>
@@ -135,7 +135,7 @@
                            </font></Button>
                      </children>
                   </GridPane>
-                  <Label text="Palveluajan normaalijakauman parametrit">
+                  <Label prefWidth="300.0" text="Asiakkaan käsittelyajan normaalijakauman parametrit" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
@@ -156,7 +156,7 @@
                         <TextField fx:id="tfPalvelupisteenOdotusarvo" text="4" />
                      </children>
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
                   <HBox prefWidth="200.0">
@@ -183,7 +183,7 @@
                   </HBox>
                </children>
                <HBox.margin>
-                  <Insets right="20.0" />
+                  <Insets left="10.0" right="20.0" />
                </HBox.margin>
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
@@ -325,7 +325,7 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label text="Palvelun keskipituus" GridPane.rowIndex="2">
+                        <Label text="Palvelupisteen käsittelyn keskikesto" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
@@ -333,7 +333,7 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <Label text="Jonon keskipituus" GridPane.rowIndex="4">
+                        <Label text="Palvelupisteen jonon keskikesto" GridPane.rowIndex="4">
                            <font>
                               <Font size="14.0" />
                            </font></Label>
