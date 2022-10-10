@@ -16,10 +16,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.*;
 import javafx.scene.Group;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -29,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -38,6 +36,9 @@ public class simviewController implements IVisualisointi{
 
     @FXML
     private Pane bg;
+
+    @FXML
+    private AnchorPane ap;
 
     private MainApp mainApp;
 
@@ -51,14 +52,16 @@ public class simviewController implements IVisualisointi{
     @FXML
     private void initialize() {
 
+
+
         gp.setAlignment(Pos.CENTER);
         gp.toFront();
         bg.toBack();
 
-        lista.add(new ppVisualizer(1, 1, TapahtumanTyyppi.ENTRANCE));
-        lista.add(new ppVisualizer(2, 2, TapahtumanTyyppi.TICKETSALES));
-        lista.add(new ppVisualizer(3, 1, TapahtumanTyyppi.TICKETCHECK));
-        lista.add(new ppVisualizer(4, 1, TapahtumanTyyppi.METRO));
+        lista.add(new ppVisualizer(1, 2, TapahtumanTyyppi.ENTRANCE));
+        lista.add(new ppVisualizer(2, 4, TapahtumanTyyppi.TICKETSALES));
+        lista.add(new ppVisualizer(3, 2, TapahtumanTyyppi.TICKETCHECK));
+        lista.add(new ppVisualizer(4, 3, TapahtumanTyyppi.METRO));
 
 
 
@@ -66,11 +69,16 @@ public class simviewController implements IVisualisointi{
             @Override public void run() {
 
 
-
+                gp.addColumn(0, new Text(""));
                 gp.addColumn(0,lista.get(0).getGroup());
                 gp.addColumn(1, new Text(""));
+                gp.addColumn(1, new Text(""));
+                gp.addColumn(1, new Text(""));
                 gp.addColumn(1,lista.get(1).getGroup());
+                gp.addColumn(2, new Text(""));
                 gp.addColumn(2,lista.get(2).getGroup());
+                gp.addColumn(3, new Text(""));
+                gp.addColumn(3, new Text(""));
                 gp.addColumn(3,lista.get(3).getGroup());
 
 
@@ -135,8 +143,11 @@ public class simviewController implements IVisualisointi{
                 switch (t.getTyyppi()){
 
                     case ENTRANCE:
+                        Random rand = new Random();
+                        int x = MainApp.getKontrol().getMobiililippujakauma();
+                        int c = rand.nextInt(100)+1;
 
-                        if (ThreadLocalRandom.current().nextBoolean()){
+                        if (x < c){
                             smartpiirra(lista.get(0), lista.get(1));
                         } else {
                             smartpiirra(lista.get(0), lista.get(2));
@@ -185,10 +196,23 @@ public class simviewController implements IVisualisointi{
     }
 
     private void viivapiirra(ppVisualizer x1, ppVisualizer x2){
-        Point2D startpos = getboxc2(x1.getXaxis(), x1.getYaxis());
-        Point2D endpos = getboxc2(x2.getXaxis(), x2.getYaxis());
 
-        bg.getChildren().add(new Line(startpos.getX(), startpos.getY(), endpos.getX(), endpos.getY()));
+
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Point2D startpos = getboxc2(x1.getXaxis(), x1.getYaxis());
+                Point2D endpos = getboxc2(x2.getXaxis(), x2.getYaxis());
+
+                bg.getChildren().add(new Line(startpos.getX(), startpos.getY(), endpos.getX(), endpos.getY()));
+            }
+        });
 
 
     }
@@ -204,7 +228,7 @@ public class simviewController implements IVisualisointi{
         Platform.runLater(new Runnable() {
             @Override public void run() {
 
-                int cwidth = 10;
+                int cwidth = 18;
 
                 Circle ball = new Circle(cwidth, Color.BLACK);
 

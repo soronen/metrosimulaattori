@@ -1,12 +1,18 @@
 package application;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import application.controller.IKontrolleri;
 import application.view.*;
 import application.simu.framework.Trace;
+import datasource.MariaDbJpaConn;
+import jakarta.persistence.EntityManager;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.LoadListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +40,15 @@ public class MainApp extends Application {
         initRootLayout();
 
         showStatsTab();
+
+        //luodaan tietokantayhteys sovelluksen käynnistyessä
+        Thread thread = new Thread(){
+            public void run(){
+                MariaDbJpaConn.getInstance();
+                return;
+            }
+        };
+        thread.start();
     }
 
     public static void setKontrol(IKontrolleri ii){
@@ -90,8 +105,9 @@ public class MainApp extends Application {
 
             dialogStage.show();
 
-            controller.setChart(1);
 
+
+            kontrol.initchart(controller);
 
 
 
