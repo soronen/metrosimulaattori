@@ -6,9 +6,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -52,6 +54,27 @@ public class ppVisualizer {
     private void csquare(){
         Rectangle r1 = new Rectangle(80,80);
         r1.setFill(Color.BLACK);
+        Image img = null;
+        switch (tt){
+
+            case ENTRANCE:
+                img = new Image(ppVisualizer.class.getResourceAsStream("images/asema.png"));
+                r1.setFill(new ImagePattern(img));
+                break;
+            case METRO:
+                img = new Image(ppVisualizer.class.getResourceAsStream("images/metro.png"));
+                r1.setFill(new ImagePattern(img));
+                break;
+            case TICKETSALES:
+                img = new Image(ppVisualizer.class.getResourceAsStream("images/lipunmyynti.png"));
+                r1.setFill(new ImagePattern(img));
+                break;
+            case TICKETCHECK:
+                img = new Image(ppVisualizer.class.getResourceAsStream("images/tarkastus.png"));
+                r1.setFill(new ImagePattern(img));
+                break;
+        }
+
         group.getChildren().add(r1);
 
     }
