@@ -32,16 +32,13 @@ import javax.sql.DataSource;
 
 public class Kontrolleri implements IKontrolleri {
 
+    boolean kaynnissa = false;
     private IMoottori moottori;
     private IVisualisointi ui;
-
     private int simukesto = 1000;
     private int simuviive = 100;
     private int metronKapasiteetti = 40;
     private int asemanKapasiteetti = 200;
-
-    boolean kaynnissa = false;
-
     private Palvelupiste palvelupisteet[];
 
 
@@ -153,34 +150,38 @@ public class Kontrolleri implements IKontrolleri {
     }
 
     @Override
-    public void setAsemanKapasiteetti(int asemanKapasiteetti) {
-        this.asemanKapasiteetti = asemanKapasiteetti;
-        moottori.setStationCapacity(asemanKapasiteetti);
-    }
-    @Override
-    public void setMetronKapasiteetti(int metronKapasiteetti) {
-        this.metronKapasiteetti = metronKapasiteetti;
-        moottori.setMetroCapacity(metronKapasiteetti);
-    }
-    @Override
     public void setsimulaattorinKesto(int simukesto) {
         this.simukesto = simukesto;
         moottori.setSimulointiaika(simukesto);
     }
+
     @Override
     public void setSimulaattorinViive(int simuviive) {
         this.simuviive = simuviive;
         moottori.setViive(simuviive);
 
     }
+
     @Override
     public int getMetronKapasiteetti() {
         return moottori.getMetroCapacity();
     }
 
     @Override
+    public void setMetronKapasiteetti(int metronKapasiteetti) {
+        this.metronKapasiteetti = metronKapasiteetti;
+        moottori.setMetroCapacity(metronKapasiteetti);
+    }
+
+    @Override
     public int getAsemanKapasiteetti() {
         return moottori.getStationCapacity();
+    }
+
+    @Override
+    public void setAsemanKapasiteetti(int asemanKapasiteetti) {
+        this.asemanKapasiteetti = asemanKapasiteetti;
+        moottori.setStationCapacity(asemanKapasiteetti);
     }
 
     @Override
@@ -429,6 +430,7 @@ public class Kontrolleri implements IKontrolleri {
                     ppt[i].getPalvelunro(),
                     ppt[i].getJonopituus(),
                     ppt[i].getKeskiarvoaika(),
+
                     ppt[i].getKeskijonoaika(),
                     getPPJakauma(t)[0],
                     getPPJakauma(t)[1],
