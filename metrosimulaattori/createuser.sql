@@ -1,4 +1,4 @@
-metrosimulaattoriDROP DATABASE if EXISTS metrosimulaattori;
+DROP DATABASE if EXISTS metrosimulaattori;
 CREATE DATABASE metrosimulaattori;
 
 
