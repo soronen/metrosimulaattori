@@ -74,15 +74,30 @@ public class Kontrolleri implements IKontrolleri {
     // Moottorin ohjausta:
     @Override
     public void kaynnistaSimulointi() {
+
+        if (((Thread)moottori).getState() != Thread.State.NEW){
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Uutta moottoria ei luotu!");
+            alert.setContentText("Muistitko nollata moottorin?");
+            alert.show();
+            return;
+        }
+
         moottori = getMoottori();
         Kello.getInstance().setAika(0);
         palvelupisteet = moottori.getPalvelupisteet();
 
         asetaMoottorinParametrit();
 
-        if (!kaynnissa) {
+
+
+        if (!kaynnissa && ((Thread)moottori).getState() == Thread.State.NEW) {
+
             kaynnissa = true;
             ((Thread)moottori).start();
+
         }
     }
 
@@ -103,9 +118,9 @@ public class Kontrolleri implements IKontrolleri {
 
     @Override
     public void resetSimulator() {
+        setKaynnissa(false);
         moottori.setSimulointiaika(0);
         moottori = null;
-        setKaynnissa(false);
     }
 
     @Override
@@ -466,7 +481,6 @@ public class Kontrolleri implements IKontrolleri {
 
         if (lv.getSelectionModel().getSelectedIndex() < 0){
             sim = sdao.haeSimulaattori(1);
-            System.out.println("override");
         }
 
 
@@ -554,7 +568,7 @@ public class Kontrolleri implements IKontrolleri {
 
         for (Simulaattori sim : simlist){
 
-            i.getListView().getItems().add(sim.getId());
+            i.getListView().getItems().add("Simulaatio " + sim.getId());
 
         }
 

@@ -2,23 +2,17 @@ package application.view;
 
 import application.MainApp;
 import application.controller.IKontrolleri;
-import application.controller.Kontrolleri;
-import application.eduni.distributions.Normal;
-import application.simu.framework.IMoottori;
 import application.simu.framework.Kello;
 import application.simu.framework.Tapahtuma;
-import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import javafx.application.Platform;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 
@@ -178,9 +172,12 @@ public class StatsTabController implements  IVisualisointi {
      * sen parametrien asettamiseen ja käyttöliittymän tekstikenttien lukitsemiseen.
      */
     public void kaynnista() {
+
         kontrolleri.setUi(this);
         setSimunSaapumisJakauma();
         kontrolleri.getMoottori();
+
+
 
         setSimulaattorinAsetukset();
         asetaAsemanTiedot();
@@ -420,7 +417,7 @@ public class StatsTabController implements  IVisualisointi {
      */
     @FXML
     public void nollaaSimulaattori() {
-        if (kontrolleri.onkoKaynnissa()) {
+        if (!kontrolleri.onkoKaynnissa()) {
             kontrolleri.resetSimulator();
             salliSimunasetuksienmuutos(true);
         }

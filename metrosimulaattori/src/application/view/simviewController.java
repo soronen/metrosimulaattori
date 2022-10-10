@@ -1,11 +1,7 @@
 package application.view;
 
 import application.MainApp;
-import application.controller.IKontrolleri;
-import application.controller.Kontrolleri;
-import application.simu.framework.IMoottori;
 import application.simu.framework.Tapahtuma;
-import application.simu.model.OmaMoottori;
 import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import javafx.animation.KeyFrame;
@@ -13,21 +9,20 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.*;
-import javafx.scene.Group;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class simviewController implements IVisualisointi{

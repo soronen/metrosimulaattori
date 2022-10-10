@@ -56,7 +56,6 @@ public abstract class Moottori extends Thread implements IMoottori{  // UUDET MÃ
 			yritaCTapahtumat();
 		}
 		tulokset();
-		
 	}
 	
 	private void suoritaBTapahtumat(){
