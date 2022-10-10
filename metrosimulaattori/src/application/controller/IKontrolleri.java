@@ -8,7 +8,13 @@ import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
 import application.view.graphviewcontroller;
 
-
+/**
+ * Kontrolleri-luokan rajapinta. kaikki kontrolleri-luokan kutsut tehdään luomalla IKontrolleri-olio.
+ * Melko turha kun meillä on vain 1 kontrolleri luokka..
+ *
+ * @author Eetu Soronen, Emil Ålgars
+ * @version 1
+ */
 public interface IKontrolleri {
 
     // Rajapinta, joka tarjotaan  käyttöliittymälle:
