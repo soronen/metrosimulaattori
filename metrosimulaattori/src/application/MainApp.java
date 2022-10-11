@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import application.controller.IKontrolleri;
 import application.view.*;
 import application.simu.framework.Trace;
-import datasource.MariaDbJpaConn;
+import datasource.MySqlJpaConn;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -44,7 +44,7 @@ public class MainApp extends Application {
         //luodaan tietokantayhteys sovelluksen käynnistyessä
         Thread thread = new Thread(){
             public void run(){
-                MariaDbJpaConn.getInstance();
+                MySqlJpaConn.getInstance();
                 return;
             }
         };
