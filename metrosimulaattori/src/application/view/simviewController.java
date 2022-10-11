@@ -106,10 +106,7 @@ public class simviewController implements IVisualisointi{
                 viivapiirra(lista.get(1), lista.get(2));
                 viivapiirra(lista.get(2), lista.get(3));
 
-                System.out.println(bg.getBoundsInLocal());
-                System.out.println(bg.getBoundsInParent());
-                System.out.println(gp.getBoundsInParent());
-                System.out.println(gp.getBoundsInLocal());
+
 
             }
         });
