@@ -216,32 +216,63 @@ public class Kontrolleri implements IKontrolleri {
         moottori.setViive(simuviive);
 
     }
+
+    /**
+     *  Palauttaa metro-palvelupisteen kapasiteetin.
+     *
+     * @return Metro-palvelupisteen kapasiteetti int-arvona.
+     */
     @Override
     public int getMetronKapasiteetti() {
         return moottori.getMetroCapacity();
     }
 
+    /**
+     * Asettaa metro-palvelupisteen kapasiteetin parametrina annettuun arvoon.
+     * @param metronKapasiteetti
+     */
     @Override
     public void setMetronKapasiteetti(int metronKapasiteetti) {
         this.metronKapasiteetti = metronKapasiteetti;
         moottori.setMetroCapacity(metronKapasiteetti);
     }
 
+    /**
+     * Palauttaa aseman-kapasiteetin.
+     * Jos asemassa on tätä lukua enemmän asiakkaita, entrance-palvelupiste ei vastaanota asiakkaita.
+     *
+     * @return aseman kapasiteetti (int)
+     */
     @Override
     public int getAsemanKapasiteetti() {
         return moottori.getStationCapacity();
     }
 
+    /**
+     * Asettaa aseman kapasiteetin parametrina annettuun arvoon.
+     * Jos asemassa on tätä lukua enemmän asiakkaita, entrance-palvelupiste ei vastaanota asiakkaita.
+     *
+     * @param asemanKapasiteetti aseman kapasiteetti (int)
+     */
     @Override
     public void setAsemanKapasiteetti(int asemanKapasiteetti) {
         this.asemanKapasiteetti = asemanKapasiteetti;
         moottori.setStationCapacity(asemanKapasiteetti);
     }
 
+    /**
+     * Palauttaa asemassa olevat asiakkaat (entrance-palvelupisteen läpi menneet asiakkaat - metro-palvelupisteen käsittelemät asiakkaat)
+     * @return asemassa olevien asiakkaiden lukumäärä (int)
+     */
     @Override
     public int getAsiakkaatAsemassa() {
         return moottori.getCustomersWithin();
     }
+
+    /**
+     * Palauttaa metro-palvelupisteen käsittelemät asiakkaat.
+     * @return palvellut asiakkaat (int)
+     */
     @Override
     public int getPalvellutAsaiakkaat() {
         return moottori.getServedCustomers();
