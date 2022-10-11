@@ -28,22 +28,45 @@ import java.util.Random;
  * Controller luokka simview sivulle. Piirtää animaatiot ja palvelupisteet sivulle hyödyntäen fxml sivun gridpanea ja panea
  */
 public class simviewController implements IVisualisointi{
+    /**
+     * FXML viittaus GridPaneen jota käytetään palvelupisteiden asetteluun
+     */
     @FXML
     private GridPane gp;
 
+    /**
+     * FXML viittaus sivun tausta Paneen johon animaatiot ja viivat piirretään
+     */
     @FXML
     private Pane bg;
 
+    /**
+     * FXML viittaus sivun anchor paneen
+     */
     @FXML
     private AnchorPane ap;
 
+    /**
+     * mainApp
+     */
     private MainApp mainApp;
 
+    /**
+     * Kaikki moottorin palvelupisteet
+     */
     private Palvelupiste[] pt;
+
+    /**
+     * vastaanottaa mainApiltä viitauksen siihen
+     * @param mainApp {@link MainApp}
+     */
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Lista palvelupisteitä {@link ppVisualizer}
+     */
     private ArrayList<ppVisualizer> lista = new ArrayList<ppVisualizer>();
 
     /**
@@ -114,7 +137,8 @@ public class simviewController implements IVisualisointi{
     }
 
     /**
-     * Kutsutaan kontrollerista, paivitaUI piirtää animaatiot palvelupisteiden välille
+     * Kutsutaan kontrollerista, paivitaUI piirtää animaatiot palvelupisteiden välille,
+     * ja päivittää palvelupisteiden jonojenpituudet
      * @param t Tapahtuman tyyppi päättää mistä palvelupisteestä mihin piirretään animaatio
      */
     @FXML
@@ -181,11 +205,11 @@ public class simviewController implements IVisualisointi{
     }
 
     /**
-     * Annetaa laatikon koordinaatit esim jos laatikko on iha vasemmassa yläkulmassa annetaan 1x 1y koordinaateiksi, josta
+     * Annetaa laatikon koordinaatit: esim jos laatikko on iha vasemmassa yläkulmassa annetaan 1x 1y koordinaateiksi, josta
      * tämä funktio laskee sen absoluuttiset koordinaatit sceneen nähden (esim 123x, 156y)
-     * @param x Palvelupisteen x coordinaatti gridpanessa
-     * @param y Palvelupisteen y koordinaatti gridpanessa
-     * @return Palauttaa point2d objectin jossa on palvelupisteen absoluuttiset x ja y koordinaatit sceneen nähden
+     * @param x Palvelupisteen x sijainti gridpanessa
+     * @param y Palvelupisteen y sijainti gridpanessa
+     * @return Palauttaa Point2D objectin jossa on palvelupisteen absoluuttiset x ja y koordinaatit sceneen nähden
      */
     private Point2D getboxc2(int x, int y){
 
@@ -203,6 +227,11 @@ public class simviewController implements IVisualisointi{
 
     }
 
+    /**
+     * Piirtää viivan kahden palvelupisteen välille
+     * @param x1 Palvelupiste josta viivan piiro alkaa
+     * @param x2 Palvelupiste johon viiva piirretään
+     */
     private void viivapiirra(ppVisualizer x1, ppVisualizer x2){
 
 
@@ -227,9 +256,9 @@ public class simviewController implements IVisualisointi{
 
 
     /**
-     * Piirtää Panelle p liikkuvan pallon
-     * preffered metodi piirtämiseen on smartpiirrä()
-     * yksinkertaisuuden takia
+     * Piirtää liikkuvan pallon
+     * preffered metodi piirtämiseen on smartpiirrä
+     * yksinkertaisuuden takia {@link #smartpiirra(ppVisualizer, ppVisualizer)}
      * @param x pallon lähtökoordinaatit
      * @param y pallon päättymis koordinaatit
      * @param p pane johon pallo piirretään
@@ -275,6 +304,12 @@ public class simviewController implements IVisualisointi{
 
     }
 
+    /**
+     * ns Wrapper funktio drawille. {@link #draw(Point2D, Point2D, Pane)}
+     * Laskee koordinaatit automaattisesti. Suositeltu piirto menetelmä
+     * @param p1 palvelupiste josta animaatio alkaa
+     * @param p2 palvelupiste johon animaatio päättyy
+     */
     private void smartpiirra(ppVisualizer p1, ppVisualizer p2){
 
         Point2D startpos = getboxc2(p1.getXaxis(), p1.getYaxis());

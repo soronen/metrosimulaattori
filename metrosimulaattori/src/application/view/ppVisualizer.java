@@ -4,8 +4,6 @@ import application.simu.model.TapahtumanTyyppi;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -16,18 +14,39 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Palvelupistettä kuvastava luokka simviewille {@link simviewController}
+ */
 public class ppVisualizer {
+    /**
+     * StackPane joka asettaa palvelupisteen nimen ja kuvan päällekkäin
+     */
+    private final StackPane group = new StackPane();
+    /**
+     * Palvelupisteen nimi + jononpituus
+     */
+    private final Text pptext;
+    /**
+     * Palvelupisteen tapahtumantyyppi/nimi
+     */
+    private final TapahtumanTyyppi tt;
 
-    private StackPane group = new StackPane();
-    private Text pptext = null;
-    private Rectangle box = null;
-
-    private TapahtumanTyyppi tt;
-
+    /**
+     * palvelupisteen x sijainti gridpanessa
+     */
     private int xaxis;
 
+    /**
+     * palvelupisteen y sijainti gridpanessa
+     */
     private int yaxis;
 
+    /**
+     * Konstruktori
+     * @param x palvelupisteen x sijainti gridpanessa
+     * @param y palvelupisteen y sijainti gridpanessa
+     * @param tt Tapahtuman tyyppi / palvelupisteen nimi
+     */
     public ppVisualizer(int x, int y, TapahtumanTyyppi tt){
         this.xaxis = x;
         this.yaxis = y;
@@ -36,7 +55,7 @@ public class ppVisualizer {
         this.pptext = new Text(tt.name() + " 0");
         pptext.setTextAlignment(TextAlignment.CENTER);
         pptext.setFill(Color.RED);
-        pptext.setFont(new Font(40));
+        pptext.setFont(new Font( 40));
 
 
         csquare();
@@ -51,6 +70,10 @@ public class ppVisualizer {
 
     }
 
+    /**
+     * Luo palvelupisteen kuvan
+     * kutsutaan konstruktorista {@link #ppVisualizer(int, int, TapahtumanTyyppi)}
+     */
     private void csquare(){
         Rectangle r1 = new Rectangle(80,80);
         r1.setFill(Color.BLACK);
@@ -73,29 +96,50 @@ public class ppVisualizer {
                 img = new Image(ppVisualizer.class.getResourceAsStream("images/tarkastus.png"));
                 r1.setFill(new ImagePattern(img));
                 break;
+
         }
 
         group.getChildren().add(r1);
 
     }
 
+    /**
+     * getteri
+     * @return {@link #group}
+     */
     public StackPane getGroup(){
         return this.group;
     }
 
+    /**
+     * getteri
+     * @return {@link #tt}
+     */
     public TapahtumanTyyppi getTapahtumanTyyppi(){
         return this.tt;
     }
 
+    /**
+     * Asettaa palvelupisteen tekstin numeron (käytetään jononpituuden visualisointiin)
+     * @param x uusi numero
+     */
     public void setNumber(int x){
         String temp = this.pptext.getText();
         pptext.setText(temp.replaceAll("\\d","") + Integer.toString(x));
     }
 
+    /**
+     * getteri
+     * @return {@link #xaxis}
+     */
     public int getXaxis() {
         return this.xaxis;
     }
 
+    /**
+     * getteri
+     * @return {@link #yaxis}
+     */
     public int getYaxis() {
         return this.yaxis;
     }
