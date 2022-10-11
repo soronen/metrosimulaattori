@@ -311,9 +311,18 @@ public class StatsTabController implements  IVisualisointi {
      * @param palvelupiste Palvelupiste, jonka tiedot haetaan ja näytetään.
      */
     private void asetaPavelupisteenTiedot(TapahtumanTyyppi palvelupiste) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        labelJonossaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getPPjononpituus(palvelupiste)));
+        labelJononKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskijonoaika(palvelupiste))));
+        labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getPPpalvellutAsiakkaat(palvelupiste)));
+        labelPavelunKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskiarvoaika(palvelupiste))));
+
+
         switch (palvelupiste) {
             case ENTRANCE:
                 labelPalvelupiste.setText("Palvelupisteen \"Sisäänkäynti\" tilastot");
+                // entrance-pisteen palvellut asiakkaat ei ole oikein, jonka takia pitää tehdä näin..
+                labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()+kontrolleri.getPalvellutAsaiakkaat()));
                 break;
             case TICKETSALES:
                 labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
@@ -331,12 +340,6 @@ public class StatsTabController implements  IVisualisointi {
         } else {
             labelPavelunTila.setText("Vapaa");
         }
-        DecimalFormat df = new DecimalFormat("#.##");
-        labelJonossaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getPPjononpituus(palvelupiste)));
-        labelJononKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskijonoaika(palvelupiste))));
-        labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getPPpalvellutAsiakkaat(palvelupiste)));
-        labelPavelunKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskiarvoaika(palvelupiste))));
-
     }
 
     /**
