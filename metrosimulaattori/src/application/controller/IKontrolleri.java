@@ -98,4 +98,6 @@ public interface IKontrolleri {
     void initchart(graphviewcontroller i);
 
     void stopSimulation();
+
+    void dChart(graphviewcontroller i);
 }

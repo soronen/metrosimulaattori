@@ -10,6 +10,7 @@ import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
 import application.view.graphviewcontroller;
+import dao.ISimulaattoriDAO;
 import dao.SimulaattoriDAO;
 import entity.ServicePoint;
 import entity.Simulaattori;
@@ -645,7 +646,7 @@ public class Kontrolleri implements IKontrolleri {
             return;
 
         }
-
+        i.getListView().getItems().clear();
         for (Simulaattori sim : simlist) {
 
             i.getListView().getItems().add("Simulaatio " + sim.getId());
@@ -654,5 +655,18 @@ public class Kontrolleri implements IKontrolleri {
 
         asetachart(i, 1);
 
+    }
+
+    public void dChart(graphviewcontroller i){
+        ISimulaattoriDAO sdao = new SimulaattoriDAO();
+        int id = i.getListView().getSelectionModel().getSelectedIndex();
+
+        if (id < 0){
+            return;
+        }
+
+        sdao.poistaSimulaattori(((int)id+1));
+
+        initchart(i);
     }
 }

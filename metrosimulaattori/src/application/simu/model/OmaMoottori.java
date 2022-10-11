@@ -85,7 +85,6 @@ public class OmaMoottori extends Moottori{
 				palvelupisteet[0].lisaaJonoon(new Asiakas());
 				saapumisprosessi.generoiSeuraava();
 
-				kontrolleri.visualisoiAsiakas(); // UUSI
 				break;
 			case TICKETSALES: a = palvelupisteet[1].otaJonosta();
 				a.setPpisteSaapumisaika(Kello.getInstance().getAika());

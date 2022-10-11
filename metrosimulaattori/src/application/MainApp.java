@@ -93,11 +93,16 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("view/graphview.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
+
+
+
             dialogStage.setTitle("Kraaffi näkymä");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+
+
 
             // Set the persons into the controller.
             graphviewcontroller controller = loader.getController();
@@ -109,7 +114,12 @@ public class MainApp extends Application {
 
             kontrol.initchart(controller);
 
-
+            scene.setOnKeyPressed(event -> {
+                String codeString = event.getCode().toString();
+                if (codeString.equals("DELETE")){
+                    kontrol.dChart(controller);
+                }
+            });
 
 
         } catch (IOException e) {
