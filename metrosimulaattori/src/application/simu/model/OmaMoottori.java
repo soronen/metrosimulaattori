@@ -1,17 +1,13 @@
 package application.simu.model;
 
 import application.controller.IKontrolleri;
-import application.eduni.distributions.ContinuousGenerator;
 import application.eduni.distributions.Normal;
-import application.eduni.distributions.Uniform;
 import application.simu.framework.Kello;
 import application.simu.framework.Moottori;
 import application.simu.framework.Saapumisprosessi;
 import application.simu.framework.Tapahtuma;
-import entity.Simulaattori;
 
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class OmaMoottori extends Moottori{
 
@@ -42,10 +38,10 @@ public class OmaMoottori extends Moottori{
 
 		palvelupisteet = new Palvelupiste[4];
 
-		palvelupisteet[0]=new Palvelupiste(new Uniform(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
-		palvelupisteet[1]=new Palvelupiste(new Normal(salesMean,salesVariance), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
-		palvelupisteet[2]=new Palvelupiste(new Normal(checkMean,checkVariance), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
-		palvelupisteet[3]=new Palvelupiste(new Normal(metroMean,metroVariance), tapahtumalista, TapahtumanTyyppi.METRO);
+		palvelupisteet[0]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[1]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
+		palvelupisteet[2]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
+		palvelupisteet[3]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.METRO);
 
 		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
 	}
@@ -55,7 +51,7 @@ public class OmaMoottori extends Moottori{
 
 		palvelupisteet = new Palvelupiste[4];
 
-		palvelupisteet[0]=new Palvelupiste(new Uniform(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[0]=new Palvelupiste(new Normal(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
 		palvelupisteet[1]=new Palvelupiste(new Normal(salesMean,salesVariance), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
 		palvelupisteet[2]=new Palvelupiste(new Normal(checkMean,checkVariance), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
 		palvelupisteet[3]=new Palvelupiste(new Normal(metroMean,metroVariance), tapahtumalista, TapahtumanTyyppi.METRO);
@@ -84,7 +80,6 @@ public class OmaMoottori extends Moottori{
 			case ARRIVAL:
 				palvelupisteet[0].lisaaJonoon(new Asiakas());
 				saapumisprosessi.generoiSeuraava();
-
 				break;
 			case TICKETSALES: a = palvelupisteet[1].otaJonosta();
 				a.setPpisteSaapumisaika(Kello.getInstance().getAika());
