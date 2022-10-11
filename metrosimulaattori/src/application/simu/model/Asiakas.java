@@ -11,13 +11,7 @@ public class Asiakas {
 	private double poistumisaika;
 	private int id;
 	private static int i = 1;
-
 	private double ppisteSaapumisaika;
-
-
-
-
-
 	private static int poistuneetAsiakkaat = 0;
 	private static double sum = 0;
 
