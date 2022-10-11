@@ -1,9 +1,11 @@
 package dao;
 
+import datasource.MySqlJpaConn;
 import entity.Simulaattori;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public void lisaaSimulaattori(Simulaattori s) {
-        EntityManager em = datasource.MySqlJpaConn.getInstance();
+        EntityManager em = MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         em.persist(s);
         em.getTransaction().commit();
@@ -32,7 +34,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public Simulaattori haeSimulaattori(int id) {
-        EntityManager em = datasource.MySqlJpaConn.getInstance();
+        EntityManager em = MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Simulaattori s = em.find(Simulaattori.class, id);
         em.getTransaction().commit();
@@ -45,7 +47,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public void poistaSimulaattori(int id) {
-        EntityManager em = datasource.MySqlJpaConn.getInstance();
+        EntityManager em = MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Simulaattori s = em.find(Simulaattori.class, id);
         if (s!=null) {
@@ -60,11 +62,10 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public List<Simulaattori> listaaSimulaattorit() {
-        EntityManager em = datasource.MySqlJpaConn.getInstance();
+        EntityManager em = MySqlJpaConn.getInstance();
         String jpqlQuery = "SELECT s FROM Simulaattori s";
         Query q = em.createQuery(jpqlQuery);
         List<Simulaattori> resultList = q.getResultList();
         return resultList;
     }
-
 }
