@@ -19,42 +19,19 @@ public class OmaMoottori extends Moottori{
 
 	private double keskiarvoaika;
 	private int mobiililippujakauma = 50;
-
-	private int entranceMean = 4;
-	private int	entranceVariance = 8;
-	private int salesMean = 20;
-	private int salesVariance = 10;
-	private int checkMean = 7;
-	private int checkVariance = 3;
-	private int metroMean = 360;
-	private int metroVariance = 60;
-	private int arrivalMean = 5;
-	private int arrivalVariance = 3;
+	private int arrivalMean;
+	private int arrivalVariance;
 
 
-	public OmaMoottori(IKontrolleri kontrolleri){ // UUSI
-
-		super(kontrolleri); //UUSI
-
-		palvelupisteet = new Palvelupiste[4];
-
-		palvelupisteet[0]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
-		palvelupisteet[1]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
-		palvelupisteet[2]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
-		palvelupisteet[3]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.METRO);
-
-		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
-	}
 	public OmaMoottori(IKontrolleri kontrolleri, int arrivalMean, int arrivalVariance){ // UUSI
 
 		super(kontrolleri); //UUSI
 
 		palvelupisteet = new Palvelupiste[4];
-
-		palvelupisteet[0]=new Palvelupiste(new Normal(entranceMean,entranceVariance), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
-		palvelupisteet[1]=new Palvelupiste(new Normal(salesMean,salesVariance), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
-		palvelupisteet[2]=new Palvelupiste(new Normal(checkMean,checkVariance), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
-		palvelupisteet[3]=new Palvelupiste(new Normal(metroMean,metroVariance), tapahtumalista, TapahtumanTyyppi.METRO);
+		palvelupisteet[0]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[1]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
+		palvelupisteet[2]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
+		palvelupisteet[3]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.METRO);
 
 		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
 		this.arrivalMean = arrivalMean;
@@ -129,7 +106,7 @@ public class OmaMoottori extends Moottori{
 						a = palvelupisteet[3].otaJonosta();
 						a.setPoistumisaika(Kello.getInstance().getAika());
 						a.raportti();
-						palvelupisteet[3].addtoKeskijonoaika(a.getPpisteSaapumisaika());
+						palvelupisteet[3].kokonaisaikaJonotettu(a.getPpisteSaapumisaika());
 						customersWithin--;
 						servedCustomers++;
 						keskiarvoaika = a.getKeskiarvo();
@@ -156,22 +133,6 @@ public class OmaMoottori extends Moottori{
 		kontrolleri.tallenaEntity(this);
 
 	}
-
-	protected void yritaCTapahtumat(){
-		for (Palvelupiste p: palvelupisteet){
-			if (!p.onVarattu() && p.onJonossa() && p.getTapahtumanTyyppi() != TapahtumanTyyppi.ENTRANCE){
-				p.aloitaPalvelu();
-			} else if (!p.onVarattu() && p.onJonossa() && p.getTapahtumanTyyppi() == TapahtumanTyyppi.ENTRANCE){
-
-				if (customersWithin < stationCapacity){
-					System.out.println("Palvelu aloitettu. Palvelupisteen kapasiteetti: " + customersWithin + " : " + stationCapacity);
-					customersWithin++;
-					p.aloitaPalvelu();
-					}
-				}
-			}
-		}
-
 
 	public Palvelupiste[] getPalvelupisteet() {
 		return palvelupisteet;
