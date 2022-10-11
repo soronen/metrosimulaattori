@@ -24,7 +24,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Controller luokka simview sivulle. Piirtää animaatiot ja palvelupisteet sivulle hyödyntäen fxml sivun gridpanea ja panea
+ */
 public class simviewController implements IVisualisointi{
     @FXML
     private GridPane gp;
@@ -44,6 +46,10 @@ public class simviewController implements IVisualisointi{
 
     private ArrayList<ppVisualizer> lista = new ArrayList<ppVisualizer>();
 
+    /**
+     * FXML initalize, joka piirtää palvelupisteet ja niiden väliset viivat
+     * simview sivulle. Se alustaa myös ppVisualizer luokat palvelupisteille
+     */
     @FXML
     private void initialize() {
 
@@ -110,7 +116,10 @@ public class simviewController implements IVisualisointi{
 
     }
 
-
+    /**
+     * Kutsutaan kontrollerista, paivitaUI piirtää animaatiot palvelupisteiden välille
+     * @param t Tapahtuman tyyppi päättää mistä palvelupisteestä mihin piirretään animaatio
+     */
     @FXML
     public void paivitaUI(Tapahtuma t){
 
@@ -174,6 +183,13 @@ public class simviewController implements IVisualisointi{
 
     }
 
+    /**
+     * Annetaa laatikon koordinaatit esim jos laatikko on iha vasemmassa yläkulmassa annetaan 1x 1y koordinaateiksi, josta
+     * tämä funktio laskee sen absoluuttiset koordinaatit sceneen nähden (esim 123x, 156y)
+     * @param x Palvelupisteen x coordinaatti gridpanessa
+     * @param y Palvelupisteen y koordinaatti gridpanessa
+     * @return Palauttaa point2d objectin jossa on palvelupisteen absoluuttiset x ja y koordinaatit sceneen nähden
+     */
     private Point2D getboxc2(int x, int y){
 
         Bounds b = bg.getBoundsInLocal();
@@ -213,10 +229,13 @@ public class simviewController implements IVisualisointi{
     }
 
 
-    /*
-    Piirtää Panelle p liikkuvan pallon pisteestä x pisteeseen y.
-    (Point2D on classi jolla on x ja y arvo)
-    preffered metodi piirtämiseen on smartpiirrä()
+    /**
+     * Piirtää Panelle p liikkuvan pallon
+     * preffered metodi piirtämiseen on smartpiirrä()
+     * yksinkertaisuuden takia
+     * @param x pallon lähtökoordinaatit
+     * @param y pallon päättymis koordinaatit
+     * @param p pane johon pallo piirretään
      */
     private void draw(Point2D x, Point2D y, Pane p){
 
