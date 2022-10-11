@@ -6,11 +6,11 @@
  <persistence-unit name="DevPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
-        <property name="jakarta.persistence.jdbc.url" value="jdbc:mariadb://localhost:3306/metrosimulaattori"/>
-        <property name="jakarta.persistence.jdbc.user" value="metrosim"/>
-        <property name="jakarta.persistence.jdbc.password" value="dbpassword"/>
-        <property name="jakarta.persistence.jdbc.driver" value="org.mariadb.jdbc.Driver"/>
-        <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+        <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://mysql.metropolia.fi/eetusoro"/>
+        <property name="jakarta.persistence.jdbc.user" value="eetusoro"/>
+        <property name="jakarta.persistence.jdbc.password" value="metrosim"/>
+        <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+        <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
         <property name="hibernate.show_sql" value="true" />
         <property name="dialect" value ="org.hibernate.dialect.MySQLDialect" />
     </properties>
