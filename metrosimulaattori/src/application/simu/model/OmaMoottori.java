@@ -28,10 +28,10 @@ public class OmaMoottori extends Moottori{
 		super(kontrolleri); //UUSI
 
 		palvelupisteet = new Palvelupiste[4];
-		palvelupisteet[0]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
-		palvelupisteet[1]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
-		palvelupisteet[2]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
-		palvelupisteet[3]=new Palvelupiste(new Normal(1,1), tapahtumalista, TapahtumanTyyppi.METRO);
+		palvelupisteet[0]=new Palvelupiste(new Normal(1000,1000), tapahtumalista, TapahtumanTyyppi.ENTRANCE, stationCapacity);
+		palvelupisteet[1]=new Palvelupiste(new Normal(1000,1000), tapahtumalista, TapahtumanTyyppi.TICKETSALES);
+		palvelupisteet[2]=new Palvelupiste(new Normal(1000,1000), tapahtumalista, TapahtumanTyyppi.TICKETCHECK);
+		palvelupisteet[3]=new Palvelupiste(new Normal(1000,1000), tapahtumalista, TapahtumanTyyppi.METRO);
 
 		saapumisprosessi = new Saapumisprosessi(new Normal(arrivalMean,arrivalVariance), tapahtumalista, TapahtumanTyyppi.ARRIVAL);
 		this.arrivalMean = arrivalMean;
@@ -101,7 +101,7 @@ public class OmaMoottori extends Moottori{
 
 				break;
 			case METRO:
-				for (int i = 0; i < metroCapacity ; i++) {
+				for (int i = 1; i < metroCapacity ; i++) {
 					if (palvelupisteet[3].onJonossa()) {
 						a = palvelupisteet[3].otaJonosta();
 						a.setPoistumisaika(Kello.getInstance().getAika());

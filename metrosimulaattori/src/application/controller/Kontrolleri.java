@@ -76,7 +76,6 @@ public class Kontrolleri implements IKontrolleri {
 
         moottori = getMoottori();
         Kello.getInstance().setAika(0);
-        palvelupisteet = moottori.getPalvelupisteet();
 
         asetaMoottorinParametrit();
 
@@ -112,6 +111,7 @@ public class Kontrolleri implements IKontrolleri {
         if (moottori != null) {
             moottori.setSimulointiaika(0);
             moottori = null;
+            getMoottori();
         }
 
     }
@@ -146,6 +146,7 @@ public class Kontrolleri implements IKontrolleri {
     public IMoottori getMoottori() {
         if (moottori == null) {
             moottori = new OmaMoottori(this, arrivalMean, arrivalVariance); // luodaan uusi moottorisäie jokaista simulointia varten
+            palvelupisteet = moottori.getPalvelupisteet();
         }
         return moottori;
     }
@@ -424,7 +425,12 @@ public class Kontrolleri implements IKontrolleri {
                 System.out.println("metron palvelunro = " + palvelupisteet[3].getPalvelunro());
                 break;
         }
-        return palvelupisteet[index].getPalvelunro();
+
+        // aaveasiakkas pois näkymästä
+        if (palvelupisteet[index].getPalvelunro() == 0) {
+            return 0;
+        }
+        return palvelupisteet[index].getPalvelunro()-1;
     }
 
     public double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste) {

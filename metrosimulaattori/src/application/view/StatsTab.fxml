@@ -339,7 +339,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label text="Pavellut asiakkaat" GridPane.rowIndex="1">
+                              <Label text="Palvellut asiakkaat" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

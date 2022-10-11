@@ -161,6 +161,7 @@ public class StatsTabController implements  IVisualisointi {
     @FXML
     private void initialize() {
         kontrolleri = MainApp.getKontrol();
+        kontrolleri.getMoottori();
 
         // simuloinnin viiveen voi antaa enteriä painamalla kun simu on käynnissä
         tfSimuloinninViive.setOnKeyPressed(event -> {
@@ -207,7 +208,6 @@ public class StatsTabController implements  IVisualisointi {
     /**
      * Lukee aseman saapumisten jakauman arvot käyttöliittymästä ja lähettää ne kontrollerille.
      */
-
     public void setSimunSaapumisJakauma() {
         try {
             int arrmean = Integer.parseInt(tfSaapumisenOdotusarvo.getText());
@@ -369,6 +369,7 @@ public class StatsTabController implements  IVisualisointi {
     private void setPPJakauma() {
         if (!kontrolleri.onkoKaynnissa()) {
             try {
+                kontrolleri.getMoottori();
                 int mean = Integer.valueOf(tfPalvelupisteenOdotusarvo.getText());
                 int variance = Integer.valueOf(tfPalvelupisteenVarianssi.getText());
                 kontrolleri.setPPJakauma(getPainettuNappi(), mean, variance);
