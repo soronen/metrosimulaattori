@@ -118,7 +118,7 @@ public class Kontrolleri implements IKontrolleri {
 
     /**
      * pysäyttää!!1! ⛔🚫🛑🚫  simulaattorin kesken asetmmalla simulointiajan nollaan.
-     * asettaa moottorin null arvoksi 1 sekunnin kuluttua tästä, kun muutkin säikeet ovat saaneet kuulla uutiset
+     * asettaa moottorin null arvoksi pienen viiveen kuluttua tästä, kun muutkin säikeet ovat saaneet kuulla uutiset
      * jotta konsoliin ei tulisi virheilmoituksia
      */
     public void stopSimulation() {
@@ -128,7 +128,7 @@ public class Kontrolleri implements IKontrolleri {
         Platform.runLater(new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(100);
                     moottori = null;
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
