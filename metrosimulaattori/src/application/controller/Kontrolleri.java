@@ -10,19 +10,15 @@ import application.simu.model.Palvelupiste;
 import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
 import application.view.graphviewcontroller;
-import dao.ServicePointDAO;
 import dao.SimulaattoriDAO;
-import datasource.MariaDbJpaConn;
 import entity.ServicePoint;
 import entity.Simulaattori;
 import entity.Station;
-import jakarta.persistence.EntityManager;
 import javafx.application.Platform;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 
@@ -47,7 +43,7 @@ public class Kontrolleri implements IKontrolleri {
 
     //palvelupisteiden jakaumien mean ja var -arvot
     private int entranceMean = 4;
-    private int	entranceVariance = 8;
+    private int entranceVariance = 8;
     private int salesMean = 20;
     private int salesVariance = 10;
     private int checkMean = 7;
@@ -59,7 +55,7 @@ public class Kontrolleri implements IKontrolleri {
     private int arrivalMean = 5;
     private int arrivalVariance = 3;
 
-
+    private boolean simuStopped = false;
 
 
     public Kontrolleri(IVisualisointi ui) {
@@ -67,7 +63,7 @@ public class Kontrolleri implements IKontrolleri {
         MainApp.setKontrol(this);
     }
 
-    public Kontrolleri(){
+    public Kontrolleri() {
         MainApp.setKontrol(this);
     }
 
@@ -75,7 +71,7 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void kaynnistaSimulointi() {
 
-        if (((Thread)moottori).getState() != Thread.State.NEW){
+        if (((Thread) moottori).getState() != Thread.State.NEW) {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
@@ -92,11 +88,10 @@ public class Kontrolleri implements IKontrolleri {
         asetaMoottorinParametrit();
 
 
-
-        if (!kaynnissa && ((Thread)moottori).getState() == Thread.State.NEW) {
+        if (!kaynnissa && ((Thread) moottori).getState() == Thread.State.NEW) {
 
             kaynnissa = true;
-            ((Thread)moottori).start();
+            ((Thread) moottori).start();
 
         }
     }
@@ -114,15 +109,46 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
-
-
+    /**
+     * Kutsuu setKaynnissa(false) -metodia.
+     * Jos moottori != null asettaa simlointiajan nollaksi ja poistaa simulaattorin.
+     */
     @Override
     public void resetSimulator() {
         setKaynnissa(false);
-        moottori.setSimulointiaika(0);
-        moottori = null;
+        if (moottori != null) {
+            moottori.setSimulointiaika(0);
+            moottori = null;
+        }
+
     }
 
+    /**
+     * pysäyttää!!1! ⛔🚫🛑🚫  simulaattorin kesken asetmmalla simulointiajan nollaan.
+     * asettaa moottorin null arvoksi 1 sekunnin kuluttua tästä, kun muutkin säikeet ovat saaneet kuulla uutiset
+     * jotta konsoliin ei tulisi virheilmoituksia
+     */
+    public void stopSimulation() {
+        setKaynnissa(false);
+        simuStopped = true;
+        moottori.setSimulointiaika(0);
+        Platform.runLater(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    moottori = null;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    /**
+     * Palauttaa moottorin. Jos moottori = null, luo sen.
+     *
+     * @return OmaMoottori-olio, jonka saapmuisen jakauma on asetettu (arrivalMean ja arrivalVariance);
+     */
     @Override
     public IMoottori getMoottori() {
         if (moottori == null) {
@@ -131,48 +157,60 @@ public class Kontrolleri implements IKontrolleri {
         return moottori;
     }
 
+    /**
+     * Palauttaa moottorin palvelupisteet
+     *
+     * @return Palvelupiste[]-taulukko, joka sisältää moottorin palvelupisteet. [0] = Entrance, [1] = Sales, [2] = Check, [3] = Metro
+     */
     @Override
     public Palvelupiste[] getPalvelupisteet() {
         return moottori.getPalvelupisteet();
     }
 
+    /**
+     * Nopeuttaa simulaattoria laskemalla simulaattorin viivettä 10%:lla.
+     */
     @Override
     public void nopeuta() {
-        moottori.setViive((long)(moottori.getViive()*0.9));
+        moottori.setViive((long) (moottori.getViive() * 0.9));
     }
 
+    /**
+     * Korottaa mottorin viivettä 10%:lla ja lisää tulokseen vielä ykkösen.
+     * Ykkönen lisätään, jotta viive nousee nollastakin.
+     */
     @Override
     public void hidasta() {
-        moottori.setViive((long)(moottori.getViive()*1.10));
+        moottori.setViive((long) (moottori.getViive() * 1.10 + 1));
     }
 
-    @Override
-    public void muutaNopeutta(long viive) {
-        moottori.setViive(viive);
-    }
-
-    @Override
-    public void naytaLoppuaika(double aika) {
-
-    }
-    @Override
-    public void visualisoiAsiakas() {
-
-    }
+    /**
+     * OmaMoottorin kutsuma metodi, joka kutsuu UI:n päivitäUI()-metodia jokaisen tapahtuman käsittelyn yhteydessä.
+     * Vastaa käyttöliittymän päivittämisestä.
+     *
+     * @param t Tapahtuma-olio, joka sisältää tiedon tapahtuneesta tapahtumasta.
+     */
     @Override
     public void paivitaUI(Tapahtuma t) {
-
-
-
         ui.paivitaUI(t);
     }
 
+    /**
+     * Asettaa simulaattorin keston moottorissa ja tallentaa sen kontrollerin simukesto-muuttujaan.
+     *
+     * @param simukesto
+     */
     @Override
     public void setsimulaattorinKesto(int simukesto) {
         this.simukesto = simukesto;
         moottori.setSimulointiaika(simukesto);
     }
 
+    /**
+     * Asettaa simulaattorin viiveen parametrina annettuun arvoon.
+     *
+     * @param simuviive long arvo, joka asetetaan simulaattorin viiveeksi.
+     */
     @Override
     public void setSimulaattorinViive(int simuviive) {
         this.simuviive = simuviive;
@@ -180,32 +218,65 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+    /**
+     * Palauttaa metro-palvelupisteen kapasiteetin.
+     *
+     * @return Metro-palvelupisteen kapasiteetti int-arvona.
+     */
     @Override
     public int getMetronKapasiteetti() {
         return moottori.getMetroCapacity();
     }
 
+    /**
+     * Asettaa metro-palvelupisteen kapasiteetin parametrina annettuun arvoon.
+     *
+     * @param metronKapasiteetti
+     */
     @Override
     public void setMetronKapasiteetti(int metronKapasiteetti) {
         this.metronKapasiteetti = metronKapasiteetti;
         moottori.setMetroCapacity(metronKapasiteetti);
     }
 
+    /**
+     * Palauttaa aseman-kapasiteetin.
+     * Jos asemassa on tätä lukua enemmän asiakkaita, entrance-palvelupiste ei vastaanota asiakkaita.
+     *
+     * @return aseman kapasiteetti (int)
+     */
     @Override
     public int getAsemanKapasiteetti() {
         return moottori.getStationCapacity();
     }
 
+    /**
+     * Asettaa aseman kapasiteetin parametrina annettuun arvoon.
+     * Jos asemassa on tätä lukua enemmän asiakkaita, entrance-palvelupiste ei vastaanota asiakkaita.
+     *
+     * @param asemanKapasiteetti aseman kapasiteetti (int)
+     */
     @Override
     public void setAsemanKapasiteetti(int asemanKapasiteetti) {
         this.asemanKapasiteetti = asemanKapasiteetti;
         moottori.setStationCapacity(asemanKapasiteetti);
     }
 
+    /**
+     * Palauttaa asemassa olevat asiakkaat (entrance-palvelupisteen läpi menneet asiakkaat - metro-palvelupisteen käsittelemät asiakkaat)
+     *
+     * @return asemassa olevien asiakkaiden lukumäärä (int)
+     */
     @Override
     public int getAsiakkaatAsemassa() {
         return moottori.getCustomersWithin();
     }
+
+    /**
+     * Palauttaa metro-palvelupisteen käsittelemät asiakkaat.
+     *
+     * @return palvellut asiakkaat (int)
+     */
     @Override
     public int getPalvellutAsaiakkaat() {
         return moottori.getServedCustomers();
@@ -215,6 +286,7 @@ public class Kontrolleri implements IKontrolleri {
     public long getViive() {
         return moottori.getViive();
     }
+
     @Override
     public void setKaynnissa(boolean kaynnissa) {
         this.kaynnissa = kaynnissa;
@@ -224,6 +296,7 @@ public class Kontrolleri implements IKontrolleri {
     public boolean onkoKaynnissa() {
         return kaynnissa;
     }
+
     @Override
     public int getMobiililippujakauma() {
         return moottori.getMobiililippujakauma();
@@ -238,36 +311,39 @@ public class Kontrolleri implements IKontrolleri {
     public void setEntranceJakauma(int mean, int variance) {
         entranceMean = mean;
         entranceVariance = variance;
-        palvelupisteet[0].setJakauma(new Normal(entranceMean,entranceVariance));
+        palvelupisteet[0].setJakauma(new Normal(entranceMean, entranceVariance));
     }
+
     @Override
     public void setSalesJakauma(int mean, int variance) {
         salesMean = mean;
         salesVariance = variance;
 
-        palvelupisteet[1].setJakauma(new Normal(salesMean,salesVariance));
+        palvelupisteet[1].setJakauma(new Normal(salesMean, salesVariance));
     }
+
     @Override
     public void setCheckJakauma(int mean, int variance) {
         checkMean = mean;
         checkVariance = variance;
-        palvelupisteet[2].setJakauma(new Normal(checkMean,checkVariance));
+        palvelupisteet[2].setJakauma(new Normal(checkMean, checkVariance));
     }
+
     @Override
     public void setMetroJakauma(int mean, int variance) {
         metroMean = mean;
         metroVariance = variance;
-        palvelupisteet[3].setJakauma(new Normal(metroMean,metroVariance));
+        palvelupisteet[3].setJakauma(new Normal(metroMean, metroVariance));
     }
 
 
-    public void setArrivalJakauma (int mean, int variance) {
+    public void setArrivalJakauma(int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
     }
 
     public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
-        switch(tt) {
+        switch (tt) {
             case ENTRANCE:
                 entranceMean = mean;
                 entranceVariance = variance;
@@ -379,14 +455,14 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
-
     /**
      * Palauttaa palvelupisteen generaattorin odotus ja varianssiarvot
+     *
      * @param tt TapahtumanTyyppi, joka vastaa palvelupistettä
      * @return int[2] taulukon, jossa i[0] = odotusarvo ja i[1] = varianssi
      */
     public int[] getPPJakauma(TapahtumanTyyppi tt) {
-        switch(tt) {
+        switch (tt) {
             case ENTRANCE:
                 return new int[]{entranceMean, entranceVariance};
             case TICKETSALES:
@@ -400,8 +476,7 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
-
-    public void setUi(IVisualisointi iv){
+    public void setUi(IVisualisointi iv) {
 
         System.out.println(iv + " vaihdettu");
 
@@ -411,11 +486,17 @@ public class Kontrolleri implements IKontrolleri {
 
     /**
      * Tallentaa simulaattorin asetukset ja loppuarvot ensiksi olioksi ja sitten tietokantaan.
+     * Kuitenkin jos simulaattori on keskeytetty ennenaikaisesti, ei tee mitään.
      *
      * @param mtr OmaMoottori-olio, jonka parametrit ja palvelupisteet tallennetaan.
      */
     @Override
     public void tallenaEntity(OmaMoottori mtr) {
+        if (simuStopped == true) {
+            simuStopped = false;
+            return;
+        }
+
         Palvelupiste[] ppt = mtr.getPalvelupisteet();
         ServicePoint[] spoints = new ServicePoint[4];
 
@@ -426,21 +507,21 @@ public class Kontrolleri implements IKontrolleri {
 
 
         // luo ServicePoint-olion jokaisesta palvelupisteestä
-        for (int i = 0; i<4; i++) {
-        TapahtumanTyyppi t = TapahtumanTyyppi.ENTRANCE;
+        for (int i = 0; i < 4; i++) {
+            TapahtumanTyyppi t = TapahtumanTyyppi.ENTRANCE;
 
             switch (i) {
                 case 0:
-                    t=TapahtumanTyyppi.ENTRANCE;
+                    t = TapahtumanTyyppi.ENTRANCE;
                     break;
                 case 1:
-                    t=TapahtumanTyyppi.TICKETSALES;
+                    t = TapahtumanTyyppi.TICKETSALES;
                     break;
                 case 2:
-                    t=TapahtumanTyyppi.TICKETCHECK;
+                    t = TapahtumanTyyppi.TICKETCHECK;
                     break;
                 case 3:
-                    t=TapahtumanTyyppi.METRO;
+                    t = TapahtumanTyyppi.METRO;
                     break;
             }
             spoints[i] = new ServicePoint(
@@ -456,10 +537,10 @@ public class Kontrolleri implements IKontrolleri {
         }
 
         Simulaattori sim = new Simulaattori(simukesto, spoints[0], spoints[1], spoints[2], spoints[3], station);
-        SimulaattoriDAO.lisaaSimulaattori(sim);
+        SimulaattoriDAO dao = new SimulaattoriDAO();
+        dao.lisaaSimulaattori(sim);
 
     }
-
 
 
     @Override
@@ -476,15 +557,14 @@ public class Kontrolleri implements IKontrolleri {
         SimulaattoriDAO sdao = new SimulaattoriDAO();
 
 
+        Simulaattori sim = sdao.haeSimulaattori((lv.getSelectionModel().getSelectedIndex() + 1));
 
-        Simulaattori sim = sdao.haeSimulaattori((lv.getSelectionModel().getSelectedIndex()+1));
-
-        if (lv.getSelectionModel().getSelectedIndex() < 0){
+        if (lv.getSelectionModel().getSelectedIndex() < 0) {
             sim = sdao.haeSimulaattori(1);
         }
 
 
-        if (sim == null){
+        if (sim == null) {
 
             Alert a = new Alert(Alert.AlertType.NONE);
             a.setAlertType(Alert.AlertType.ERROR);
@@ -496,7 +576,7 @@ public class Kontrolleri implements IKontrolleri {
 
         ServicePoint sp = new ServicePoint();
 
-        switch (x){
+        switch (x) {
             case 1:
 
                 sp = sim.getEntrance();
@@ -552,12 +632,12 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
-    public void initchart(graphviewcontroller i){
+    public void initchart(graphviewcontroller i) {
         SimulaattoriDAO sdao = new SimulaattoriDAO();
 
         List<Simulaattori> simlist = sdao.listaaSimulaattorit();
 
-        if (simlist == null || simlist.size() == 0){
+        if (simlist == null || simlist.size() == 0) {
             Alert a = new Alert(Alert.AlertType.NONE);
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("Sql tietokannassa ei simulaation tuloksia! >:D");
@@ -566,7 +646,7 @@ public class Kontrolleri implements IKontrolleri {
 
         }
 
-        for (Simulaattori sim : simlist){
+        for (Simulaattori sim : simlist) {
 
             i.getListView().getItems().add("Simulaatio " + sim.getId());
 
@@ -575,5 +655,4 @@ public class Kontrolleri implements IKontrolleri {
         asetachart(i, 1);
 
     }
-
 }

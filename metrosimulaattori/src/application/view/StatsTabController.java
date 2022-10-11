@@ -14,6 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import static application.simu.model.TapahtumanTyyppi.*;
 
 /**
@@ -294,7 +297,8 @@ public class StatsTabController implements  IVisualisointi {
             } else {
                 labelSimuloinninTila.setText("Ei käynnissä");
             }
-            labelAika.setText(String.valueOf(Kello.getInstance().getAika()));
+            DecimalFormat df = new DecimalFormat("#.##");
+            labelAika.setText(String.valueOf(df.format(Kello.getInstance().getAika())));
             tfMetronKapasiteetti.setText(String.valueOf(kontrolleri.getMetronKapasiteetti()));
             tfAsemanKapasiteetti.setText(String.valueOf(kontrolleri.getAsemanKapasiteetti()));
             labelAsemassaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()));
@@ -327,10 +331,11 @@ public class StatsTabController implements  IVisualisointi {
         } else {
             labelPavelunTila.setText("Vapaa");
         }
+        DecimalFormat df = new DecimalFormat("#.##");
         labelJonossaOlevatAsiakkaat.setText(String.valueOf(kontrolleri.getPPjononpituus(palvelupiste)));
-        labelJononKeskipituus.setText(String.valueOf(kontrolleri.getPPkeskijonoaika(palvelupiste)));
+        labelJononKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskijonoaika(palvelupiste))));
         labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getPPpalvellutAsiakkaat(palvelupiste)));
-        labelPavelunKeskipituus.setText(String.valueOf(kontrolleri.getPPkeskiarvoaika(palvelupiste)));
+        labelPavelunKeskipituus.setText(String.valueOf(df.format(kontrolleri.getPPkeskiarvoaika(palvelupiste))));
 
     }
 
@@ -419,6 +424,9 @@ public class StatsTabController implements  IVisualisointi {
     public void nollaaSimulaattori() {
         if (!kontrolleri.onkoKaynnissa()) {
             kontrolleri.resetSimulator();
+            salliSimunasetuksienmuutos(true);
+        } else if (kontrolleri.onkoKaynnissa()) {
+            kontrolleri.stopSimulation();
             salliSimunasetuksienmuutos(true);
         }
 

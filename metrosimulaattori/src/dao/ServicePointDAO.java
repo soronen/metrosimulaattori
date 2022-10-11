@@ -49,5 +49,4 @@ public class ServicePointDAO {
         }
         em.getTransaction().commit();
     }
-
 }
