@@ -19,9 +19,6 @@ import javafx.application.Platform;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
-
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.List;
 
 
@@ -38,10 +35,9 @@ public class Kontrolleri implements IKontrolleri {
     private IMoottori moottori;
     private IVisualisointi ui;
     private int simukesto = 1000;
-    private int simuviive = 100;
     private int metronKapasiteetti = 40;
     private int asemanKapasiteetti = 200;
-    private Palvelupiste palvelupisteet[];
+    private Palvelupiste[] palvelupisteet;
 
 
     //palvelupisteiden jakaumien mean ja var -arvot
@@ -59,12 +55,6 @@ public class Kontrolleri implements IKontrolleri {
     private int arrivalVariance = 3;
 
     private boolean simuStopped = false;
-
-
-    public Kontrolleri(IVisualisointi ui) {
-        this.ui = ui;
-        MainApp.setKontrol(this);
-    }
 
     public Kontrolleri() {
         MainApp.setKontrol(this);
@@ -201,7 +191,7 @@ public class Kontrolleri implements IKontrolleri {
     /**
      * Asettaa simulaattorin keston moottorissa ja tallentaa sen kontrollerin simukesto-muuttujaan.
      *
-     * @param simukesto
+     * @param simukesto asetetaan simulaattorin kestoksi
      */
     @Override
     public void setsimulaattorinKesto(int simukesto) {
@@ -216,7 +206,6 @@ public class Kontrolleri implements IKontrolleri {
      */
     @Override
     public void setSimulaattorinViive(int simuviive) {
-        this.simuviive = simuviive;
         moottori.setViive(simuviive);
 
     }
@@ -234,7 +223,7 @@ public class Kontrolleri implements IKontrolleri {
     /**
      * Asettaa metro-palvelupisteen kapasiteetin parametrina annettuun arvoon.
      *
-     * @param metronKapasiteetti
+     * @param metronKapasiteetti int-arvo, joka asetetaan metro-palvelupisteen kapasiteetiksi.
      */
     @Override
     public void setMetronKapasiteetti(int metronKapasiteetti) {
