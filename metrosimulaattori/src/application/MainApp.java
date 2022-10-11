@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadListener;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -25,6 +26,8 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
 
     private static IKontrolleri kontrol;
+
+    private EntityManager em;
 
     @Override
     public void init(){
@@ -44,7 +47,7 @@ public class MainApp extends Application {
         //luodaan tietokantayhteys sovelluksen käynnistyessä
         Thread thread = new Thread(){
             public void run(){
-                MySqlJpaConn.getInstance();
+                em = MySqlJpaConn.getInstance();
                 return;
             }
         };
@@ -86,6 +89,15 @@ public class MainApp extends Application {
 
     public void showgraphview() {
 
+        if (em == null) {
+            // Show the error message.
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Virhe");
+            alert.setHeaderText("Virhe..");
+            alert.setContentText("Ei yhteyttä tietokantaan");
+            alert.showAndWait();
+            return;
+        }
 
         try {
             // Load the fxml file and create a new stage for the popup.

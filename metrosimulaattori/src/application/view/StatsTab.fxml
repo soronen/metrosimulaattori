@@ -313,7 +313,7 @@
                               </Label>
                            </children>
                         </GridPane>
-                        <Label fx:id="labelPalvelupiste" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Palvelupisteen tilastot [PALVELUPISTE]">
+                        <Label fx:id="labelPalvelupiste" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Valitse palvelupiste katsoaksesi sen tilastoja">
                            <font>
                               <Font size="24.0" />
                            </font>
