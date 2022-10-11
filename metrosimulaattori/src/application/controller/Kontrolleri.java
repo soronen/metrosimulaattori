@@ -686,7 +686,14 @@ public class Kontrolleri implements IKontrolleri {
             return;
         }
 
-        sdao.poistaSimulaattori(((int)id+1));
+        String ids = (String) i.getListView().getItems().get(i.getListView().getSelectionModel().getSelectedIndex());
+        try {
+            id = Integer.parseInt(ids.replaceAll("[^0-9]", ""));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        sdao.poistaSimulaattori(id);
 
         initchart(i);
     }
