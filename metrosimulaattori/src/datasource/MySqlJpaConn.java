@@ -8,7 +8,7 @@ import jakarta.persistence.*;
  * @author Eetu Soronen
  * @version 1
  */
-public class MariaDbJpaConn {
+public class MySqlJpaConn {
 
     /**
      * EntityMaagerFactory luo entitymanagerin
