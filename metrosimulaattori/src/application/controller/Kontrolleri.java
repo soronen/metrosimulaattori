@@ -486,6 +486,7 @@ public class Kontrolleri implements IKontrolleri {
 
     /**
      * Tallentaa simulaattorin asetukset ja loppuarvot ensiksi olioksi ja sitten tietokantaan.
+     * Kuitenkin jos simulaattori on keskeytetty ennenaikaisesti, ei tee mitään.
      *
      * @param mtr OmaMoottori-olio, jonka parametrit ja palvelupisteet tallennetaan.
      */
