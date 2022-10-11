@@ -30,13 +30,12 @@ public interface IKontrolleri {
     Palvelupiste[] getPalvelupisteet();
 
     public void nopeuta();
+
+    /**
+     * katso toteutus {@link Kontrolleri#hidasta()}
+     */
     public void hidasta();
 
-    void muutaNopeutta(long viive);
-
-    // Rajapinta, joka tarjotaan moottorille:
-    public void naytaLoppuaika(double aika);
-    public void visualisoiAsiakas();
 
     public void paivitaUI(Tapahtuma t);
 
@@ -97,4 +96,6 @@ public interface IKontrolleri {
     void asetachart(graphviewcontroller i, int x);
 
     void initchart(graphviewcontroller i);
+
+    void stopSimulation();
 }
