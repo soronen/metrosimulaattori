@@ -11,13 +11,14 @@ import java.util.List;
  * @author Eetu Soronen
  * @version 1
  */
-public class SimulaattoriDAO {
+public class SimulaattoriDAO implements ISimulaattoriDAO {
 
     /**
      * Lisää Simulator-olion tietokantaan
      * @param s Simulaattori
      */
-    public static void lisaaSimulaattori(Simulaattori s) {
+    @Override
+    public void lisaaSimulaattori(Simulaattori s) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
         em.persist(s);
@@ -29,6 +30,7 @@ public class SimulaattoriDAO {
      * @param id
      * @return Simulaattori-olio
      */
+    @Override
     public Simulaattori haeSimulaattori(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -41,6 +43,7 @@ public class SimulaattoriDAO {
      * Poistaa Simulaattori-olion tietokannasta sen id:n perusteella.
      * @param id
      */
+    @Override
     public void poistaSimulaattori(int id) {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         em.getTransaction().begin();
@@ -51,11 +54,11 @@ public class SimulaattoriDAO {
         em.getTransaction().commit();
     }
 
-    // testaamaton!
     /**
      * Palauttaa kaikki tietokannan Simulator-oliot (jotka taas sisältävät kaikki Station ja ServicePoint -oliot..)
      * @return List<Simulaattori> olio, joka sisältää kaikki tietokannan simulaattorit
      */
+    @Override
     public List<Simulaattori> listaaSimulaattorit() {
         EntityManager em = datasource.MariaDbJpaConn.getInstance();
         String jpqlQuery = "SELECT s FROM Simulaattori s";
