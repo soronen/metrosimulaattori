@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.LoadListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -40,8 +41,10 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Metrosimulaattori");
 
-        initRootLayout();
+        // Set the application icon.
+        this.primaryStage.getIcons().add(new Image(MainApp.class.getResourceAsStream("view/images/metrosim.png")));
 
+        initRootLayout();
         showStatsTab();
 
         //luodaan tietokantayhteys sovelluksen käynnistyessä

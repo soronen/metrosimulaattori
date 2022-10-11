@@ -10,18 +10,10 @@
    <top>
       <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Tiedosto">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Uusi tiedosto" />
-                  <MenuItem mnemonicParsing="false" text="Avaa tiedosto" />
-                  <MenuItem mnemonicParsing="false" text="Tallenna tiedosto" />
-                  <MenuItem mnemonicParsing="false" text="Poistu" />
-            </items>
-          </Menu>
           <Menu mnemonicParsing="false" text="Simulaattori">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#avaaSimulaattori" text="Avaa simulaattori" />
-                  <MenuItem mnemonicParsing="false" onAction="#avaasimview" text="Avaa simview" />
+              <MenuItem mnemonicParsing="false" onAction="#avaaSimulaattori" text="Tekstinäkymä" />
+                  <MenuItem mnemonicParsing="false" onAction="#avaasimview" text="Graafinen näkymä" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Tilastot">
@@ -29,7 +21,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#avaagraphview" text="Näytä tilastoja" />
                </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Lisää...">
+          <Menu mnemonicParsing="false" onAction="#aboutUs" text="Lisää...">
             <items>
               <MenuItem mnemonicParsing="false" text="Tietoa meistä" />
             </items>
