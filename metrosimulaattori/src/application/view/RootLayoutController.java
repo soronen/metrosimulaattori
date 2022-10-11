@@ -50,12 +50,14 @@ public class RootLayoutController {
         dialog.initOwner(this.mainApp.getPrimaryStage());
         VBox dialogVbox = new VBox(20);
         Text t = new Text("  Tekijät: Eetu Soronen ja Emil Ålgars  ");
+        Text filler = new Text("  ");
         Text t2 = new Text("  metrosimulaattori🚇(tm) 2022 all rights reserved  ");
         t.setStyle("-fx-font: 16 arial;");
         t2.setStyle("-fx-font: 20 'Old English Text MT'");
         dialogVbox.getChildren().add(t);
+        dialogVbox.getChildren().add(filler);
         dialogVbox.getChildren().add(t2);
-        Scene dialogScene = new Scene(dialogVbox, 420, 80);
+        Scene dialogScene = new Scene(dialogVbox, 420, 120);
         dialog.setScene(dialogScene);
         dialog.show();
     }
