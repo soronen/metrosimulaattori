@@ -114,15 +114,44 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
-
-
+    /**
+     * Kutsuu setKaynnissa(false) -metodia.
+     * Jos moottori != null asettaa simlointiajan nollaksi ja poistaa simulaattorin.
+     */
     @Override
     public void resetSimulator() {
         setKaynnissa(false);
-        moottori.setSimulointiaika(0);
-        moottori = null;
+        if (moottori != null) {
+            moottori.setSimulointiaika(0);
+            moottori = null;
+        }
+
     }
 
+    /**
+     * pysäyttää!!1! ⛔🚫🛑🚫  simulaattorin kesken asetmmalla simulointiajan nollaan.
+     * asettaa moottorin null arvoksi 1 sekunnin kuluttua tästä, kun muutkin säikeet ovat saaneet kuulla uutiset
+     * jotta konsoliin ei tulisi virheilmoituksia
+     */
+    public void stopSimulation() {
+        setKaynnissa(false);
+        moottori.setSimulointiaika(0);
+        Platform.runLater(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                    moottori = null;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    /**
+     * Palauttaa moottorin. Jos moottori = null, luo sen.
+     * @return OmaMoottori-olio, jonka saapmuisen jakauma on asetettu (arrivalMean ja arrivalVariance);
+     */
     @Override
     public IMoottori getMoottori() {
         if (moottori == null) {
@@ -131,55 +160,62 @@ public class Kontrolleri implements IKontrolleri {
         return moottori;
     }
 
+    /**
+     * Palauttaa moottorin palvelupisteet
+     * @return Palvelupiste[]-taulukko, joka sisältää moottorin palvelupisteet. [0] = Entrance, [1] = Sales, [2] = Check, [3] = Metro
+     */
     @Override
     public Palvelupiste[] getPalvelupisteet() {
         return moottori.getPalvelupisteet();
     }
 
+    /**
+     * Nopeuttaa simulaattoria laskemalla simulaattorin viivettä 10%:lla.
+     */
     @Override
     public void nopeuta() {
         moottori.setViive((long)(moottori.getViive()*0.9));
     }
 
+    /**
+     * Korottaa mottorin viivettä 10%:lla ja lisää tulokseen vielä ykkösen.
+     *  Ykkönen lisätään, jotta viive nousee nollastakin.
+     */
     @Override
     public void hidasta() {
-        moottori.setViive((long)(moottori.getViive()*1.10));
+        moottori.setViive((long)(moottori.getViive()*1.10+1));
     }
 
-    @Override
-    public void muutaNopeutta(long viive) {
-        moottori.setViive(viive);
-    }
-
-    @Override
-    public void naytaLoppuaika(double aika) {
-
-    }
-    @Override
-    public void visualisoiAsiakas() {
-
-    }
+    /**
+     * OmaMoottorin kutsuma metodi, joka kutsuu UI:n päivitäUI()-metodia jokaisen tapahtuman käsittelyn yhteydessä.
+     * Vastaa käyttöliittymän päivittämisestä.
+     * @param t Tapahtuma-olio, joka sisältää tiedon tapahtuneesta tapahtumasta.
+     */
     @Override
     public void paivitaUI(Tapahtuma t) {
-
-
-
         ui.paivitaUI(t);
     }
 
+    /**
+     * Asettaa simulaattorin keston moottorissa ja tallentaa sen kontrollerin simukesto-muuttujaan.
+     * @param simukesto
+     */
     @Override
     public void setsimulaattorinKesto(int simukesto) {
         this.simukesto = simukesto;
         moottori.setSimulointiaika(simukesto);
     }
 
+    /**
+     * Asettaa simulaattorin viiveen parametrina annettuun arvoon.
+     * @param simuviive long arvo, joka asetetaan simulaattorin viiveeksi.
+     */
     @Override
     public void setSimulaattorinViive(int simuviive) {
         this.simuviive = simuviive;
         moottori.setViive(simuviive);
 
     }
-
     @Override
     public int getMetronKapasiteetti() {
         return moottori.getMetroCapacity();
@@ -456,7 +492,8 @@ public class Kontrolleri implements IKontrolleri {
         }
 
         Simulaattori sim = new Simulaattori(simukesto, spoints[0], spoints[1], spoints[2], spoints[3], station);
-        SimulaattoriDAO.lisaaSimulaattori(sim);
+        SimulaattoriDAO dao = new SimulaattoriDAO();
+        dao.lisaaSimulaattori(sim);
 
     }
 
