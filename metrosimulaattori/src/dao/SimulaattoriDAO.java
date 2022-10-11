@@ -19,7 +19,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public void lisaaSimulaattori(Simulaattori s) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         em.persist(s);
         em.getTransaction().commit();
@@ -32,7 +32,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public Simulaattori haeSimulaattori(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Simulaattori s = em.find(Simulaattori.class, id);
         em.getTransaction().commit();
@@ -45,7 +45,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public void poistaSimulaattori(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Simulaattori s = em.find(Simulaattori.class, id);
         if (s!=null) {
@@ -60,7 +60,7 @@ public class SimulaattoriDAO implements ISimulaattoriDAO {
      */
     @Override
     public List<Simulaattori> listaaSimulaattorit() {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         String jpqlQuery = "SELECT s FROM Simulaattori s";
         Query q = em.createQuery(jpqlQuery);
         List<Simulaattori> resultList = q.getResultList();

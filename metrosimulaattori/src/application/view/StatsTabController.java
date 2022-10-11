@@ -429,7 +429,6 @@ public class StatsTabController implements  IVisualisointi {
             kontrolleri.stopSimulation();
             salliSimunasetuksienmuutos(true);
         }
-
     }
 
     /**

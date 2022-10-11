@@ -16,7 +16,7 @@ public class StationDAO {
      * @param s
      */
     public void lisaaAsema(Station s) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         em.persist(s);
         em.getTransaction().commit();
@@ -28,7 +28,7 @@ public class StationDAO {
      * @return
      */
     public Station haeAsema(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Station s = em.find(Station.class, id);
         em.getTransaction().commit();
@@ -40,7 +40,7 @@ public class StationDAO {
      * @param id
      */
     public void poistaAsema(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         Station s = em.find(Station.class, id);
         if (s!=null) {

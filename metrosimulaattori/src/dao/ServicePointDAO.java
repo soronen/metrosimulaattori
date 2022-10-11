@@ -17,7 +17,7 @@ public class ServicePointDAO {
      * @param p Palvelupiste-olio
      */
     public void lisaaPalvelupiste(Palvelupiste p) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         em.persist(p);
         em.getTransaction().commit();
@@ -29,7 +29,7 @@ public class ServicePointDAO {
      * @return
      */
     public ServicePoint haePalvelupiste(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         ServicePoint p = em.find(ServicePoint.class, id);
         em.getTransaction().commit();
@@ -41,7 +41,7 @@ public class ServicePointDAO {
      * @param id
      */
     public void poistaPalvelupiste(int id) {
-        EntityManager em = datasource.MariaDbJpaConn.getInstance();
+        EntityManager em = datasource.MySqlJpaConn.getInstance();
         em.getTransaction().begin();
         ServicePoint p = em.find(ServicePoint.class, id);
         if (p!=null) {

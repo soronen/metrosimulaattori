@@ -20,6 +20,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 
 
@@ -547,6 +549,8 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void asetachart(graphviewcontroller i, int x) {
 
+
+
         i.getbarChart().getData().clear();
 
         XYChart.Series<String, Double> series = new XYChart.Series<>();
@@ -557,15 +561,32 @@ public class Kontrolleri implements IKontrolleri {
 
         SimulaattoriDAO sdao = new SimulaattoriDAO();
 
+        List<Simulaattori> lista = sdao.listaaSimulaattorit();
 
-        Simulaattori sim = sdao.haeSimulaattori((lv.getSelectionModel().getSelectedIndex() + 1));
-
-        if (lv.getSelectionModel().getSelectedIndex() < 0) {
-            sim = sdao.haeSimulaattori(1);
+        int id = 1;
+        if (!(i.getListView().getSelectionModel().getSelectedIndex() < 0)){
+            String ids = (String) i.getListView().getItems().get(i.getListView().getSelectionModel().getSelectedIndex());
+            try {
+                id = Integer.parseInt(ids.replaceAll("[^0-9]", ""));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            String ids = (String) i.getListView().getItems().get(0);
+            try {
+                id = Integer.parseInt(ids.replaceAll("[^0-9]", ""));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
 
-        if (sim == null) {
+
+        Simulaattori sim = sdao.haeSimulaattori(id);
+
+
+
+        if (lista == null || lista.size() == 0) {
 
             Alert a = new Alert(Alert.AlertType.NONE);
             a.setAlertType(Alert.AlertType.ERROR);

@@ -7,7 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import application.controller.IKontrolleri;
 import application.view.*;
 import application.simu.framework.Trace;
-import datasource.MariaDbJpaConn;
+import datasource.MySqlJpaConn;
 import jakarta.persistence.EntityManager;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -44,7 +44,7 @@ public class MainApp extends Application {
         //luodaan tietokantayhteys sovelluksen käynnistyessä
         Thread thread = new Thread(){
             public void run(){
-                MariaDbJpaConn.getInstance();
+                MySqlJpaConn.getInstance();
                 return;
             }
         };
@@ -111,8 +111,18 @@ public class MainApp extends Application {
             dialogStage.show();
 
 
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10);
+                        kontrol.initchart(controller);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
 
-            kontrol.initchart(controller);
 
             scene.setOnKeyPressed(event -> {
                 String codeString = event.getCode().toString();
