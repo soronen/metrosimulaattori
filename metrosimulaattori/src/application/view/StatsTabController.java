@@ -321,8 +321,6 @@ public class StatsTabController implements  IVisualisointi {
         switch (palvelupiste) {
             case ENTRANCE:
                 labelPalvelupiste.setText("Palvelupisteen \"Sisäänkäynti\" tilastot");
-                // entrance-pisteen palvellut asiakkaat ei ole oikein, jonka takia pitää tehdä näin..
-                labelPavellutAsiakkaat.setText(String.valueOf(kontrolleri.getAsiakkaatAsemassa()+kontrolleri.getPalvellutAsaiakkaat()));
                 break;
             case TICKETSALES:
                 labelPalvelupiste.setText("Palvelupisteen \"Lipunmyynti\" tilastot");
