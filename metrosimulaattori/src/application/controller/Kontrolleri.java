@@ -527,7 +527,7 @@ public class Kontrolleri implements IKontrolleri {
                     ppt[i].getKeskijonoaika(),
                     getPPJakauma(t)[0],
                     getPPJakauma(t)[1],
-                    ppt[i].getMaxSize());
+                    mtr.getMetroCapacity());
         }
 
         Simulaattori sim = new Simulaattori(simukesto, spoints[0], spoints[1], spoints[2], spoints[3], station);

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="510.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.graphviewcontroller">
+<AnchorPane prefHeight="530.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.graphviewcontroller">
    <children>
       <HBox prefHeight="450.0" prefWidth="750.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -72,7 +72,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="skesto" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="skesto" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -85,20 +85,27 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="p0txt1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="p0txt2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="p0txt1" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="p0txt2" strokeType="OUTSIDE" strokeWidth="0.0" />
                         <Label text="Mobiili lippu todnäk">
                            <font>
                               <Font size="13.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
                         </Label>
-                        <Text fx:id="esuhde" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Label text="Asema kapasiteetti">
+                        <Text fx:id="esuhde" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Label text="Kapasiteetit">
                            <font>
                               <Font size="13.0" />
                            </font>
+                           <padding>
+                              <Insets top="2.0" />
+                           </padding>
                         </Label>
-                        <Text fx:id="akap" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="akap" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="metro" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <padding>
                         <Insets top="10.0" />
@@ -106,13 +113,13 @@
                   </VBox>
                   <VBox prefWidth="100.0" spacing="2.0">
                      <children>
-                        <Label fx:id="p1txt1" text="Asema piste">
+                        <Label fx:id="p1txt1">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="p1txt2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="p1txt3" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="p1txt2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="p1txt3" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <padding>
                         <Insets top="10.0" />
@@ -120,13 +127,13 @@
                   </VBox>
                   <VBox prefWidth="100.0" spacing="2.0">
                      <children>
-                        <Label fx:id="p2txt1" text="Asema piste">
+                        <Label fx:id="p2txt1">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="p2txt2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="p2txt3" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="p2txt2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="p2txt3" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
@@ -134,13 +141,13 @@
                   </VBox>
                   <VBox prefWidth="100.0" spacing="2.0">
                      <children>
-                        <Label fx:id="p3txt1" text="Asema piste">
+                        <Label fx:id="p3txt1">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="p3txt2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="p3txt3" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="p3txt2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="p3txt3" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
@@ -148,13 +155,13 @@
                   </VBox>
                   <VBox prefWidth="100.0" spacing="2.0">
                      <children>
-                        <Label fx:id="p4txt1" text="Asema piste">
+                        <Label fx:id="p4txt1">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Text fx:id="p4txt2" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                        <Text fx:id="p4txt3" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                        <Text fx:id="p4txt2" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <Text fx:id="p4txt3" strokeType="OUTSIDE" strokeWidth="0.0" />
                      </children>
                      <padding>
                         <Insets top="5.0" />
@@ -162,7 +169,7 @@
                   </VBox>
                </children>
                <padding>
-                  <Insets bottom="15.0" top="10.0" />
+                  <Insets bottom="25.0" top="10.0" />
                </padding>
             </VBox>
          </children>

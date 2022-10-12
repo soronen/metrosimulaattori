@@ -77,6 +77,12 @@ public class graphviewcontroller {
     private Text akap;
 
     @FXML
+    private Text esuhde;
+
+    @FXML
+    private Text metro;
+
+    @FXML
     private Text p0txt1;
     @FXML
     private Text p0txt2;
@@ -205,8 +211,9 @@ public class graphviewcontroller {
 
         Station asema = sim.getAsema();
 
-        akap.setText(Integer.toString(asema.getAsemanKapasiteetti()));
+        akap.setText("Asema : " + Integer.toString(asema.getAsemanKapasiteetti()));
 
+        esuhde.setText(sim.getAsema().getEsiostettujenLippujenSuhde() + "%");
 
         p0txt1.setText("Odotusarvo : " + Integer.toString(asema.getAsiakkaidenSaapumisenOdotusarvo()));
         p0txt2.setText("Varianssi : " + Integer.toString(asema.getAsiakkaidenSaapumisenVarianssi()));
@@ -232,6 +239,7 @@ public class graphviewcontroller {
         p4txt1.setText(sp.getPalvelupiste().name());
         p4txt2.setText("Odotusarvo : " + Integer.toString(sp.getPalvelupisteenOdotusarvo()));
         p4txt3.setText("Varianssi : " + Integer.toString(sp.getPalvelupisteenVarianssi()));
+        metro.setText("Metro : " + Integer.toString(sp.getMetronKapasiteetti()));
 
     }
 
