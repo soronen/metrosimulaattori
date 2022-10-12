@@ -101,7 +101,7 @@ public class OmaMoottori extends Moottori{
 
 				break;
 			case METRO:
-				for (int i = 1; i < metroCapacity ; i++) {
+				for (int i = 0; i < metroCapacity ; i++) {
 					if (palvelupisteet[3].onJonossa()) {
 						a = palvelupisteet[3].otaJonosta();
 						a.setPoistumisaika(Kello.getInstance().getAika());

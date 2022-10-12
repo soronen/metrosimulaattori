@@ -112,7 +112,10 @@ public class Palvelupiste {
 	}
 
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
-		palvelunro++;
+
+		if (seuraavaTapahtumanTyyppi != TapahtumanTyyppi.METRO){
+			palvelunro++;
+		}
 		Trace.out(Trace.Level.INFO, "Aloitetaan uusi palvelu asiakkaalle " + jono.peek().getId());
 
 		varattu = true;

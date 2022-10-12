@@ -426,11 +426,7 @@ public class Kontrolleri implements IKontrolleri {
                 break;
         }
 
-        // aaveasiakkas pois näkymästä
-        if (palvelupisteet[index].getPalvelunro() == 0) {
-            return 0;
-        }
-        return palvelupisteet[index].getPalvelunro()-1;
+        return palvelupisteet[index].getPalvelunro();
     }
 
     public double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste) {
