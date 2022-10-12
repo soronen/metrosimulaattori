@@ -1,6 +1,9 @@
 package application.view;
 
 import application.MainApp;
+import entity.ServicePoint;
+import entity.Simulaattori;
+import entity.Station;
 import javafx.beans.InvalidationListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -9,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Collection;
@@ -61,6 +66,48 @@ public class graphviewcontroller {
      * Muuttuja joka kuvastaa mitä näppäintä on painettu viimmeiseksi
      */
     private int currentnum = 1;
+
+    @FXML
+    private Text skesto;
+    @FXML
+    private Label sid;
+    @FXML
+    private Label cmode;
+    @FXML
+    private Text akap;
+
+    @FXML
+    private Text p0txt1;
+    @FXML
+    private Text p0txt2;
+
+    @FXML
+    private Label p1txt1;
+    @FXML
+    private Text p1txt2;
+    @FXML
+    private Text p1txt3;
+
+    @FXML
+    private Label p2txt1;
+    @FXML
+    private Text p2txt2;
+    @FXML
+    private Text p2txt3;
+
+    @FXML
+    private Label p3txt1;
+    @FXML
+    private Text p3txt2;
+    @FXML
+    private Text p3txt3;
+
+    @FXML
+    private Label p4txt1;
+    @FXML
+    private Text p4txt2;
+    @FXML
+    private Text p4txt3;
 
 
     /**
@@ -132,6 +179,60 @@ public class graphviewcontroller {
     @FXML
     private void lvhandleclick(){
         MainApp.getKontrol().asetachart(this, currentnum);
+    }
+
+    /**
+     * Asettaa graphviewin oiken infopalkin tiedot
+     * @param sim simulaattori josta tiedot otetaan palkkiin
+     */
+    public void setInfo(Simulaattori sim){
+
+        sid.setText("Simu id :" + sim.getId());
+
+        switch (this.currentnum){
+            case 1:
+                cmode.setText(jonoaika.getText());
+                break;
+            case 2:
+                cmode.setText(palvelluasiakkaat.getText());
+                break;
+            case 3:
+                cmode.setText(palveluaika.getText());
+                break;
+        }
+
+        skesto.setText(Integer.toString(sim.getSimunKesto()));
+
+        Station asema = sim.getAsema();
+
+        akap.setText(Integer.toString(asema.getAsemanKapasiteetti()));
+
+
+        p0txt1.setText("Odotusarvo : " + Integer.toString(asema.getAsiakkaidenSaapumisenOdotusarvo()));
+        p0txt2.setText("Varianssi : " + Integer.toString(asema.getAsiakkaidenSaapumisenVarianssi()));
+
+        ServicePoint sp;
+
+        sp = sim.getEntrance();
+        p1txt1.setText(sp.getPalvelupiste().name());
+        p1txt2.setText("Odotusarvo : " + Integer.toString(sp.getPalvelupisteenOdotusarvo()));
+        p1txt3.setText("Varianssi : " + Integer.toString(sp.getPalvelupisteenVarianssi()));
+
+        sp = sim.getTicketsales();
+        p2txt1.setText(sp.getPalvelupiste().name());
+        p2txt2.setText("Odotusarvo : " + Integer.toString(sp.getPalvelupisteenOdotusarvo()));
+        p2txt3.setText("Varianssi : " + Integer.toString(sp.getPalvelupisteenVarianssi()));
+
+        sp = sim.getTicketcheck();
+        p3txt1.setText(sp.getPalvelupiste().name());
+        p3txt2.setText("Odotusarvo : " + Integer.toString(sp.getPalvelupisteenOdotusarvo()));
+        p3txt3.setText("Varianssi : " + Integer.toString(sp.getPalvelupisteenVarianssi()));
+
+        sp = sim.getMetro();
+        p4txt1.setText(sp.getPalvelupiste().name());
+        p4txt2.setText("Odotusarvo : " + Integer.toString(sp.getPalvelupisteenOdotusarvo()));
+        p4txt3.setText("Varianssi : " + Integer.toString(sp.getPalvelupisteenVarianssi()));
+
     }
 
 

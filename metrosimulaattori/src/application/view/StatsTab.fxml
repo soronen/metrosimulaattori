@@ -88,7 +88,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" style="-fx-background-color: ff9900; -fx-text-fill: white; -fx-background-radius: 5px;" text="Käynnistä Simulointi">
+                              <Button defaultButton="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" style="-fx-background-color: ff9900; -fx-text-fill: white; -fx-background-radius: 5px;" text="Käynnistä Simulointi">
                                  <font>
                                     <Font name="Arial Black" size="24.0" />
                                  </font>
@@ -103,7 +103,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="70.0" prefWidth="246.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#nollaaSimulaattori" text="Nollaa simulaattori">
+                              <Button cancelButton="true" mnemonicParsing="false" onAction="#nollaaSimulaattori" text="Nollaa simulaattori">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

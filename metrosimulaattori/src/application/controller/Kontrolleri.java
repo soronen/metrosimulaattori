@@ -540,7 +540,7 @@ public class Kontrolleri implements IKontrolleri {
     @Override
     public void asetachart(graphviewcontroller i, int x) {
 
-
+        //asetetaan chartin tiedot
 
         i.getbarChart().getData().clear();
 
@@ -642,6 +642,9 @@ public class Kontrolleri implements IKontrolleri {
 
         i.getbarChart().getData().add(series);
 
+        //asetetaan oikeaan palkkiin simuloinnin tiedot
+
+        i.setInfo(sim);
 
     }
 
@@ -665,7 +668,10 @@ public class Kontrolleri implements IKontrolleri {
 
         }
 
-        asetachart(i, 1);
+        if (i.getListView().getSelectionModel().getSelectedIndex() < 0){
+            asetachart(i, 1);
+        }
+
 
     }
 
