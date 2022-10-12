@@ -173,8 +173,11 @@
                               </Label>
                               <TextField fx:id="tfPalvelupisteenOdotusarvo" prefWidth="150.0" text="4">
                                  <font>
-                                    <Font size="18.0" />
-                                 </font></TextField>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="3.0" />
+                                 </HBox.margin></TextField>
                            </children>
                            <VBox.margin>
                               <Insets />
@@ -189,7 +192,7 @@
                               </Label>
                               <TextField fx:id="tfPalvelupisteenVarianssi" prefWidth="150.0" text="8">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="14.0" />
                                  </font></TextField>
                            </children>
                            <VBox.margin>
@@ -427,7 +430,7 @@
                         </GridPane>
                      </children>
                      <padding>
-                        <Insets left="20.0" />
+                        <Insets left="30.0" />
                      </padding>
                      <HBox.margin>
                         <Insets />
