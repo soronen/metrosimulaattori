@@ -51,8 +51,8 @@ public class Kontrolleri implements IKontrolleri {
     private int metroVariance = 60;
 
 
-    private int arrivalMean = 5;
-    private int arrivalVariance = 3;
+    private int arrivalMean = 10;
+    private int arrivalVariance = 5;
 
     private boolean simuStopped = false;
 
@@ -333,6 +333,7 @@ public class Kontrolleri implements IKontrolleri {
     public void setArrivalJakauma(int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
+        getMoottori().setSaapumisprosessi(arrivalMean, arrivalVariance);
     }
 
     public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
@@ -412,8 +413,8 @@ public class Kontrolleri implements IKontrolleri {
         int index = 0;
         switch (palvelupiste) {
             case ENTRANCE:
-                index = 0;
-                break;
+                // entrance-pisteen palvellut asiakkaat ei ole oikein, jonka takia pitää tehdä näin..
+                return getAsiakkaatAsemassa()+getPalvellutAsaiakkaat();
             case TICKETSALES:
                 index = 1;
                 break;
@@ -493,6 +494,7 @@ public class Kontrolleri implements IKontrolleri {
 
         Palvelupiste[] ppt = mtr.getPalvelupisteet();
         ServicePoint[] spoints = new ServicePoint[4];
+        int palvellutAsiakkaat = 0;
 
         Station station = new Station(
                 getMobiililippujakauma(), arrivalMean, arrivalVariance,
@@ -507,20 +509,26 @@ public class Kontrolleri implements IKontrolleri {
             switch (i) {
                 case 0:
                     t = TapahtumanTyyppi.ENTRANCE;
+                    palvellutAsiakkaat = getPPpalvellutAsiakkaat (TapahtumanTyyppi.ENTRANCE);
                     break;
                 case 1:
                     t = TapahtumanTyyppi.TICKETSALES;
+                    palvellutAsiakkaat = getPPpalvellutAsiakkaat (TapahtumanTyyppi.TICKETSALES);
                     break;
                 case 2:
                     t = TapahtumanTyyppi.TICKETCHECK;
+                    palvellutAsiakkaat = getPPpalvellutAsiakkaat (TapahtumanTyyppi.TICKETCHECK);
                     break;
                 case 3:
                     t = TapahtumanTyyppi.METRO;
+                    palvellutAsiakkaat = getPPpalvellutAsiakkaat (TapahtumanTyyppi.METRO);
                     break;
             }
+
+
             spoints[i] = new ServicePoint(
                     t,
-                    ppt[i].getPalvelunro(),
+                    palvellutAsiakkaat,
                     ppt[i].getJonopituus(),
                     ppt[i].getKeskiarvoaika(),
 
