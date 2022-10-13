@@ -675,6 +675,10 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+    /**
+     * Asettaa Taulukko ikkunassa sijaitsevan listviewein
+     * @param i referenssi graphviewcontrolleriin
+     */
     public void dChart(graphviewcontroller i){
         ISimulaattoriDAO sdao = new SimulaattoriDAO();
         int id = i.getListView().getSelectionModel().getSelectedIndex();
