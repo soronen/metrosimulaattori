@@ -7,9 +7,9 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
         <property name="jakarta.persistence.lock.timeout" value="5000"/>
-        <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://remotemysql.com:3306/2xX0Ltn1GQ"/>
-        <property name="jakarta.persistence.jdbc.user" value="2xX0Ltn1GQ"/>
-        <property name="jakarta.persistence.jdbc.password" value="TSFliBUGCE"/>
+        <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://mysql.metropolia.fi/eetusoro"/>
+        <property name="jakarta.persistence.jdbc.user" value="eetusoro"/>
+        <property name="jakarta.persistence.jdbc.password" value="metrosim"/>
         <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
         <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
         <property name="hibernate.show_sql" value="true" />

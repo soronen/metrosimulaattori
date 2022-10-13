@@ -80,7 +80,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Button defaultButton="true" maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" style="-fx-background-color: ff9900; -fx-text-fill: white; -fx-border-color: c64f00; -fx-border-width: 3px;" text="Käynnistä Simulointi">
+                              <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#kaynnista" style="-fx-background-color: ff9900; -fx-text-fill: white; -fx-border-color: c64f00; -fx-border-width: 3px;" text="Käynnistä Simulointi">
                                  <font>
                                     <Font name="Arial Black" size="24.0" />
                                  </font>

@@ -333,8 +333,9 @@ public class Kontrolleri implements IKontrolleri {
     public void setArrivalJakauma(int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
-        getMoottori().setSaapumisprosessi(arrivalMean, arrivalVariance);
+        //setSaapumisprosessi(arrivalMean, arrivalVariance);
     }
+
 
     public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
         switch (tt) {
@@ -683,6 +684,10 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+    /**
+     * Asettaa Taulukko ikkunassa sijaitsevan listviewein
+     * @param i referenssi graphviewcontrolleriin
+     */
     public void dChart(graphviewcontroller i){
         ISimulaattoriDAO sdao = new SimulaattoriDAO();
         int id = i.getListView().getSelectionModel().getSelectedIndex();
