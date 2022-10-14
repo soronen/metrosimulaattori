@@ -8,6 +8,13 @@ import application.simu.model.TapahtumanTyyppi;
 import application.view.IVisualisointi;
 import application.view.graphviewcontroller;
 
+/**
+ * IKontrolleri-luokka, on Kontrolleri-luokan rajapinta.
+ * Hieman turha kun meillä on vain 1 kontrolleri..
+ *
+ * @author Eetu Soronen, Emil Ålgars
+ * @version 1
+ */
 public interface IKontrolleri {
     /**
      * Hakee moottorin, asettaa sen parametrit, asettaa simulaattorin kellon nollaan ja käynnistää simulaation.

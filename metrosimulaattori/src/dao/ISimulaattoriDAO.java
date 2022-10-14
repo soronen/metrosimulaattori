@@ -4,6 +4,12 @@ import entity.Simulaattori;
 
 import java.util.List;
 
+/**
+ * Simulaattori-DAO:n rajapinta. Hieman turha kun ei ole muita DAO-luokkia...
+ *
+ * @author Eetu Soronen
+ * @version 1
+ */
 public interface ISimulaattoriDAO {
     /**
      * Lisää Simulator-olion tietokantaan
