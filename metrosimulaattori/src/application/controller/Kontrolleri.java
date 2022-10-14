@@ -31,39 +31,111 @@ import java.util.List;
 
 public class Kontrolleri implements IKontrolleri {
 
+    /**
+     * Onko kontrollerin ohjaama simulaattori tällä hetkellä käynnissä?
+     */
+
     boolean kaynnissa = false;
+    /**
+     * Moottori, joka sisältää simulaation logiikan
+     */
+
     private IMoottori moottori;
+    /**
+     * Käyttöliittymä, joka sisältää simulaation graafisen käyttöliittymän
+     */
+
     private IVisualisointi ui;
+    /**
+     * Kauan simulaattoria ajetaan
+     */
     private int simukesto = 1000;
+
+    /**
+     * Metron maksimikapasiteetti
+     */
     private int metronKapasiteetti = 40;
+
+    /**
+     * Aseman maksimikapasiteetti
+     */
     private int asemanKapasiteetti = 200;
+
+    /**
+     * Taulukko simulaattorin palvelupisteistä. (entrance, ticketsales, ticketcheck, metro)
+     */
     private Palvelupiste[] palvelupisteet;
 
 
-    //palvelupisteiden jakaumien mean ja var -arvot
+    /**
+     * Saapuminen-palvelupisteen käsittelyajan odotusarvo
+     */
     private int entranceMean = 4;
+
+    /**
+     * Saapuminen-palvelupisteen käsittelyajan odotusarvo
+     */
     private int entranceVariance = 8;
+
+    /**
+     * Lipunmyynti-palvelupisteen käsittelyajan odotusarvo
+     */
     private int salesMean = 20;
+
+    /**
+     * Lipunmyynti-palvelupisteen käsittelyajan varianssi
+     */
     private int salesVariance = 10;
+
+    /**
+     * lipuntarkastus-palvelupisteen käsittelyajan odotusarvo
+     */
     private int checkMean = 7;
+
+    /**
+     * lipuntarkastus-palvelupisteen käsittelyajan varianssi
+     */
     private int checkVariance = 3;
+
+    /**
+     * metro-palvelupisteen käsittelyajan odotusarvo
+     */
     private int metroMean = 360;
+
+    /**
+     * metro-palvelupisteen käsittelyajan varianssi
+     */
     private int metroVariance = 60;
 
-
+    /**
+     * Simulaattorin saapumisgeneraattorin normaalijakauman odotusarvo
+     */
     private int arrivalMean = 10;
+
+    /**
+     * Simulaattorin saapumisgeneraattorin normaalijakauman varianssi
+     */
     private int arrivalVariance = 5;
 
+    /**
+     * Onko simulaattori pysäytetty? Miten tämä eroaa {@link #kaynnissa} muuttujasta? En tiedä!
+     */
     private boolean simuStopped = false;
 
+    /**
+     * Konstruktori joka kutsuu Mainapin {@link application.MainApp setKontrol(this)} metodia.
+     */
     public Kontrolleri() {
         MainApp.setKontrol(this);
     }
 
-    // Moottorin ohjausta:
+
+    /**
+     * Hakee moottorin, asettaa sen parametrit, asettaa simulaattorin kellon nollaan ja käynnistää simulaation.
+     * Jos simu on jo käynnissä, luo virheilmoitusponnahdusikkunan.
+     */
     @Override
     public void kaynnistaSimulointi() {
-
         if (((Thread) moottori).getState() != Thread.State.NEW) {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -73,21 +145,18 @@ public class Kontrolleri implements IKontrolleri {
             alert.show();
             return;
         }
-
         moottori = getMoottori();
         Kello.getInstance().setAika(0);
-
         asetaMoottorinParametrit();
-
-
         if (!kaynnissa && ((Thread) moottori).getState() == Thread.State.NEW) {
-
             kaynnissa = true;
             ((Thread) moottori).start();
-
         }
     }
 
+    /**
+     * Asettaa moottorin parametrit. Metron ja aseman kapasiteetit sekä saapumisen ja palvelupisteiden käsittelyajan odotusarvot ja varianssit.
+     */
     @Override
     public void asetaMoottorinParametrit() {
         setMetronKapasiteetti(metronKapasiteetti);
@@ -275,31 +344,56 @@ public class Kontrolleri implements IKontrolleri {
         return moottori.getServedCustomers();
     }
 
+    /**
+     * Palauttaa simulaattorin tämänhetkisen viiveen
+     * @return simulaattorin viive (long)
+     */
     @Override
     public long getViive() {
         return moottori.getViive();
     }
 
+    /**
+     * setteri
+     * @param kaynnissa {@link #kaynnissa}
+     */
     @Override
     public void setKaynnissa(boolean kaynnissa) {
         this.kaynnissa = kaynnissa;
     }
 
+    /**
+     * getteri (huonosti nimetty)
+     * @return kaynnissa {@link #kaynnissa}
+     */
     @Override
     public boolean onkoKaynnissa() {
         return kaynnissa;
     }
 
+    /**
+     * getteri. Prosenttiarvo, kuinka monta asiakasta hyppää lipunmyynnin ohi.
+     * @return % asiakkaista, jotka hyppäävät lipunmyynnin ohi.
+     */
     @Override
     public int getMobiililippujakauma() {
         return moottori.getMobiililippujakauma();
     }
 
+    /**
+     * setteri. Prosenttiarvo, kuinka monta asiakasta hyppää lipunmyynnin ohi.
+     * @param % asiakkaista, jotka hyppäävät lipunmyynnin ohi.
+     */
     @Override
     public void setMobiililippujakauma(int mobiililippujakauma) {
         moottori.setMobiililippujakauma(mobiililippujakauma);
     }
 
+    /**
+     * Asettaa sisääkäynti-palvelupisteen käsittelyajan normaalijakauman odotusarvon ja varianssin.
+     * @param mean Odotusarvo
+     * @param variance Varianssi
+     */
     @Override
     public void setEntranceJakauma(int mean, int variance) {
         entranceMean = mean;
@@ -307,6 +401,11 @@ public class Kontrolleri implements IKontrolleri {
         palvelupisteet[0].setJakauma(new Normal(entranceMean, entranceVariance));
     }
 
+    /**
+     * Asettaa lipunmyynti-palvelupisteen käsittelyajan normaalijakauman odotusarvon ja varianssin.
+     * @param mean Odotusarvo
+     * @param variance Varianssi
+     */
     @Override
     public void setSalesJakauma(int mean, int variance) {
         salesMean = mean;
@@ -315,6 +414,11 @@ public class Kontrolleri implements IKontrolleri {
         palvelupisteet[1].setJakauma(new Normal(salesMean, salesVariance));
     }
 
+    /**
+     * Asettaa lipuntarkastus-palvelupisteen käsittelyajan normaalijakauman odotusarvon ja varianssin.
+     * @param mean Odotusarvo
+     * @param variance Varianssi
+     */
     @Override
     public void setCheckJakauma(int mean, int variance) {
         checkMean = mean;
@@ -322,6 +426,11 @@ public class Kontrolleri implements IKontrolleri {
         palvelupisteet[2].setJakauma(new Normal(checkMean, checkVariance));
     }
 
+    /**
+     * Asettaa metro-palvelupisteen käsittelyajan normaalijakauman odotusarvon ja varianssin.
+     * @param mean Odotusarvo
+     * @param variance Varianssi
+     */
     @Override
     public void setMetroJakauma(int mean, int variance) {
         metroMean = mean;
@@ -330,13 +439,25 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
+    /**
+     * Arvot tallennetaan kontrolleriin ja niitä käytetään, kun luodaan uusi moottori.
+     * OmaMoottorin konstruktori käyttää näitä luodakseen saapumisgeneraattorin (joka luo uusia asiakkaita normaalijakauman mukaisesti)
+      * @param mean Normaalijakauman odotusarvo
+     * @param variance Normaalijakauman varianssi
+     */
     public void setArrivalJakauma(int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
-        //setSaapumisprosessi(arrivalMean, arrivalVariance);
     }
 
 
+    /**
+     * Tallentaa kontrolleriin palvelupisteidne käsittelyajan normaalijakauman odotusarvon ja varianssin.
+     * Jakaumat asetataan simulaattorille käynnistyksen yhteydessä.
+     * @param tt Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @param mean Normaalijakauman odotusarvo
+     * @param variance Normaalijakauman varianssi
+     */
     public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
         switch (tt) {
             case ENTRANCE:
@@ -358,6 +479,11 @@ public class Kontrolleri implements IKontrolleri {
         }
     }
 
+    /**
+     * Palauttaa palvelupisteen tämänhetkisen tilan, eli käsitteleekö se asiakkaita juuri nyt?
+     * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @return onko palvelupiste varattu? true / false
+     */
     public boolean onkoPPVarattu(TapahtumanTyyppi palvelupiste) {
         switch (palvelupiste) {
             case ENTRANCE:
@@ -372,6 +498,11 @@ public class Kontrolleri implements IKontrolleri {
         return false;
     }
 
+    /**
+     * Palauttaa palvelupisteen jonon pituuden tällä hetkellä.
+     * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @return
+     */
     public int getPPjononpituus(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -391,6 +522,11 @@ public class Kontrolleri implements IKontrolleri {
         return palvelupisteet[index].getJonopituus();
     }
 
+    /**
+     * Palauttaa keskimääräisen jononkeston palvelupisteessä.
+     * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @return
+     */
     public double getPPkeskijonoaika(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -410,11 +546,17 @@ public class Kontrolleri implements IKontrolleri {
         return palvelupisteet[index].getKeskijonoaika();
     }
 
+    /**
+     * Palauttaa palvelupisteen käsittelemien asiakkaiden lukumäärän.
+     * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @return
+     */
     public int getPPpalvellutAsiakkaat(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
             case ENTRANCE:
                 // entrance-pisteen palvellut asiakkaat ei ole oikein, jonka takia pitää tehdä näin..
+                // johtuu varmaan siitä, että jos asiakas on täynnä, se lasketaan palvelluksi vaikka todellisuudessa se vain poistuu systeemistä.
                 return getAsiakkaatAsemassa()+getPalvellutAsaiakkaat();
             case TICKETSALES:
                 index = 1;
@@ -427,10 +569,14 @@ public class Kontrolleri implements IKontrolleri {
                 System.out.println("metron palvelunro = " + palvelupisteet[3].getPalvelunro());
                 break;
         }
-
         return palvelupisteet[index].getPalvelunro();
     }
 
+    /**
+     * Palauttaa palvelupisteen käsittelemien asiakkaiden keskimääräisen käsittelyajan. (palvelun keston keskiaika)
+     * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
+     * @return
+     */
     public double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
