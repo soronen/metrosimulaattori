@@ -190,6 +190,7 @@ public class Kontrolleri implements IKontrolleri {
      * asettaa moottorin null arvoksi pienen viiveen kuluttua tästä, kun muutkin säikeet ovat saaneet kuulla uutiset
      * jotta konsoliin ei tulisi virheilmoituksia
      */
+    @Override
     public void stopSimulation() {
         setKaynnissa(false);
         simuStopped = true;
@@ -445,6 +446,7 @@ public class Kontrolleri implements IKontrolleri {
       * @param mean Normaalijakauman odotusarvo
      * @param variance Normaalijakauman varianssi
      */
+    @Override
     public void setArrivalJakauma(int mean, int variance) {
         arrivalMean = mean;
         arrivalVariance = variance;
@@ -458,6 +460,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param mean Normaalijakauman odotusarvo
      * @param variance Normaalijakauman varianssi
      */
+    @Override
     public void setPPJakauma(TapahtumanTyyppi tt, int mean, int variance) {
         switch (tt) {
             case ENTRANCE:
@@ -484,6 +487,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
      * @return onko palvelupiste varattu? true / false
      */
+    @Override
     public boolean onkoPPVarattu(TapahtumanTyyppi palvelupiste) {
         switch (palvelupiste) {
             case ENTRANCE:
@@ -503,6 +507,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
      * @return
      */
+    @Override
     public int getPPjononpituus(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -527,6 +532,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
      * @return
      */
+    @Override
     public double getPPkeskijonoaika(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -551,6 +557,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
      * @return
      */
+    @Override
     public int getPPpalvellutAsiakkaat(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -577,6 +584,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param palvelupiste Tapahtumaa vastaava palvelupiste. (entrance, ticketsales, ticketcheck, metro)
      * @return
      */
+    @Override
     public double getPPkeskiarvoaika(TapahtumanTyyppi palvelupiste) {
         int index = 0;
         switch (palvelupiste) {
@@ -603,6 +611,7 @@ public class Kontrolleri implements IKontrolleri {
      * @param tt TapahtumanTyyppi, joka vastaa palvelupistettä
      * @return int[2] taulukon, jossa i[0] = odotusarvo ja i[1] = varianssi
      */
+    @Override
     public int[] getPPJakauma(TapahtumanTyyppi tt) {
         switch (tt) {
             case ENTRANCE:
@@ -618,6 +627,7 @@ public class Kontrolleri implements IKontrolleri {
     }
 
 
+    @Override
     public void setUi(IVisualisointi iv) {
 
         System.out.println(iv + " vaihdettu");
@@ -803,6 +813,7 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+    @Override
     public void initchart(graphviewcontroller i) {
         SimulaattoriDAO sdao = new SimulaattoriDAO();
 
@@ -834,6 +845,7 @@ public class Kontrolleri implements IKontrolleri {
      * Asettaa Taulukko ikkunassa sijaitsevan listviewein
      * @param i referenssi graphviewcontrolleriin
      */
+    @Override
     public void dChart(graphviewcontroller i){
         ISimulaattoriDAO sdao = new SimulaattoriDAO();
         int id = i.getListView().getSelectionModel().getSelectedIndex();

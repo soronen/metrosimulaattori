@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 
 import static application.simu.model.TapahtumanTyyppi.*;
 

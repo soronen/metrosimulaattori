@@ -10,10 +10,34 @@ package application.simu.model;
  * @version 1
  */
 public enum TapahtumanTyyppi {
+
+	/**
+	 * Saapuminen
+	 */
 	ARRIVAL,
+
+	/**
+	 * Sisäänkäynti
+	 */
 	ENTRANCE,
+
+	/**
+	 * Lipunmyynti
+	 */
 	TICKETSALES,
+
+	/**
+	 * Lipuntarkastus
+	 */
 	TICKETCHECK,
+
+	/**
+	 * Metro
+	 */
 	METRO,
+
+	/**
+	 * Mobiililippu, tämä tapahtuma hyppää lipunmyynnin ohi.
+	 */
 	MOBILETICKET
 }

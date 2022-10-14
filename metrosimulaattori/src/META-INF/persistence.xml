@@ -7,6 +7,7 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <properties>
         <property name="jakarta.persistence.lock.timeout" value="5000"/>
+        <!-- Mikä tahansa mysql-tietokanta näyttää toimivan + paikallinen mariadb -->
         <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://mysql.metropolia.fi/eetusoro"/>
         <property name="jakarta.persistence.jdbc.user" value="eetusoro"/>
         <property name="jakarta.persistence.jdbc.password" value="metrosim"/>

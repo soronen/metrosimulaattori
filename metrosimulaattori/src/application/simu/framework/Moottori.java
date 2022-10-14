@@ -3,8 +3,6 @@ package application.simu.framework;
 import application.controller.IKontrolleri;
 import application.simu.model.Palvelupiste;
 
-import java.util.Observable;
-
 public abstract class Moottori extends Thread implements IMoottori{  // UUDET MÄÄRITYKSET
 	
 	private double simulointiaika = 0;
