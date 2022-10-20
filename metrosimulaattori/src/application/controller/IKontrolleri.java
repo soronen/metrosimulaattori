@@ -141,14 +141,14 @@ public interface IKontrolleri {
     /**
      * setteri
      *
-     * @param kaynnissa {@link #kaynnissa}
+     * @param kaynnissa {@link Kontrolleri#kaynnissa}
      */
     void setKaynnissa(boolean kaynnissa);
 
     /**
      * getteri (huonosti nimetty)
      *
-     * @return kaynnissa {@link #kaynnissa}
+     * @return kaynnissa {@link Kontrolleri#kaynnissa}
      */
     boolean onkoKaynnissa();
 
