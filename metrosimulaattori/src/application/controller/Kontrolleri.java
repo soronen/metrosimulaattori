@@ -626,7 +626,11 @@ public class Kontrolleri implements IKontrolleri {
         return null;
     }
 
-
+    /**
+     * Asettaa kontrollerille näkymän johon
+     * simulaation tiedot päivitetään
+     * @param iv Ivisualisointi rajapinta joka kuvastaa pääikkunaa
+     */
     @Override
     public void setUi(IVisualisointi iv) {
 
@@ -701,7 +705,12 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
-
+    /**
+     * Asettaa graphviewissä sijaitsevaan taulukkoon tiedot,
+     * riippuen mitä näppäintä on painettu
+     * @param i referenssi graphviewiin johnka taulukkoon tiedot asetetaan
+     * @param x mikä näppäin sivulla on painettu (1-3 vasemmalta oikealle)
+     */
     @Override
     public void asetachart(graphviewcontroller i, int x) {
 
@@ -813,6 +822,11 @@ public class Kontrolleri implements IKontrolleri {
 
     }
 
+    /**
+     * Alustaa taulukkonäkymän simulaatio listan, ja
+     * asettaa taulukkoon listan ensimmäisen simulaation tiedot
+     * @param i taulukkonäkymä jota käsitellään
+     */
     @Override
     public void initchart(graphviewcontroller i) {
         SimulaattoriDAO sdao = new SimulaattoriDAO();

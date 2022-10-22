@@ -265,6 +265,11 @@ public interface IKontrolleri {
      */
     int[] getPPJakauma(TapahtumanTyyppi tt);
 
+    /**
+     * Asettaa kontrollerille näkymän johon
+     * simulaation tiedot päivitetään
+     * @param iv Ivisualisointi rajapinta joka kuvastaa pääikkunaa
+     */
     void setUi(IVisualisointi iv);
 
     /**
@@ -275,8 +280,19 @@ public interface IKontrolleri {
      */
     void tallenaEntity(OmaMoottori mtr);
 
+    /**
+     * Asettaa graphviewissä sijaitsevaan taulukkoon tiedot,
+     * riippuen mitä näppäintä on painettu
+     * @param i referenssi graphviewiin johnka taulukkoon tiedot asetetaan
+     * @param x mikä näppäin sivulla on painettu (1-3 vasemmalta oikealle)
+     */
     void asetachart(graphviewcontroller i, int x);
 
+    /**
+     * Alustaa taulukkonäkymän simulaatio listan, ja
+     * asettaa taulukkoon listan ensimmäisen simulaation tiedot
+     * @param i taulukkonäkymä jota käsitellään
+     */
     void initchart(graphviewcontroller i);
 
     /**

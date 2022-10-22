@@ -11,18 +11,60 @@ import java.util.Random;
 
 public class OmaMoottori extends Moottori{
 
+	/**
+	 * Kuvaa simulaation aseman sisällä olevaa asiakaslukua
+	 */
 	private int customersWithin = 0;
+
+	/**
+	 * Kuinka monta asiakasta on palveltu
+	 */
 	private int servedCustomers = 0;
+
+	/**
+	 * Aseman maksimi kapasiteetti. Kuvastaa kuinka
+	 * monta asiakasta järjestelmään mahtuu
+	 */
 	private int stationCapacity = 0;
+
+	/**
+	 * Kuinka monta asiakasta metro poistaa kerrallaan
+	 */
 	private int metroCapacity = 0;
+
+	/**
+	 * Asiakas generaattori
+	 */
 	private final Saapumisprosessi saapumisprosessi;
 
+
+	/**
+	 * yksittäisen asiakkaan keskiarvo aika simulaattorissa
+	 * (metrojen saapumisten välissä, tämä on järjestelmästä viimeisin poistettu asiakas)
+	 */
 	private double keskiarvoaika;
+
+	/**
+	 * Kuvastaa kuinka suurella todennäköisyydellä saapuvalla asiakkaalla on lippu
+	 */
 	private int mobiililippujakauma = 50;
+
+	/**
+	 * Asiakkaiden saapumisten välinen odotusaika
+	 */
 	private int arrivalMean;
+
+	/**
+	 * Kuvastaa kuinka paljolla {@link #arrivalMean} voi erota
+	 */
 	private int arrivalVariance;
 
-
+	/**
+	 * Konstruktori
+	 * @param kontrolleri sovelluksen pää kontrolleri, jota kutsutaan tarvittaessa
+	 * @param arrivalMean {@link #arrivalMean} Odotusaika asiakkaiden välissä
+	 * @param arrivalVariance {@link #arrivalVariance} Kuinka paljolla odotusaika voi heittää
+	 */
 	public OmaMoottori(IKontrolleri kontrolleri, int arrivalMean, int arrivalVariance){ // UUSI
 
 		super(kontrolleri); //UUSI
@@ -38,12 +80,18 @@ public class OmaMoottori extends Moottori{
 		this.arrivalVariance = arrivalVariance;
 	}
 
-
+	/**
+	 * Alustaa simulaatioon ensimmäiset asiakkaat
+	 */
 	@Override
 	protected void alustukset() {
 		saapumisprosessi.generoiSeuraava(); // Ensimmäinen saapuminen järjestelmään
 	}
 
+	/**
+	 * Määrittelee miten eri tapahtumat käsitellään. (kutsutaan moottorista)
+	 * @param t käsiteltävän tapahtuman tyyppi
+	 */
 	@Override
 	protected void suoritaTapahtuma(Tapahtuma t){  // B-vaiheen tapahtumat
 
@@ -115,6 +163,9 @@ public class OmaMoottori extends Moottori{
 		}
 	}
 
+	/**
+	 * Tulostetaan simulaation tiedot konsoliin sen päätyttyä
+	 */
 	@Override
 	protected void tulokset() {
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
@@ -134,36 +185,82 @@ public class OmaMoottori extends Moottori{
 
 	}
 
+	/**
+	 * getteri
+	 * @return {@link #palvelupisteet}
+	 */
 	public Palvelupiste[] getPalvelupisteet() {
 		return palvelupisteet;
 	}
+
+	/**
+	 * getteri
+	 * @return {@link #keskiarvoaika}
+	 */
 	public double getLapimenoaika() {
 		return keskiarvoaika;
 	}
+
+	/**
+	 * getteri
+	 * @return {@link #metroCapacity}
+	 */
 	public int getMetroCapacity() {
 		return metroCapacity;
 	}
+
+	/**
+	 * setteri
+	 * @param capacity {@link #metroCapacity}
+	 */
 	public void setMetroCapacity(int capacity) {
 		metroCapacity = capacity;
 	}
+
+	/**
+	 * getteri
+	 * @return {@link #stationCapacity}
+	 */
 	public int getStationCapacity() {
 		return stationCapacity;
 	}
+
+	/**
+	 * setteri
+	 * @param stationCapacity {@link #stationCapacity}
+	 */
 	public void setStationCapacity(int stationCapacity) {
 		this.stationCapacity = stationCapacity;
 	}
+
+	/**
+	 * getteri
+	 * @return {@link #customersWithin}
+	 */
 	public int getCustomersWithin() {
 		return customersWithin;
 	}
 
+	/**
+	 * getteri
+	 * @return {@link #servedCustomers}
+	 */
 	public int getServedCustomers() {
 		return servedCustomers;
 	}
 
+	/**
+	 * setteri
+	 * @param mobiililippujakauma {@link #mobiililippujakauma}
+	 */
 	public void setMobiililippujakauma(int mobiililippujakauma) {
 		this.mobiililippujakauma = mobiililippujakauma;
 	}
 
+	/**
+	 * getteri
+	 * @return {@link #mobiililippujakauma}
+	 */
 	@Override
 	public int getMobiililippujakauma() {
 		return mobiililippujakauma;

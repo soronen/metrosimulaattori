@@ -24,25 +24,40 @@ public class RootLayoutController {
         this.mainApp = mainApp;
     }
 
+    /**
+     * Kutsutaan kun RootLayout luodaan / kun sovellus käynnistetään. Alustaa simulaattorin luomalla
+     * pää kontrollerin.
+     */
     @FXML
     private void initialize(){
         Kontrolleri kontrolleri = new Kontrolleri();
     }
 
-
+    /**
+     * Kutsutaan kun tekstinäkymä painiketta painetaan yläpalkista. Avaa päänäkymän.
+     */
     @FXML
     public void avaaSimulaattori() {
         mainApp.showStatsTab();
     }
 
+    /**
+     * Kusutaan kun Graafinen näkymä painiketta painetaan yläpalkista. Avaa simulaatio näkymän / simviewin.
+     */
     @FXML
     public void avaasimview() {
         mainApp.showSimview();
     }
 
+    /**
+     * Kutsutaan yläpalkin näytä tilastoja painikkeesta. Avaa tilasto ikkunan.
+     */
     @FXML
     public void avaagraphview(){mainApp.showgraphview();}
 
+    /**
+     * Kutsutaan kun tietoa mesitä painiketta painetaan. Avaa tieto ikkunan ja asettaa tiedot siihen.
+     */
     @FXML
     public void aboutUs() {
         final Stage dialog = new Stage();
