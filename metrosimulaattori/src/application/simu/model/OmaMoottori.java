@@ -9,6 +9,12 @@ import application.simu.framework.Tapahtuma;
 
 import java.util.Random;
 
+/**
+ * Simulaattori käynnistetään ja pyöritetään täältä käsin
+ *
+ * @author Eetu Soronen, Emil Ålgars
+ * @version 1
+ */
 public class OmaMoottori extends Moottori{
 
 	/**

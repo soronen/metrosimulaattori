@@ -64,6 +64,11 @@ public class Asiakas {
 		return poistumisaika;
 	}
 
+	/**
+	 * Asettaa asiakkaan poistumisajan, ja korottaa {@link #poistuneetAsiakkaat} yhdellä.
+	 * Lisäksi lisää asiakkaan elinajan {@link #sum} -muuttujaan.
+	 * @param poistumisaika
+	 */
 	public void setPoistumisaika(double poistumisaika) {
 		poistuneetAsiakkaat++;
 		this.poistumisaika = poistumisaika;

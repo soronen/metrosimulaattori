@@ -8,9 +8,6 @@ import application.simu.framework.Tapahtuma;
 import application.simu.framework.Tapahtumalista;
 import application.simu.framework.Trace;
 
-// TODO:
-// Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
-
 /**
  * Palvelupisteitä simulaattorissamme on neljä, jotka ovat Entrance, TicketSales, TicketCheck ja Metro.
  * Ne ovat toteutettu tässä luokassa.
@@ -77,6 +74,12 @@ public class Palvelupiste {
 	private int palvelunro = 0;
 
 
+	/**
+	 *  Palvelupisteen konstruktori, jolla rajaton kapasiteetti
+	 * @param generator {@link #generator}
+	 * @param tapahtumalista {@link #tapahtumalista}
+	 * @param tyyppi {@link #seuraavaTapahtumanTyyppi}
+	 */
 	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi){
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
@@ -84,6 +87,13 @@ public class Palvelupiste {
 
 	}
 
+	/**
+	 * Palvelupisteen konstruktori, jolla rajallinen kapasiteetti
+	 * @param generator {@link #generator}
+	 * @param tapahtumalista {@link #tapahtumalista}
+	 * @param tyyppi {@link #seuraavaTapahtumanTyyppi}
+	 * @param maxSize {@link #maxSize}
+	 */
 	public Palvelupiste(ContinuousGenerator generator, Tapahtumalista tapahtumalista, TapahtumanTyyppi tyyppi , int maxSize){
 		this.tapahtumalista = tapahtumalista;
 		this.generator = generator;
@@ -111,6 +121,11 @@ public class Palvelupiste {
 		return jono.poll();
 	}
 
+	/**
+	 * Aloittaa asiakkaan käsittelyn palvelupisteessä.
+	 * Asettaa palvelupisteen {@link #varattu} arvon todeksi, laskee asiakkaan jonotuksen keston,
+	 * ja aloittaa palvelun keston laskemisen.
+	 */
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
 		if (seuraavaTapahtumanTyyppi != TapahtumanTyyppi.METRO){
